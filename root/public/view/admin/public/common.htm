@@ -1,0 +1,96 @@
+<df-code>
+	global $other,$_df,$common;
+	$other->verifyLogin(1);
+</df-code>
+
+<html>
+
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+
+		<!-- ********************** layui START ********************** -->
+		<link href="//unpkg.com/layui@2.8.15/dist/css/layui.css" rel="stylesheet">
+		<script src="//unpkg.com/layui@2.8.15/dist/layui.js"></script>
+		<!-- **********************  layui END  ********************** -->
+
+
+		<link href="!!VIEW_ASSETS!!/admin/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+		<link href="!!VIEW_ASSETS!!/admin/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+		<link href="!!VIEW_ASSETS!!/admin/css/style.css?v=4.1.0" rel="stylesheet">
+
+		<!-- ********************** jq START ********************** -->
+		<script src="!!VIEW_ASSETS!!/admin/js/jquery.min.js"></script>
+		<!-- **********************  jq END  ********************** -->
+		<script src="!!VIEW_ASSETS!!/df.js"></script>
+
+		<df-header />
+	</head>
+
+	<body class="gray-bg">
+		<div class="wrapper wrapper-content">
+			<df-body />
+		</div>
+		<!-- 全局js -->
+		<script src="!!VIEW_ASSETS!!/admin/js/bootstrap.min.js?v=3.3.6"></script>
+		<!-- 自定义js -->
+		<script src="!!VIEW_ASSETS!!/admin/js/content.js?v=1.0.0"></script>
+	</body>
+
+	<df-footer />
+
+	<script>
+		//上传
+		function upload(trigger_obj, preview_obj, input_obj, upload_api) {
+
+			var uploader = WebUploader.create({
+				auto: true,
+				pick: trigger_obj,
+				server: upload_api,
+				method: 'POST'
+			});
+
+
+			uploader.on('uploadBeforeSend', function() {
+				console.log('uploadBeforeSend')
+				$(preview_obj).after(`<div class="layui-progress layui-progress-big" lay-showpercent="true" lay-filter="${input_obj.replace('#', '')}">
+													<div class="layui-progress-bar layui-bg-red" lay-percent="0%"></div>
+												 </div>`);
+			});
+
+			uploader.on('uploadProgress', function(file, percentage) {
+				per = Math.round(percentage * 100)
+				layui.use('element', function() {
+					var element = layui.element;
+					console.log(input_obj.replace('#', ''), `${per}%`);
+					element.progress(input_obj.replace('#', ''), `${per}%`)
+				})
+			});
+
+			uploader.on('uploadSuccess', function(file, response) {
+				if (response == "-1")
+					$(preview_obj).html('文件出错（超出服务器允许上传的体积，请设置php.ini）');
+				else if (response == "-2")
+					$(preview_obj).html('类型不允许');
+				else if (response == "-3")
+					$(preview_obj).html('文件太大');
+				else {
+					//获取原始数据
+					var type = response.type;
+					var url = response.url;
+					if (type == 'img')
+						$(preview_obj).html(`<img src="${url}" />`);
+					else
+						$(preview_obj).append(`<div>${url}</div>`);
+					$(input_obj).val(url);
+				}
+			});
+
+			uploader.on('uploadError', function(file) {
+				$(preview_obj).html("上传失败");
+			});
+
+		}
+	</script>
+
+</html>

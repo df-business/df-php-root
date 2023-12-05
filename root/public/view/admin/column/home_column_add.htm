@@ -1,0 +1,135 @@
+<df-body>
+
+
+<div class="row">
+	<div class="col-sm-12">
+		<div class="ibox float-e-margins">
+			<div class="ibox-title">
+				<h5></h5>
+			</div>
+			<div class="ibox-content">
+				<form method="post" action='!!splitUrl(str("admin/column/{0}_update",[self::$db_hc]))!!'>
+					<input name="id" value="!!isset($output[0])?$output[0]:'0'!!" hidden/>
+					<!--<input name="data[img1]" id="img1" value="!!isset($output[0])?$output['img1']:''!!" hidden/>-->
+					<input name="data[content]" id="content" hidden="" />
+
+					<div class="form-horizontal m-t">
+						<div class="form-group">
+							<label class="col-sm-1 control-label">标题：</label>
+							<div class="col-sm-5">
+								<input class="form-control" name="data[title]" size="10" type="text" value="!!isset($output[0])?$output['title']:''!!" />
+								<span class="field-validation-error" veri-for=""></span>
+							</div>
+						</div>
+
+
+
+						<div class="form-group">
+							<label class="col-sm-1 control-label">菜单名：</label>
+							<div class="col-sm-5">
+								<input class="form-control" name="data[menu]" size="10" type="text" value="!!isset($output[0])?$output['menu']:''!!" />
+								<span class="field-validation-error" veri-for=""></span>
+							</div>
+						</div>
+
+
+						<div class="form-group">
+							<label class="col-sm-1 control-label">描述：</label>
+							<div class="col-sm-5">
+								<input class="form-control" name="data[describe]" size="10" type="text" value="!!isset($output[0])?$output['describe']:''!!" />
+								<span class="field-validation-error" veri-for=""></span>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-1 control-label">文件上传：</label>
+							<div class="col-sm-4">
+								<div class="upload">
+									<div id="uploadPreview1">
+									</div>
+									<div class="left">
+										<div class="uploadProgressBar"></div>
+										<div id="uploadBut1">选择文件</div>
+									</div>
+									<div class="clear"></div>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-1 control-label">内容：</label>
+							<div class="col-sm-11">
+								<!--script标签之间不能有换行和空格，否则新建的时候文本框会自动添加换行和空格-->
+								<script type="text/plain" id="Body">
+									!!isset($output[0])?$output['content']:''!!
+								</script>
+								<span class="field-validation-error" veri-for="Body"></span>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="col-sm-2 col-sm-offset-1">
+								<button class="btn btn-primary" onclick="return submit_form()">保存</button>
+								<a href='!!splitUrl(sprintf("admin/column/%s ",self::$db_hc))!!' class="btn btn-sm btn-white"> 返 回 </a>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+</df-body>
+
+<df-footer>
+
+
+<!-- umeditor -->
+<link type="text/css" rel="stylesheet" href="!!VIEW_ASSETS!!/umeditor/themes/default/css/umeditor.css">
+<script type="text/javascript" src="!!VIEW_ASSETS!!/umeditor/umeditor.config.js?time=!!date(" Ymdhis ")!!"></script>
+<script type="text/javascript" src="!!VIEW_ASSETS!!/umeditor/umeditor.js"></script>
+<script type="text/javascript" src="!!VIEW_ASSETS!!/umeditor/lang/zh-cn/zh-cn.js"></script>
+
+<script type="text/javascript">
+	//验证输入
+	function verify() {
+		if($("input[name='data[title]']").val() == "") {
+			$("[name='data[title]']").next().html('请输入标题')
+			return false;
+		}
+		if($("#content").val() == "<p><br></p>") {
+			$("[veri-for='Body']").html('请输入内容')
+			return false;
+		}
+		return true;
+	}
+
+	function submit_form() {
+		$("#content").val($("#Body").html());
+		return verify();
+	}
+
+	window.UMEDITOR_CONFIG.imageUrl = '!!splitUrl(sprintf("admin/column/%s_edit_up",self::$db_hc))!!';
+	var um1 = UM.getEditor('Body');
+	um1.addListener('fullscreenchanged', resetbody);
+
+	function resetbody(type, isfullscreen) {
+		if(!isfullscreen) {
+			$("body").css("overflow", "");
+		}
+	}
+</script>
+
+<!-- webuploader --上传文件 -->
+<link rel="stylesheet" href="!!VIEW_ASSETS!!/webuploader/webuploader.css" type="text/css" />
+<script src="!!VIEW_ASSETS!!/webuploader/webuploader.min.js"></script>
+
+<script type="text/javascript">
+	//上传图片
+	$(function() {
+		upload('#uploadBut1', "#uploadPreview1", "#img1",'!!splitUrl(sprintf("admin/column/%s_up/file",self::$db_hc))!!');
+	})
+</script>
+
+</df-footer>

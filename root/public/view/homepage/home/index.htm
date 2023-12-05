@@ -1,0 +1,46 @@
+<df-header>
+	<!--'闲云野鹤醉溪月'-->
+	<style>
+
+	</style>
+
+</df-header>
+
+<df-body>
+	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 0;">
+		<legend style="color: !!$home_layout['color']!!;">!!$home_layout['description']!!</legend>
+	</fieldset>
+
+	<div style="padding: 20px;">
+		<div class="layui-row layui-col-space15">
+
+			<df-each $home_column>
+				<df-if !ctype_space($v["title"])>
+					<div class="layui-col-md6">
+						<div class="layui-card">
+							<div class="layui-card-header">!`title`</div>
+							<div class="layui-card-body">
+								!`content`
+							</div>
+						</div>
+					</div>
+				</df-if>
+			</df-each>
+		</div>
+	</div>
+
+	<div class="foot" style="color: !!$home_layout['color']!!;">!!$home_layout['Inscribe']!!</div>
+
+</df-body>
+<df-footer>
+
+	<!--script-->
+	<script>
+		$(function() {
+			var url_a = jQuery.getUrlParam('a') == null ? 'index' : jQuery.getUrlParam('a');
+			console.log("!!$home_layout['title']!!_{0} loaded".format(url_a));
+
+		})
+	</script>
+
+</df-footer>

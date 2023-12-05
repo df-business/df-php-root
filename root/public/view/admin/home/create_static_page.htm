@@ -1,0 +1,47 @@
+<df-header>
+
+
+	<title></title>
+
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+
+		df {
+			width: 10%;
+			background: orange;
+			cursor: crosshair;
+			position: fixed;
+			top: 5%;
+			right: 5%;
+			text-align: center;
+			z-index: 999999999;
+		}
+	</style>
+</df-header>
+<df-body>
+
+
+	<df onclick="window.refresh()">刷新</df>
+
+	!!$str!!
+
+</df-body>
+<df-footer>
+
+
+
+	<script>
+		function clear1() {
+			post('', {
+				a: 1
+			}, function() {
+				location.reload()
+			});
+
+		}
+	</script>
+
+</df-footer>

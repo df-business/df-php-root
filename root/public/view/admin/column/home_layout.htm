@@ -1,0 +1,210 @@
+<df-body>
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="ibox float-e-margins">
+				<div class="ibox-title">
+					<h5></h5>
+				</div>
+				<div class="ibox-content">
+					<form method="post" action='!!splitUrl(str("admin/column/{0}_update",[self::$db_hlo]))!!'
+						class="layui-form">
+						<input name="id" value="!!isset($output[0])?$output[0]:'0'!!" hidden />
+						<input name="data[img1]" id="img1" value="!!isset($output[0])?$output['img1']:''!!" hidden />
+						<input name="data[musicPlay]" value="!!isset($output[0])?$output['musicPlay']:'0'!!" hidden />
+						<input name='data[color]' value="!!isset($output[0])?$output['color']:''!!" hidden />
+						<div class="form-horizontal m-t">
+							<div class="form-group">
+								<label class="col-sm-1 control-label">主题：</label>
+								<div class="col-sm-2">
+									<input class="form-control" name="data[title]" size="10" type="text"
+										value="!!isset($output[0])?$output['title']:''!!" />
+									<span class="field-validation-error" veri-for=""></span>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-1 control-label">关键字：</label>
+								<div class="col-sm-10">
+									<input class="form-control" name="data[keywords]" size="10" type="text"
+										value="!!isset($output[0])?$output['keywords']:''!!" />
+									<span class="field-validation-error" veri-for=""></span>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-1 control-label">描述：</label>
+								<div class="col-sm-10">
+									<input class="form-control" name="data[description]" size="10" type="text"
+										value="!!isset($output[0])?$output['description']:''!!" />
+									<span class="field-validation-error" veri-for=""></span>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-1 control-label">落款：</label>
+								<div class="col-sm-5">
+									<input class="form-control" name="data[Inscribe]" size="10" type="text"
+										value="!!isset($output[0])?$output['Inscribe']:''!!" /> <span
+										class="field-validation-error" veri-for=""></span>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-1 control-label">音乐自动播放：</label>
+								<div class="col-sm-2">
+									<input type="checkbox" lay-skin="switch" lay-text="ON|OFF" !!$output[ 'musicPlay'
+										]? "checked" : "" !! lay-filter="musicPlay">
+
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-1 control-label">主体文字颜色：</label>
+								<div class="col-sm-4">
+									<div id="color1"></div>
+
+								</div>
+							</div>
+
+							<div class="form-group">
+								<!--加载多张背景图会拖网速，所以只用一张-->
+								<label class="col-sm-1 control-label">背景图片：</label>
+								<div class="col-sm-4">
+									<div class="upload">
+										<div id="uploadPreview1">
+											!!!empty($output['img1'])?"<img src='{$output["img1"]}' />":'暂无图片'!!
+										</div>
+										<div class="left">
+											<div class="uploadProgressBar"></div>
+											<div id="uploadBut1">选择图片</div>
+										</div>
+										<div class="clear"></div>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<!--加载多张背景图会拖网速，所以只用一张-->
+								<label class="col-sm-1 control-label">字体：</label>
+								<div class="col-sm-4">
+									<div class="upload">
+										<div id="uploadPreview2">
+											!!VIEW_ASSETS!!/fontFamily/font.TTF
+										</div>
+										<div class="left">
+											<div class="uploadProgressBar"></div>
+											<div id="uploadBut2">选择字体文件</div>
+										</div>
+										<div class="clear"></div>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+
+								<df-each $img>
+									<div class="img_!`Id`" style="float: left;margin-right: 15px;">
+										<a href="javascript:selePic('!`img`')" title="点击更换图片">
+											<img style="width: 55px;height: 55px;" src="!`img`">
+										</a>
+										<div style="text-align: center;">
+											<a href="javascript:delPic('!`Id`')"
+												onclick='return confirm("确认删除吗？")'>删除</a>
+										</div>
+									</div>
+								</df-each>
+
+							</div>
+
+							<div class="form-group">
+								<div class="col-sm-2 col-sm-offset-1">
+									<button class="btn btn-primary" onclick="return submit_form()">保存</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</df-body>
+<df-footer>
+
+	<!-- webuploader-->
+	<link rel="stylesheet" href="!!VIEW_ASSETS!!/webuploader/webuploader.css" type="text/css" />
+	<script src="!!VIEW_ASSETS!!/webuploader/webuploader.min.js"></script>
+	<script type="text/javascript">
+		layui.use(['form', 'colorpicker'], function() {
+			var $ = layui.$;
+			layer = layui.layer;
+			var form = layui.form,
+				colorpicker = layui.colorpicker;
+
+			//监听指定开关
+			form.on('switch(musicPlay)', function(data) {
+				$('[name="data[musicPlay]"]').val(this.checked ? 1 : 0)
+			});
+
+			colorpicker.render({
+				elem: '#color1',
+				change: function(color) {
+					layer.tips('选择了：' + color, this.elem, {
+						tips: 1
+					});
+				},
+				color: $('[name="data[color]"]').val(),
+				done: function(color) {
+					$('[name="data[color]"]').val(color)
+				}
+			});
+
+		});
+		//验证输入
+		function verify() {
+			if ($("input[name='data[title]']").val() == "") {
+				$("[name='data[title]']").next().html('请输入标题')
+				return false;
+			}
+			if ($("#html").val() == "<p><br></p>") {
+				$("[veri-for='Body']").html('请输入内容')
+				return false;
+			}
+			return true;
+		}
+
+		function submit_form() {
+			$("#html").val($("#Body").html());
+			return verify();
+		}
+
+
+
+		//上传图片
+		$(function() {
+			upload('#uploadBut1', "#uploadPreview1", "#img1",
+				'!!splitUrl(sprintf("admin/column/%s_pic_up",self::$db_hlo))!!');
+			upload('#uploadBut2', "#uploadPreview2", "",
+				'!!splitUrl(sprintf("admin/column/%s_up",self::$db_hlo))!!');
+		})
+
+		function selePic(src) {
+			$('#img1').val(src)
+			$('#uploadPreview1').children().attr('src', src);
+
+			$('html,body').animate({
+				scrollTop: $('#uploadPreview1').offset().top
+			}, 500)
+		}
+
+		function delPic(id) {
+			post('!!splitUrl(sprintf("admin/column/%s_pic_del",self::$db_hlo))!!', {
+				id: id
+			}, function(x) {
+				$('.img_' + id).remove();
+			})
+		}
+	</script>
+
+</df-footer>

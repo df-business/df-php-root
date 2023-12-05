@@ -1,0 +1,87 @@
+<df-body>
+
+
+
+<div class="row">
+	<div class="col-sm-12">
+		<div class="ibox float-e-margins">
+			<div class="ibox-title">
+				<h5></h5>
+			</div>
+			<div class="ibox-content">
+				<form method="post" action='!!splitUrl(sprintf("admin/column/%s_ss_update ",self::$db_n))!!'>
+					<input name="id" value="!!isset($output[0])?$output[0]:'0'!!" hidden/>
+					<input name="data[content]" id="content" hidden="" />
+					<input name="data[time]" value='!!isset($output[0])?$output["time"]:date(" Y-m-d H:i:s ")!!' hidden/>
+
+					<div class="form-horizontal m-t">
+						<div class="form-group">
+							<label class="col-sm-1 control-label">标题：</label>
+							<div class="col-sm-5">
+								<input class="form-control" name="data[title]" size="10" type="text" value="!!isset($output[0])?$output['title']:''!!" />
+								<span class="field-validation-error" veri-for=""></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-1 control-label">内容：</label>
+							<div class="col-sm-11">
+								<script type="text/plain" id="Body">!!isset($output['content'])?$output['content']:''!!</script>
+								<span class="field-validation-error" veri-for="Body"></span>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="col-sm-2 col-sm-offset-1">
+								<button class="btn btn-primary" onclick="return submit_form()">保存</button>
+								<a href='!!splitUrl(sprintf("admin/column/%s_ss",self::$db_n))!!' class="btn btn-sm btn-white"> 返 回 </a>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+</df-body>
+
+<df-footer>
+
+
+<!-- umeditor-->
+<link type="text/css" rel="stylesheet" href="!!VIEW_ASSETS!!/umeditor/themes/default/css/umeditor.css">
+<script type="text/javascript" src='!!VIEW_ASSETS!!/umeditor/umeditor.config.js?time=!!date("Ymdhis ")!!'></script>
+<script type="text/javascript" src="!!VIEW_ASSETS!!/umeditor/umeditor.js"></script>
+<script type="text/javascript" src="!!VIEW_ASSETS!!/umeditor/lang/zh-cn/zh-cn.js"></script>
+
+<script type="text/javascript">
+	//验证输入
+	function verify() {
+		if($("input[name='data[title]']").val() == "") {
+			$("[name='data[title]']").next().html('请输入标题')
+			return false;
+		}
+		if($("#content").val() == "<p><br></p>") {
+			$("[veri-for='Body']").html('请输入内容')
+			return false;
+		}
+		return true;
+	}
+
+	function submit_form() {
+		$("#content").val($("#Body").html());
+		return verify();
+	}
+
+	window.UMEDITOR_CONFIG.imageUrl = '!!splitUrl(sprintf("admin/column/%s_edit_up",self::$db_n))!!';
+	var um1 = UM.getEditor('Body');
+	um1.addListener('fullscreenchanged', resetbody);
+
+	function resetbody(type, isfullscreen) {
+		if(!isfullscreen) {
+			$("body").css("overflow", "");
+		}
+	}
+</script>
+
+</df-footer>
