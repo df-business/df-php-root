@@ -11,7 +11,7 @@ class HomeController
 	function index($param)
 	{
 		global $other;
-		$home_layout = showFirst("home_layout", ['Id' => 1]);
+		$home_layout = showFirst("home_layout");
 		$home_column = showList("home_column", [], ["Id" => "asc"]);
 		$home_link = showList("home_link");
 		$home_music = showList("home_music");
