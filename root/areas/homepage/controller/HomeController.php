@@ -12,7 +12,7 @@ class HomeController
 	{
 		global $other;
 		$home_layout = showFirst("home_layout");
-		$home_column = showList("home_column", [], ["Id" => "asc"]);
+		$home_column = showList("home_column", [], ["id" => "asc"]);
 		$home_link = showList("home_link");
 		$home_music = showList("home_music");
 

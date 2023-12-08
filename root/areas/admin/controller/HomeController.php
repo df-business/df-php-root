@@ -17,7 +17,7 @@ class HomeController
 			$common->showJson(true, null, $_POST['top-search']);
 		}
 		//验证登录
-		$output = showFirst("df", ['Id' => $id]);
+		$output = showFirst("df", ['id' => $id]);
 		$hits = showFirst("dt", ['key' => 'hits'])['val'];
 
 		//留言
@@ -121,7 +121,7 @@ class HomeController
 	public function dfAdd($param)
 	{
 		$err = $_GET['err']??null;
-		$output = showFirst(self::$db_d, ["Id" => $param]);
+		$output = showFirst(self::$db_d, ["id" => $param]);
 		$type = showList(self::$db_roles);
 		// var_dump($param,$output);
 		include viewBack();
@@ -326,7 +326,7 @@ class HomeController
 	{
 		$parent_id = $_GET['parent_id'];
 		$parent = $_GET['parent'];
-		$myValue = del(self::$db_menu, "Id={$id} or parent={$id}", sprintf("admin/home/menu/%s&parent=%s", $parent_id, $parent));
+		$myValue = del(self::$db_menu, "id={$id} or parent={$id}", sprintf("admin/home/menu/%s&parent=%s", $parent_id, $parent));
 	}
 
 	// **********************  菜单 END  **********************

@@ -1,1 +1,1 @@
-ALTER TABLE `sp_club_info` ADD `content` longtext;
+ALTER TABLE `test` ADD `content` longtext;

@@ -230,7 +230,7 @@ class ColumnController {
 	public function notepadAdd($param)
 	{
 		global $m;
-		$output = showFirst(self::$db_n, ["Id" => $param]);
+		$output = showFirst(self::$db_n, ["id" => $param]);
 		include viewBack();
 		}
 
@@ -250,7 +250,7 @@ class ColumnController {
 		*/
 	public function notepadView($param)
 	{
-		$output = showFirst(self::$db_n, ["Id" => $param]);
+		$output = showFirst(self::$db_n, ["id" => $param]);
 		include viewBack();
 		}
 
@@ -261,7 +261,7 @@ class ColumnController {
 	{
 		$dt = $_POST['data'];
 		$id = $_POST['id'];
-		$myValue = update(self::$db_n, $dt, ["Id" => $id], str("admin/column/{0}",[self::$db_n]));
+		$myValue = update(self::$db_n, $dt, ["id" => $id], str("admin/column/{0}",[self::$db_n]));
 	}
 
 	/**
@@ -287,7 +287,7 @@ class ColumnController {
 		public function notepadSsAdd($param)
 		{
 			global $m;
-			$output = showFirst(self::$db_n, ["Id" => $param]);
+			$output = showFirst(self::$db_n, ["id" => $param]);
 			include viewBack();
 			}
 
@@ -307,7 +307,7 @@ class ColumnController {
 			{
 				$dt = $_POST['data'];
 				$id = $_POST['id'];
-				$myValue = update(self::$db_n, $dt, ["Id" => $id], str("admin/column/{0}_ss",[self::$db_n]));
+				$myValue = update(self::$db_n, $dt, ["id" => $id], str("admin/column/{0}_ss",[self::$db_n]));
 			}
 
 
@@ -317,7 +317,7 @@ class ColumnController {
 			*/
 		public function notepadSsView($param)
 		{
-			$output = showFirst(self::$db_n, ["Id" => $param]);
+			$output = showFirst(self::$db_n, ["id" => $param]);
 			include viewBack();
 			}
 

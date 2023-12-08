@@ -90,11 +90,11 @@ class LoginController
         global $m, $_df;
         $dt = $_POST['data'];
         $ndt["pw"] = $dt["npw"];
-        $output = showFirst(self::$db_d, $dt['Id']);
+        $output = showFirst(self::$db_d, $dt['id']);
         if ($output['pw'] != $dt['pw'] || empty($dt['pw'])) {
             toUrl(sprintf("admin/login/setpwd"), array('err' => '原密码有误'));
         }
-        update(self::$db_d, $ndt, $dt['Id'], "admin/login/set_pwd");
+        update(self::$db_d, $ndt, $dt['id'], "admin/login/set_pwd");
     }
 
 // **********************  设置密码 END  **********************
