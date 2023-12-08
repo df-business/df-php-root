@@ -37,7 +37,7 @@ class HomeController
 			$w = sqlWhere($role, 'or');
 			$where = "{$w}";
 		}
-		$sql = "select * from menu where parent=0 and ({$where}) order by orderNum asc";
+		$sql = "select * from menu where parent=0 and ({$where}) order by order_num asc";
 		$menu = show($sql);
 		include viewBack('iconShare');
 	}
@@ -278,7 +278,7 @@ class HomeController
 	public static $db_menu = 'menu';
 	public function menu($param)
 	{
-		$output = showList(self::$db_menu, ['parent' => empty($param) ? '0' : $param], ['orderNum', 'asc']);
+		$output = showList(self::$db_menu, ['parent' => empty($param) ? '0' : $param], ['order_num', 'asc']);
 		$parent = get('parent');
 		$l_parent = explode(',', $parent);
 		$l_parent_id = $l_parent[count($l_parent) - 1];

@@ -115,7 +115,7 @@ echo <<<EOT
 	<ul class="nav nav-second-level">
 EOT;
 
-$m = show("select * from menu where parent={$v['Id']} and ({$where}) order by orderNum asc",'sql'); //logs("select * from menu where parent={$v['Id']} and ({$where}) order by orderNum asc");
+$m = show("select * from menu where parent={$v['id']} and ({$where}) order by order_num asc",'sql'); //logs("select * from menu where parent={$v['id']} and ({$where}) order by order_num asc");
 Tree($m,$where);
 echo <<<EOT
 	</ul>

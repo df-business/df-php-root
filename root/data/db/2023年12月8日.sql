@@ -5,7 +5,7 @@ CHANGE `createtime` `create_time` DATETIME;
 ALTER TABLE `roles` CHANGE `Id` `id` INT ( 11 );
 ALTER TABLE `dt` CHANGE `Id` `id` INT ( 11 );
 ALTER TABLE `menu` CHANGE `Id` `id` INT ( 11 ),
-CHANGE `orderNum` `order_num` INT;
+CHANGE `order_num` `order_num` INT;
 ALTER TABLE `html` CHANGE `Id` `id` INT ( 11 ),
 CHANGE `fileN` `file_n` VARCHAR ( 50 );
 ALTER TABLE `logs` CHANGE `Id` `id` INT ( 11 );

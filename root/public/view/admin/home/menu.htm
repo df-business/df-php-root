@@ -47,7 +47,7 @@ $is_df=$other->verifyLogin('all')[1]=='df'?true:false;
 									<td>!`id`</td>
 									<td>!`title`</td>
 									<td>!!urldecode($v['src'])!!</td>
-									<td>!`orderNum`</td>
+									<td>!`order_num`</td>
 									<td class='center'>
 										<a !!empty($v[ 'src'])? '': 'hidden'!! href='!!url("admin","home",self::$db_menu,$v[0],array("parent"=>$parent.",".$param))!!'>[下级]</a>
 										<a href='!!url("admin","home",self::$db_menu."Add",$v[0],array("parent_id"=>$param,"parent"=>$parent))!!'>[编辑]</a>
