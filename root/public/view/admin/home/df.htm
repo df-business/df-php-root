@@ -38,7 +38,7 @@
 								<a href='!!splitUrl(sprintf("admin/home/%s_view/%s",self::$db_d,$v[0]))!!'>!`nm`</a>
 							</td>
 							<td>!!$v['nm']=='df'?'超级管理员':showFirst('roles',$v['role'])['nm']!!</td>
-							<td>!`createtime`</td>
+							<td>!`create_time`</td>
 							<td class='center'>
 								<a href='!!splitUrl(sprintf("admin/home/%s_add/%s",self::$db_d,$v[0]))!!'>[编辑]</a>
 								<a href='!!splitUrl(sprintf("admin/home/%s_del/%s",self::$db_d,$v[0]))!!' onclick='return confirm("您确认要删除吗？")'>[删除]</a>

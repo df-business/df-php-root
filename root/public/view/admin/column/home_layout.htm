@@ -11,7 +11,7 @@
 						class="layui-form">
 						<input name="id" value="!!isset($output[0])?$output[0]:'0'!!" hidden />
 						<input name="data[img1]" id="img1" value="!!isset($output[0])?$output['img1']:''!!" hidden />
-						<input name="data[musicPlay]" value="!!isset($output[0])?$output['musicPlay']:'0'!!" hidden />
+						<input name="data[music_play]" value="!!isset($output[0])?$output['music_play']:'0'!!" hidden />
 						<input name='data[color]' value="!!isset($output[0])?$output['color']:''!!" hidden />
 						<div class="form-horizontal m-t">
 							<div class="form-group">
@@ -44,8 +44,8 @@
 							<div class="form-group">
 								<label class="col-sm-1 control-label">落款：</label>
 								<div class="col-sm-5">
-									<input class="form-control" name="data[Inscribe]" size="10" type="text"
-										value="!!isset($output[0])?$output['Inscribe']:''!!" /> <span
+									<input class="form-control" name="data[inscribe]" size="10" type="text"
+										value="!!isset($output[0])?$output['inscribe']:''!!" /> <span
 										class="field-validation-error" veri-for=""></span>
 								</div>
 							</div>
@@ -53,8 +53,8 @@
 							<div class="form-group">
 								<label class="col-sm-1 control-label">音乐自动播放：</label>
 								<div class="col-sm-2">
-									<input type="checkbox" lay-skin="switch" lay-text="ON|OFF" !!$output[ 'musicPlay'
-										]? "checked" : "" !! lay-filter="musicPlay">
+									<input type="checkbox" lay-skin="switch" lay-text="ON|OFF" !!$output[ 'music_play'
+										]? "checked" : "" !! lay-filter="music_play">
 
 								</div>
 							</div>
@@ -143,8 +143,8 @@
 				colorpicker = layui.colorpicker;
 
 			//监听指定开关
-			form.on('switch(musicPlay)', function(data) {
-				$('[name="data[musicPlay]"]').val(this.checked ? 1 : 0)
+			form.on('switch(music_play)', function(data) {
+				$('[name="data[music_play]"]').val(this.checked ? 1 : 0)
 			});
 
 			colorpicker.render({

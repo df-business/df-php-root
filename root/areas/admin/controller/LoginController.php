@@ -18,7 +18,7 @@ class LoginController
             $user = showFirst("df", ['nm'=>$user_sm['nm']]);
             if ($user != null) {
                 if ($user["pw"] == $user_sm["pw"] && $user["nm"] == $user_sm["nm"]) {
-                    update('df', array('lastlogintime' => $common->getTime(TIMESTAMP)), $user[0]);
+                    update('df', array('last_login_time' => $common->getTime(TIMESTAMP)), $user[0]);
 																				// 设置session在cookie的保存时间
 																				setcookie(session_name(), session_id(), time() + SESSION_EXPIRES, '/');
                     setSession(\Enum::sesName, array($user[0], $common->strToHex($user["nm"]),  $common->strToHex($user["pw"])), "admin/home/index");

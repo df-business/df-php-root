@@ -10,8 +10,8 @@
 					<form method="post" action='!!splitUrl(sprintf("admin/home/%s_update ",self::$db_d))!!'>
 						<input name="id" value="!!isset($output[0])?$output[0]:'0'!!" hidden />
 
-						<input name="data[createtime]"
-							value="!!isset($output['createtime'])?$output['createtime']:$common->getTime()!!" hidden />
+						<input name="data[create_time]"
+							value="!!isset($output['create_time'])?$output['create_time']:$common->getTime()!!" hidden />
 
 						<div class="form-horizontal m-t">
 							<div class="form-group">

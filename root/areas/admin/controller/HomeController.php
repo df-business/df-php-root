@@ -149,7 +149,7 @@ class HomeController
 
 		//新增
 		if ($output == null || $id > 0) {
-			$dt['lastlogintime'] = $common->getTime(TIMESTAMP);
+			$dt['last_login_time'] = $common->getTime(TIMESTAMP);
 			update(self::$db_d, $dt, $id, "admin/home/" . self::$db_d);
 		}
 		//修改
@@ -379,12 +379,12 @@ class HomeController
 		$list = showList("html");
 		$str = '';
 		foreach ($list as $i) {
-			// $path = $i['fileN'] == 'index' ? '/' : $path;
-			$fileN = str("{0}/{1}/{2}.html", [WEB_ROOT, $path, $i['fileN']]);
-			//echo $fileN;
+			// $path = $i['file_n'] == 'index' ? '/' : $path;
+			$file_n = str("{0}/{1}/{2}.html", [WEB_ROOT, $path, $i['file_n']]);
+			//echo $file_n;
 			$out = file_get_contents(splitUrl($i['src']));
-			$files->writeFile($out,$fileN);
-			$file = str("/{0}/{1}.html", [$path, $i['fileN']]);
+			$files->writeFile($out,$file_n);
+			$file = str("/{0}/{1}.html", [$path, $i['file_n']]);
 			$str .= str("<a href='{file}' target='_blank'>{file}</a>：已生成<br>", ['file'=>$file]);
 		}
 
@@ -393,10 +393,10 @@ class HomeController
 		$body = $common->getChinese($body);
 
 		$path = '/static_pages/font.html';
-		$fileN = str("{0}/{1}", [WEB_ROOT, $path]);
-		//		echo $fileN;
+		$file_n = str("{0}/{1}", [WEB_ROOT, $path]);
+		//		echo $file_n;
 		$s = sprintf('<html><head><meta charset="UTF-8"><link rel="stylesheet" href="font-awesome.css"></head><body>%s</body></html>', $body);
-		$files->writeFile($s,$fileN);
+		$files->writeFile($s,$file_n);
 		$str .= str("<a href='{path}' target='_blank'>{path}(用来优化字体文件)</a>：已生成<br>", ['path'=>$path]);
 		include viewBack();
 	}
