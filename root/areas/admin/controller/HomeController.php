@@ -409,7 +409,7 @@ class HomeController
 	public function createDb($var = null)
 	{
 		global $other,$db;
-		$other->createDb($db,DATABASE);
+		$other->createDb($db);
 	}
 
 }
