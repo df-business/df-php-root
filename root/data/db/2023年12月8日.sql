@@ -1,28 +1,28 @@
 -- 更新字段名
-ALTER TABLE `df` CHANGE `Id` `id` INT ( 11 ),
+ALTER TABLE `df` CHANGE `Id` `id` int(11) NOT NULL AUTO_INCREMENT,
 CHANGE `lastlogintime` `last_login_time` DATETIME,
 CHANGE `createtime` `create_time` DATETIME;
-ALTER TABLE `roles` CHANGE `Id` `id` INT ( 11 );
-ALTER TABLE `dt` CHANGE `Id` `id` INT ( 11 );
-ALTER TABLE `menu` CHANGE `Id` `id` INT ( 11 ),
+ALTER TABLE `roles` CHANGE `Id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `dt` CHANGE `Id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `menu` CHANGE `Id` int(11) NOT NULL AUTO_INCREMENT,
 CHANGE `orderNum` `order_num` INT;
-ALTER TABLE `html` CHANGE `Id` `id` INT ( 11 ),
+ALTER TABLE `html` CHANGE `Id` int(11) NOT NULL AUTO_INCREMENT,
 CHANGE `fileN` `file_n` VARCHAR ( 50 );
-ALTER TABLE `logs` CHANGE `Id` `id` INT ( 11 );
-ALTER TABLE `home_user_info` CHANGE `Id` `id` INT ( 11 );
-ALTER TABLE `home_layout` CHANGE `Id` `id` INT ( 11 ),
+ALTER TABLE `logs` CHANGE `Id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `home_user_info` CHANGE `Id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `home_layout` CHANGE `Id` int(11) NOT NULL AUTO_INCREMENT,
 CHANGE `Inscribe` `inscribe` VARCHAR ( 100 ),
 CHANGE `musicPlay` `music_play` TINYINT ( 4 ),
 CHANGE `sceneId` `scene_id` INT ( 11 );
-ALTER TABLE `home_layout_img` CHANGE `Id` `id` INT ( 11 );
-ALTER TABLE `home_column` CHANGE `Id` `id` INT ( 11 );
-ALTER TABLE `home_link` CHANGE `Id` `id` INT ( 11 );
-ALTER TABLE `home_music` CHANGE `Id` `id` INT ( 11 );
-ALTER TABLE `message` CHANGE `Id` `id` INT ( 11 ),
+ALTER TABLE `home_layout_img` CHANGE `Id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `home_column` CHANGE `Id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `home_link` CHANGE `Id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `home_music` CHANGE `Id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `message` CHANGE `Id` int(11) NOT NULL AUTO_INCREMENT,
 CHANGE `E_mail` `e_mail` VARCHAR ( 100 );
-ALTER TABLE `notepad` CHANGE `Id` `id` INT ( 11 );
-ALTER TABLE `column` CHANGE `Id` `id` INT ( 11 );
-ALTER TABLE `test` CHANGE `Id` `id` INT ( 11 );
+ALTER TABLE `notepad` CHANGE `Id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `column` CHANGE `Id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `test` CHANGE `Id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- 菜单
 UPDATE menu

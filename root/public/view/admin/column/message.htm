@@ -34,7 +34,7 @@
 									</td>
 									<td>
 										<a target="_blank"
-											href='mailto:!!findstr($v["e_mail"],"@")?"{$v["e_mail"]}":"{$v["e_mail"]}@qq.com"!!?subject=!`content`'>!`e_mail`</a>
+											href='mailto:!!$common->findStr($v["e_mail"],"@")?"{$v["e_mail"]}":"{$v["e_mail"]}@qq.com"!!?subject=!`content`'>!`e_mail`</a>
 									</td>
 									<td>!`content`</td>
 									<td>!!$v['status']?'已读':'未读'!!</td>
