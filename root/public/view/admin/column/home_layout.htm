@@ -10,7 +10,7 @@
 					<form method="post" action='!!splitUrl(str("admin/column/{0}_update",[self::$db_hlo]))!!'
 						class="layui-form">
 						<input name="id" value="!!isset($output[0])?$output[0]:'0'!!" hidden />
-						<input name="data[img1]" id="img1" value="!!isset($output[0])?$output['img1']:''!!" hidden />
+						<input name="data[bg_img]" id="bg_img" value="!!isset($output[0])?$output['bg_img']:''!!" hidden />
 						<input name="data[music_play]" value="!!isset($output[0])?$output['music_play']:'0'!!" hidden />
 						<input name='data[color]' value="!!isset($output[0])?$output['color']:''!!" hidden />
 						<div class="form-horizontal m-t">
@@ -73,7 +73,7 @@
 								<div class="col-sm-4">
 									<div class="upload">
 										<div id="uploadPreview1">
-											!!!empty($output['img1'])?"<img src='{$output["img1"]}' />":'暂无图片'!!
+											!!!empty($output['bg_img'])?"<img src='{$output["bg_img"]}' />":'暂无图片'!!
 										</div>
 										<div class="left">
 											<div class="uploadProgressBar"></div>
@@ -183,14 +183,14 @@
 
 		//上传图片
 		$(function() {
-			upload('#uploadBut1', "#uploadPreview1", "#img1",
+			upload('#uploadBut1', "#uploadPreview1", "#bg_img",
 				'!!splitUrl(sprintf("admin/column/%s_pic_up",self::$db_hlo))!!');
 			upload('#uploadBut2', "#uploadPreview2", "",
 				'!!splitUrl(sprintf("admin/column/%s_up",self::$db_hlo))!!');
 		})
 
 		function selePic(src) {
-			$('#img1').val(src)
+			$('#bg_img').val(src)
 			$('#uploadPreview1').children().attr('src', src);
 
 			$('html,body').animate({

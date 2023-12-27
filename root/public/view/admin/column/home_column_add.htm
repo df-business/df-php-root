@@ -10,7 +10,6 @@
 			<div class="ibox-content">
 				<form method="post" action='!!splitUrl(str("admin/column/{0}_update",[self::$db_hc]))!!'>
 					<input name="id" value="!!isset($output[0])?$output[0]:'0'!!" hidden/>
-					<!--<input name="data[img1]" id="img1" value="!!isset($output[0])?$output['img1']:''!!" hidden/>-->
 					<input name="data[content]" id="content" hidden="" />
 
 					<div class="form-horizontal m-t">
@@ -126,10 +125,6 @@
 <script src="!!VIEW_ASSETS!!/webuploader/webuploader.min.js"></script>
 
 <script type="text/javascript">
-	//上传图片
-	$(function() {
-		upload('#uploadBut1', "#uploadPreview1", "#img1",'!!splitUrl(sprintf("admin/column/%s_up/file",self::$db_hc))!!');
-	})
 </script>
 
 </df-footer>
