@@ -7,18 +7,20 @@
 					<h5></h5>
 				</div>
 				<div class="ibox-content">
-					<form method="post" action='!!splitUrl(str("admin/column/{0}_update",[self::$db_hlo]))!!'
+					<form method="post"
+						action='{:split_url(str("admin/column/%s_update",[areas\admin\model\HomeLayoutModel::getName()]))}'
 						class="layui-form">
-						<input name="id" value="!!isset($output[0])?$output[0]:'0'!!" hidden />
-						<input name="data[bg_img]" id="bg_img" value="!!isset($output[0])?$output['bg_img']:''!!" hidden />
-						<input name="data[music_play]" value="!!isset($output[0])?$output['music_play']:'0'!!" hidden />
-						<input name='data[color]' value="!!isset($output[0])?$output['color']:''!!" hidden />
+						<input name="id" value="{:isset($output[0])?$output[0]:'0'}" hidden />
+						<input name="data[bg_img]" id="bg_img" value="{:isset($output[0])?$output['bg_img']:''}"
+							hidden />
+						<input name="data[music_play]" value="{:isset($output[0])?$output['music_play']:'0'}" hidden />
+						<input name='data[color]' value="{:isset($output[0])?$output['color']:''}" hidden />
 						<div class="form-horizontal m-t">
 							<div class="form-group">
 								<label class="col-sm-1 control-label">主题：</label>
 								<div class="col-sm-2">
 									<input class="form-control" name="data[title]" size="10" type="text"
-										value="!!isset($output[0])?$output['title']:''!!" />
+										value="{:isset($output[0])?$output['title']:''}" />
 									<span class="field-validation-error" veri-for=""></span>
 								</div>
 							</div>
@@ -27,7 +29,7 @@
 								<label class="col-sm-1 control-label">关键字：</label>
 								<div class="col-sm-10">
 									<input class="form-control" name="data[keywords]" size="10" type="text"
-										value="!!isset($output[0])?$output['keywords']:''!!" />
+										value="{:isset($output[0])?$output['keywords']:''}" />
 									<span class="field-validation-error" veri-for=""></span>
 								</div>
 							</div>
@@ -36,7 +38,7 @@
 								<label class="col-sm-1 control-label">描述：</label>
 								<div class="col-sm-10">
 									<input class="form-control" name="data[description]" size="10" type="text"
-										value="!!isset($output[0])?$output['description']:''!!" />
+										value="{:isset($output[0])?$output['description']:''}" />
 									<span class="field-validation-error" veri-for=""></span>
 								</div>
 							</div>
@@ -45,7 +47,7 @@
 								<label class="col-sm-1 control-label">落款：</label>
 								<div class="col-sm-5">
 									<input class="form-control" name="data[inscribe]" size="10" type="text"
-										value="!!isset($output[0])?$output['inscribe']:''!!" /> <span
+										value="{:isset($output[0])?$output['inscribe']:''}" /> <span
 										class="field-validation-error" veri-for=""></span>
 								</div>
 							</div>
@@ -53,8 +55,8 @@
 							<div class="form-group">
 								<label class="col-sm-1 control-label">音乐自动播放：</label>
 								<div class="col-sm-2">
-									<input type="checkbox" lay-skin="switch" lay-text="ON|OFF" !!$output[ 'music_play'
-										]? "checked" : "" !! lay-filter="music_play">
+									<input type="checkbox" lay-skin="switch" lay-text="ON|OFF"
+										{:$output['music_play']?"checked" : "" } lay-filter="music_play">
 
 								</div>
 							</div>
@@ -73,11 +75,15 @@
 								<div class="col-sm-4">
 									<div class="upload">
 										<div id="uploadPreview1">
-											!!!empty($output['bg_img'])?"<img src='{$output["bg_img"]}' />":'暂无图片'!!
+											<df-if empty($output['bg_img'])>
+												暂无图片
+												<df-else>
+													<img src='{$output["bg_img"]}' />
+											</df-if>
 										</div>
 										<div class="left">
 											<div class="uploadProgressBar"></div>
-											<div id="uploadBut1">选择图片</div>
+											<div id="uploadButton1">选择图片</div>
 										</div>
 										<div class="clear"></div>
 									</div>
@@ -90,11 +96,11 @@
 								<div class="col-sm-4">
 									<div class="upload">
 										<div id="uploadPreview2">
-											!!VIEW_ASSETS!!/fontFamily/font.TTF
+											{:VIEW_ASSETS}/fontFamily/font.TTF
 										</div>
 										<div class="left">
 											<div class="uploadProgressBar"></div>
-											<div id="uploadBut2">选择字体文件</div>
+											<div id="uploadButton2">选择字体文件</div>
 										</div>
 										<div class="clear"></div>
 									</div>
@@ -102,19 +108,17 @@
 							</div>
 
 							<div class="form-group">
-
 								<df-each $img>
-									<div class="img_!`id`" style="float: left;margin-right: 15px;">
-										<a href="javascript:selePic('!`img`')" title="点击更换图片">
+									<div class="img_{$id}" style="float: left;margin-right: 15px;">
+										<a href="javascript:sele_pic('{$img}')" title="点击更换图片">
 											<img style="width: 55px;height: 55px;" src="!`img`">
 										</a>
 										<div style="text-align: center;">
-											<a href="javascript:delPic('!`id`')"
+											<a href="javascript:del_pic('{$id}')"
 												onclick='return confirm("确认删除吗？")'>删除</a>
 										</div>
 									</div>
 								</df-each>
-
 							</div>
 
 							<div class="form-group">
@@ -132,9 +136,20 @@
 </df-body>
 <df-footer>
 
+	<!-- ********************** webuploader START ********************** -->
+	<link rel="stylesheet" href="https://oss.dfer.site/webuploader/0.1.5/webuploader.css" type="text/css" />
+	<script type="text/javascript" src="https://oss.dfer.site/webuploader/0.1.5/webuploader.min.js"></script>
+	<script>
+		$(() => {
+			upload("#uploadButton1", "#uploadPreview1", "#bg_img",
+				`{:split_url(str("admin/column/%s_pic_up",[areas\admin\model\HomeLayoutModel::getName()]))}`);
+			upload("#uploadButton2", "#uploadPreview2", null, UPLOAD_API.WEB_UPLOADER);
+		})
+	</script>
+	<!-- **********************  webuploader END  ********************** -->
+
 	<!-- webuploader-->
-	<link rel="stylesheet" href="!!VIEW_ASSETS!!/webuploader/webuploader.css" type="text/css" />
-	<script src="!!VIEW_ASSETS!!/webuploader/webuploader.min.js"></script>
+
 	<script type="text/javascript">
 		layui.use(['form', 'colorpicker'], function() {
 			var $ = layui.$;
@@ -156,19 +171,22 @@
 				},
 				color: $('[name="data[color]"]').val(),
 				done: function(color) {
-					$('[name="data[color]"]').val(color)
+					$('[name="data[color]"]').val(color);
 				}
 			});
 
 		});
-		//验证输入
+
+		/**
+		 * 验证输入
+		 */
 		function verify() {
 			if ($("input[name='data[title]']").val() == "") {
-				$("[name='data[title]']").next().html('请输入标题')
+				$("[name='data[title]']").next().html('请输入标题');
 				return false;
 			}
 			if ($("#html").val() == "<p><br></p>") {
-				$("[veri-for='Body']").html('请输入内容')
+				$("[veri-for='Body']").html('请输入内容');
 				return false;
 			}
 			return true;
@@ -179,27 +197,17 @@
 			return verify();
 		}
 
-
-
-		//上传图片
-		$(function() {
-			upload('#uploadBut1', "#uploadPreview1", "#bg_img",
-				'!!splitUrl(sprintf("admin/column/%s_pic_up",self::$db_hlo))!!');
-			upload('#uploadBut2', "#uploadPreview2", "",
-				'!!splitUrl(sprintf("admin/column/%s_up",self::$db_hlo))!!');
-		})
-
-		function selePic(src) {
+		function sele_pic(src) {
 			$('#bg_img').val(src)
 			$('#uploadPreview1').children().attr('src', src);
 
 			$('html,body').animate({
 				scrollTop: $('#uploadPreview1').offset().top
-			}, 500)
+			}, 500);
 		}
 
-		function delPic(id) {
-			post('!!splitUrl(sprintf("admin/column/%s_pic_del",self::$db_hlo))!!', {
+		function del_pic(id) {
+			post('{:split_url(str("admin/column/%s_pic_del",[table_name("HomeLayoutModel")]))}', {
 				id: id
 			}, function(x) {
 				$('.img_' + id).remove();

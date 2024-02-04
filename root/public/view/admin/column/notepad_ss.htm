@@ -9,7 +9,7 @@
 				<div class="ibox-content">
 					<div class="row form-horizontal form-group">
 						<div class="col-sm-1">
-							<a href='!!splitUrl(str("admin/column/{0}_ss_add",[self::$db_n]))!!'
+							<a href='{:split_url(str("admin/column/{0}_ss_add",[areas\admin\model\NotepadModel::getName()]))!!'
 								class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>&nbsp;添加</a>
 						</div>
 
@@ -37,15 +37,14 @@
 
 
 	<!-- ********************** DATATABLE START ********************** -->
-	<link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
-	<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-	<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+	<link href="https://oss.dfer.site/datatables/1.13.8/css/jquery.dataTables.min.css" rel="stylesheet">
+	<script src="https://oss.dfer.site/datatables/1.13.8/js/jquery.dataTables.min.js"></script>
+	<script src="https://oss.dfer.site/datatables/1.13.8/js/dataTables.bootstrap.min.js"></script>
 
 	<script>
 		$(document).ready(function() {
 			var table = new DataTable('#dataTable', {
-				columns: [
-					{
+				columns: [{
 						data: 'id'
 					},
 					{
@@ -60,7 +59,10 @@
 						searchable: false
 					}
 				],
-				order: [[ 0, 'desc' ], [ 1, 'asc' ]],
+				order: [
+					[0, 'desc'],
+					[1, 'asc']
+				],
 				processing: true,
 				serverSide: true,
 				ajax: {
@@ -68,7 +70,7 @@
 					type: 'POST'
 				},
 				language: {
-					url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/zh.json'
+					url: 'https://oss.dfer.site/datatables/1.13.8/i18n/zh.json'
 				},
 				aLengthMenu: [10, 50, 100], //更改显示记录数选项
 				iDisplayLength: 10, //默认显示的记录数

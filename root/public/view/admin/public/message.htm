@@ -63,13 +63,15 @@
 	</head>
 	<body>
 		<div class="wrapper">
-			<h1>!!$msg!!</h1>
-			<p class="tm">跳转倒计时——<span id="Time">!!$delay!!</span>秒</p>
+			<h1>{:$msg}</h1>
+			<p class="tm">跳转倒计时——<span id="Time">{:$delay}</span>秒</p>
 			<p class="btn"><a id="Btn" href="javascript:">立即跳转</a></p>
 		</div>
 		<script type="text/javascript">
 			function jump() {
-				!!$script!!
+				/*code
+				{:$script}
+				code*/
 			}
 
 			var time = document.getElementById('Time');
@@ -83,7 +85,7 @@
 					jump();
 				}
 			}
-			var timer = setInterval(count, !!$delay * 1000!!);
+			var timer = setInterval(count, /*code{:$delay * 1000}code*/ );
 
 			btn.onclick = function() {
 				jump();

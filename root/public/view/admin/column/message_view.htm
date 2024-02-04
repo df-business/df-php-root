@@ -5,11 +5,11 @@
 			border-bottom: 1px dashed rgba(0, 0, 0, .1);
 			padding: 1rem;
 		}
-		
+
 		table {
 			width: 100%
 		}
-		
+
 		img {
 			width: 30%
 		}
@@ -48,7 +48,7 @@
 
 						<div class="form-group">
 							<div class="col-sm-2 col-sm-offset-1">
-								<a href='!!splitUrl(sprintf("admin/column/%s",self::$db_mes))!!' class="btn btn-sm btn-white"> 返 回 </a>
+								<a href='{:split_url(sprintf("admin/column/{0}",[areas\admin\model\MessageModel::getName()]))!!' class="btn btn-sm btn-white"> 返 回 </a>
 							</div>
 						</div>
 					</div>

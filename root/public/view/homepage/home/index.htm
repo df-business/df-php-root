@@ -8,7 +8,7 @@
 
 <df-body>
 	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 0;">
-		<legend style="color: !!$home_layout['color']!!;">!!$home_layout['title']!!——!!$home_layout['description']!!</legend>
+		<legend style="color: {$home_layout['color']};">{$home_layout['title']}——{$home_layout['description']}</legend>
 	</fieldset>
 
 	<div style="padding: 20px;">
@@ -18,9 +18,9 @@
 				<df-if !ctype_space($v["title"])>
 					<div class="layui-col-md6">
 						<div class="layui-card">
-							<div class="layui-card-header">!`title`</div>
+							<div class="layui-card-header">{::title}</div>
 							<div class="layui-card-body">
-								!`content`
+								{::content}
 							</div>
 						</div>
 					</div>
@@ -29,7 +29,7 @@
 		</div>
 	</div>
 
-	<div class="foot" style="color: !!$home_layout['color']!!;">!!$home_layout['inscribe']!!</div>
+	<div class="foot" style="color: {$home_layout['color']};">{$home_layout['inscribe']}</div>
 
 </df-body>
 <df-footer>

@@ -14,9 +14,9 @@
 				<df-if !ctype_space($v["title"])>
 					<div class="layui-col-md6">
 						<div class="layui-card">
-							<div class="layui-card-header">!`title`</div>
+							<div class="layui-card-header">{::title}</div>
 							<div class="layui-card-body">
-								!`content`
+								{::content}
 							</div>
 						</div>
 					</div>
@@ -25,7 +25,7 @@
 		</div>
 	</div>
 
-	<div class="foot" style="color: !!$home_layout['color']!!;">!!$home_layout['inscribe']!!</div>
+	<div class="foot" style="color: {$home_layout['color']};">{$home_layout['inscribe']}</div>
 
 </df-body>
 <df-footer>

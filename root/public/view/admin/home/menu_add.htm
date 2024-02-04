@@ -4,19 +4,21 @@
 		<div class="col-sm-12">
 			<div class="ibox float-e-margins">
 				<div class="ibox-title">
-					<h5>!!setVal(showFirst('menu',str_replace(',','',$parent))['title'],"")!!>>>!!$output[0]!!</h5>
+					<h5>{:$common->setVal(showFirst('menu',str_replace(',','',$parent))['title'],"")!!>>>!!$output[0]}
+					</h5>
 				</div>
 				<div class="ibox-content">
-					<form method="post" action='!!splitUrl(sprintf("admin/home/%s_update",self::$db_menu))!!'>
-						<input name="id" value="!!$output[0]!!" hidden/>
-						<input name="data[parent]" value="!!setVal($output['parent'],$parent_id)!!" hidden/>
-						<input name="parent" value="!!setVal($parent,0)!!" hidden/>
+					<form method="post" action='{:split_url(sprintf("admin/home/%s_update",table_name("MenuModel")))}'>
+						<input name="id" value="{:$output[0]}" hidden />
+						<input name="data[parent]" value="{:$common->setVal($output['parent'],$parent_id)}" hidden />
+						<input name="parent" value="{:$common->setVal($parent,0)}" hidden />
 
 						<div class="form-horizontal m-t">
 							<div class="form-group">
 								<label class="col-sm-1 control-label">标题：</label>
 								<div class="col-sm-5">
-									<input class="form-control" name="data[title]" size="10" type="text" value="!!$output['title']!!" />
+									<input class="form-control" name="data[title]" size="10" type="text"
+										value="{:$output['title']}" />
 									<span class="field-validation-error" veri-for=""></span>
 								</div>
 							</div>
@@ -24,7 +26,8 @@
 							<div class="form-group">
 								<label class="col-sm-1 control-label">路径：</label>
 								<div class="col-sm-5">
-									<input class="form-control" name="data[src]" size="10" type="text" value="!!$output['src']!!" />
+									<input class="form-control" name="data[src]" size="10" type="text"
+										value="{:$output['src']}" />
 									<span class="field-validation-error" veri-for=""></span>
 								</div>
 							</div>
@@ -32,7 +35,8 @@
 							<div class="form-group">
 								<label class="col-sm-1 control-label">排序编号：</label>
 								<div class="col-sm-5">
-									<input class="form-control" name="data[order_num]" size="10" type="text" value="!!$output['order_num']!!" />
+									<input class="form-control" name="data[order_num]" size="10" type="text"
+										value="{:$output['order_num']}" />
 									<span class="field-validation-error" veri-for=""></span>
 								</div>
 							</div>
@@ -42,7 +46,8 @@
 								<div class="col-sm-8">
 									<select class="site-select-tem" name="data[type]">
 										<df-each $type>
-											<option value="!!$v!!" !!$v==$output[ "type"]? "selected": ""!!>!!$k!!</option>
+											<option value="{::value}" {:$v==$output["type"]? "selected" : "" }>{::key}
+											</option>
 										</df-each>
 									</select>
 								</div>
@@ -68,7 +73,7 @@
 	<script type="text/javascript">
 		//验证输入
 		function verify() {
-			if($("input[name='data[title]']").val() == "") {
+			if ($("input[name='data[title]']").val() == "") {
 				$("[name='data[title]']").next().html('请输入标题')
 				return false;
 			}

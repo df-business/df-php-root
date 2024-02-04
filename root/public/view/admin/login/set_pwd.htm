@@ -8,13 +8,13 @@
                 <h5></h5>
             </div>
             <div class="ibox-content">
-                <form method="post" action='!!splitUrl("admin/login/update_set_pwd")!!'> 
-               <input name="data[id]" id="pic" value="!!isset($output[0])?$output[0]:'0'!!" hidden/>  
+                <form method="post" action='{:split_url("admin/login/update_set_pwd")!!'> 
+               <input name="data[id]" id="pic" value="{:isset($output[0])?$output[0]:'0'!!" hidden/>  
                   <div class="form-horizontal m-t">
                     <div class="form-group">
                         <label class="col-sm-1 control-label">账号：</label>
                         <div class="col-sm-2">                          
-                              <input  class="form-control"  name="data[nm]"  size="10" type="text" value="!!isset($output['nm'])?$output['nm']:''!!" readonly/>
+                              <input  class="form-control"  name="data[nm]"  size="10" type="text" value="{:isset($output['nm'])?$output['nm']:''!!" readonly/>
                                     <span class="field-validation-error" veri-for="" ></span>
                         </div>
                     </div>
@@ -28,14 +28,14 @@
                     <div class="form-group">
                         <label class="col-sm-1 control-label">新密码：</label>
                         <div class="col-sm-2">     
-                              <input  class="form-control"  name="data[npw]"  size="10" type="password" value="!!isset($output['npw'])?$output['npw']:''!!" />
+                              <input  class="form-control"  name="data[npw]"  size="10" type="password" value="{:isset($output['npw'])?$output['npw']:''!!" />
                                     <span class="field-validation-error" veri-for="" ></span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-1 control-label">确认密码：</label>
                         <div class="col-sm-2">                  
-                             <input  class="form-control"  name="data[ConfirmPassword]"  size="10" type="password" value="!!isset($output['ConfirmPassword'])?$output['ConfirmPassword']:''!!" />
+                             <input  class="form-control"  name="data[ConfirmPassword]"  size="10" type="password" value="{:isset($output['ConfirmPassword'])?$output['ConfirmPassword']:''!!" />
                                     <span class="field-validation-error" veri-for="" ></span>
                         </div>
                     </div>

@@ -1,8 +1,3 @@
-<df-code>
-	global $other,$_df,$common;
-	$other->verifyLogin(1);
-</df-code>
-
 <html>
 
 	<head>
@@ -10,19 +5,18 @@
 		<meta http-equiv="content-type" content="text/html;charset=utf-8" />
 
 		<!-- ********************** layui START ********************** -->
-		<link href="//unpkg.com/layui@2.8.15/dist/css/layui.css" rel="stylesheet">
-		<script src="//unpkg.com/layui@2.8.15/dist/layui.js"></script>
+		<link href="https://api.dfer.site/gitcode/github_dfer/layui/main/dist/css/layui.css" rel="stylesheet">
+		<script src="https://api.dfer.site/gitcode/github_dfer/layui/main/dist/layui.js"></script>
 		<!-- **********************  layui END  ********************** -->
 
-
-		<link href="!!VIEW_ASSETS!!/admin/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
-		<link href="!!VIEW_ASSETS!!/admin/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
-		<link href="!!VIEW_ASSETS!!/admin/css/style.css?v=4.1.0" rel="stylesheet">
+		<link href="{:VIEW_ASSETS}/admin/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+		<link href="{:VIEW_ASSETS}/admin/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+		<link href="{:VIEW_ASSETS}/admin/css/style.css?v=4.1.0" rel="stylesheet">
 
 		<!-- ********************** jq START ********************** -->
-		<script src="!!VIEW_ASSETS!!/admin/js/jquery.min.js"></script>
+		<script src="{:VIEW_ASSETS}/admin/js/jquery.min.js"></script>
 		<!-- **********************  jq END  ********************** -->
-		<script src="!!VIEW_ASSETS!!/df.js"></script>
+		<script src="{:VIEW_ASSETS}/df.js"></script>
 
 		<df-header />
 	</head>
@@ -32,16 +26,20 @@
 			<df-body />
 		</div>
 		<!-- 全局js -->
-		<script src="!!VIEW_ASSETS!!/admin/js/bootstrap.min.js?v=3.3.6"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 		<!-- 自定义js -->
-		<script src="!!VIEW_ASSETS!!/admin/js/content.js?v=1.0.0"></script>
+		<script src="{:VIEW_ASSETS}/admin/js/content.js?v=1.0.0"></script>
 	</body>
 
 	<df-footer />
 
 	<script>
+		const UPLOAD_API = {
+			UEDITOR: '/admin/upload/ueditor_upload',
+			WEB_UPLOADER: '/admin/upload/web_upload'
+		};
 		//上传
-		function upload(trigger_obj, preview_obj, input_obj, upload_api) {
+		function upload(trigger_obj, preview_obj, input_obj, upload_api = UPLOAD_API.UEDITOR) {
 
 			var uploader = WebUploader.create({
 				auto: true,
@@ -50,12 +48,14 @@
 				method: 'POST'
 			});
 
-
+			var input_obj = input_obj ?? '#input_obj';
 			uploader.on('uploadBeforeSend', function() {
 				console.log('uploadBeforeSend')
-				$(preview_obj).after(`<div class="layui-progress layui-progress-big" lay-showpercent="true" lay-filter="${input_obj.replace('#', '')}">
-													<div class="layui-progress-bar layui-bg-red" lay-percent="0%"></div>
-												 </div>`);
+				$(preview_obj).after(`
+				<div class="layui-progress layui-progress-big" lay-showpercent="true" lay-filter="${input_obj.replace('#', '')}">
+					<div class="layui-progress-bar layui-bg-red" lay-percent="0%"></div>
+				</div>
+				`);
 			});
 
 			uploader.on('uploadProgress', function(file, percentage) {
@@ -68,16 +68,12 @@
 			});
 
 			uploader.on('uploadSuccess', function(file, response) {
-				if (response == "-1")
-					$(preview_obj).html('文件出错（超出服务器允许上传的体积，请设置php.ini）');
-				else if (response == "-2")
-					$(preview_obj).html('类型不允许');
-				else if (response == "-3")
-					$(preview_obj).html('文件太大');
+				if (response.status == false)
+					$(preview_obj).html(response.msg);
 				else {
 					//获取原始数据
-					var type = response.type;
-					var url = response.url;
+					var type = response.data.type;
+					var url = response.data.url;
 					if (type == 'img')
 						$(preview_obj).html(`<img src="${url}" />`);
 					else

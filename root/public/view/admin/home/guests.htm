@@ -1,70 +1,69 @@
 <df-body>
-    
-
-
-<div class="row">
-	<div class="col-sm-12">
-		<div class="ibox float-e-margins">
-			<div class="ibox-title">
-				<h5>>></h5>
-			</div>
-			<div class="ibox-content">
-				<div class="row form-horizontal form-group">
-					<div class="col-sm-1">
-						<a href='!!splitUrl(sprintf("admin/home/%s_add",self::$db_guests))!!' class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>&nbsp;添加</a>
-					</div>
-
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="ibox float-e-margins">
+				<div class="ibox-title">
+					<h5>>></h5>
 				</div>
-				<table class="table table-striped table-bordered table-hover dataTables-example">
-					<thead>
-						<tr>
-							<th width="50">编号</th>
-							<th width="100">ip</th>
-							<th width="150">浏览器</th>
-							<th width="150">访问次数</th>
-							<th width="150">首次访问</th>
-							<th width="150">最近访问</th>
-						
-						</tr>
-					</thead>
-					<tbody>
-						 
-						 <df-each $output>
-						<tr>
-							<td>!!$num!!</td>
-							<td>
-								<a href='#'>!`ip`</a>
-							</td>
-							<td>!`browser`</td>
-							<td>!`hits`</td>
-							<td>!`first_time`</td>
-							<td>!`time`</td>
-							
-						</tr>
-						</df-each>
-					</tbody>
-				</table>
+				<div class="ibox-content">
+					<div class="row form-horizontal form-group">
+						<div class="col-sm-1">
+							<a href='{:split_url(sprintf("admin/home/%s_add",table_name("")))}'
+								class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>&nbsp;添加</a>
+						</div>
+
+					</div>
+					<table class="table table-striped table-bordered table-hover datatable-one">
+						<thead>
+							<tr>
+								<th width="50">编号</th>
+								<th width="100">ip</th>
+								<th width="150">浏览器</th>
+								<th width="150">访问次数</th>
+								<th width="150">首次访问</th>
+								<th width="150">最近访问</th>
+
+							</tr>
+						</thead>
+						<tbody>
+
+							<df-each $output>
+								<tr>
+									<td>{$index}</td>
+									<td>
+										<a href='#'>{::ip}</a>
+									</td>
+									<td>{::browser}</td>
+									<td>{::hits}</td>
+									<td>{::first_time}</td>
+									<td>{::time}</td>
+								</tr>
+							</df-each>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
 
 </df-body>
 <df-footer>
-    
 
-
-<!-- Data Tables -->
-<link href="!!VIEW_ASSETS!!/dataTables/dataTables.bootstrap.css" rel="stylesheet">
-<script src="!!VIEW_ASSETS!!/dataTables/jquery.dataTables.js"></script>
-<script src="!!VIEW_ASSETS!!/dataTables/dataTables.bootstrap.js"></script>
-
-<script>
-	$(document).ready(function() {
-		$('.dataTables-example').dataTable({
-			"aLengthMenu": [10, 50, 100], //更改显示记录数选项
-			"iDisplayLength": 10 //默认显示的记录数
+	<!-- ********************** DATATABLE START ********************** -->
+	<link href="https://oss.dfer.site/datatables/1.13.8/css/jquery.dataTables.min.css" rel="stylesheet">
+	<script src="https://oss.dfer.site/datatables/1.13.8/js/jquery.dataTables.min.js"></script>
+	<script src="https://oss.dfer.site/datatables/1.13.8/js/dataTables.bootstrap.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			$('.datatable-one').dataTable({
+				language: {
+					url: 'https://oss.dfer.site/datatables/1.13.8/i18n/zh.json'
+				},
+				aLengthMenu: [10, 50, 100], //更改显示记录数选项
+				iDisplayLength: 10 //默认显示的记录数
+			});
 		});
-	});
-</script>
+	</script>
+	<!-- **********************  DATATABLE END  ********************** -->
+
 </df-footer>

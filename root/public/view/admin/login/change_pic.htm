@@ -8,16 +8,16 @@
 					<h5></h5>
 				</div>
 				<div class="ibox-content">
-					<form method="post" action='!!splitUrl("admin/login/set_change_pic")!!'
+					<form method="post" action='{:split_url("admin/login/set_change_pic")!!'
 						enctype="multipart/form-data">
-						<input name="data[pic]" id="pic" value="!!isset($output[0])?$output['pic']:'0'!!" hidden />
+						<input name="data[pic]" id="pic" value="{:isset($output[0])?$output['pic']:'0'!!" hidden />
 						<div class="form-horizontal m-t">
 							<div class="form-group">
 								<label class="col-sm-1 control-label">头像</label>
 								<div class="col-sm-4">
 									<div class="upload">
 										<div class="uploadPreview1">
-											!!isset($output[0])?"<img src='{$output["pic"]}' />":'暂无图片'!!
+											{:isset($output[0])?"<img src='{$output["pic"]}' />":'暂无图片'!!
 										</div>
 										<div class="left">
 											<div class="uploadProgressBar"></div>
@@ -44,12 +44,12 @@
 
 <df-footer>
 
-	<link rel="stylesheet" href="!!VIEW_ASSETS!!/webuploader/webuploader.css" type="text/css" />
-	<script src="!!VIEW_ASSETS!!/webuploader/webuploader.min.js"></script>
+	<link rel="stylesheet" href="{:VIEW_ASSETS}/webuploader/webuploader.css" type="text/css" />
+	<script src="{:VIEW_ASSETS}/webuploader/webuploader.min.js"></script>
 	<script type="text/javascript">
 		//上传图片
 		$(function() {
-			upload('.uploadBut1', ".uploadPreview1", "#pic",'!!splitUrl("admin/login/up_change_pic")!!');
+			upload('.uploadBut1', ".uploadPreview1", "#pic",'{:split_url("admin/login/up_change_pic")!!');
 		})
 	</script>
 

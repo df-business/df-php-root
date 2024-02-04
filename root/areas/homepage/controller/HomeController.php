@@ -1,7 +1,9 @@
 <?php
 namespace areas\homepage\controller;
+use areas\admin\model\{HomeLayoutModel,HomeColumnModel,HomeLinkModel,HomeMusicModel,MessageModel};
+use Dfer\DfPhpCore\Modules\Db;
 
-class HomeController
+class HomeController extends BaseController
 {
 
 	/**
@@ -11,17 +13,14 @@ class HomeController
 	function index($param)
 	{
 		global $other;
-		$home_layout = showFirst("home_layout");
-		$home_column = showList("home_column", [], ["id" => "asc"]);
-		$home_link = showList("home_link");
-		$home_music = showList("home_music");
-
-		//var_dump($home_layout);die();
+		$home_layout = HomeLayoutModel::first();
+		$home_column =HomeColumnModel::order(["id" => "asc"])->select();
+		$home_link = HomeLinkModel::select();
+		$home_music = HomeMusicModel::select();
 		//访问量
-		sql("update dt set val=val+1 where `key`='hits'");
-		$other->colUserInfo();
-
-		include viewFront();
+		Db::sql("update dt set val=val+1 where `key`='hits'");
+		$this->colUserInfo();
+		include view_front();
 	}
 
 
@@ -35,20 +34,11 @@ class HomeController
 		$dt["time"] = date("Y-m-d H:i:s");
 		$id = 0; //add
 		//var_dump($id);die();
-
-		$myValue = update(self::$db_mes, $dt, $id);
-		showJson($myValue, ($myValue > 0 ? '留言成功' : '留言失败'));
+		$ret = MessageModel::where($id)->update($dt);
+		show_json($ret,null,'留言成功','留言失败');
 	}
 
 
-	/**
-	 * 删除留言
-	 * @param {Object} $id
-	 */
-	function delPostMsg($id)
-	{
-		$myValue = del(self::$db_mes, $id, "homepage/column/" . self::$db_mes);
-	}
 
 	// **********************  留言 END  **********************
 

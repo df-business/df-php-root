@@ -1,9 +1,9 @@
 <?php
 namespace areas\admin\controller;
 use Dfer\Tools\Files;
-
-class HomeController
-{
+use areas\admin\model\{UserModel,ConfigModel,MessageModel,RolesModel,HomeUserInfoModel,HtmlModel,MenuModel,CacheModel};
+use Dfer\DfPhpCore\Modules\Db;
+class HomeController extends BaseController{
 
 	/**
 		* 首页
@@ -12,16 +12,18 @@ class HomeController
 	public function index($param)
 	{
 		global $other, $common;
-		$id = $other->verifyLogin(1);
+		$id = $this->verifyLogin(1);
 		if (!empty($_POST['top-search'])) {
-			$common->showJson(true, null, $_POST['top-search']);
+			show_json(true, null, $_POST['top-search']);
 		}
 		//验证登录
-		$output = showFirst("df", ['id' => $id]);
-		$hits = showFirst("dt", ['key' => 'hits'])['val'];
-
+		// $output = showFirst("df", ['id' => $id]);
+		$output = UserModel::where(['id' => $id])->first();
+		// $hits = showFirst("dt", ['key' => 'hits']);
+		$hits = ConfigModel::where(['key' => 'hits'])->first()['val'];
 		//留言
-		$message = showList("message", ['status' => 0]);
+		// $message = showList("message", ['status' => 0]);
+		$message = MessageModel::where(['status' => 0])->select();
 		if ($output['nm'] == 'df') {
 			$where = '1';
 			$output['role'] = "超级管理员";
@@ -34,13 +36,56 @@ class HomeController
 			foreach ($roles as $v) {
 				$role[] = array('id', $v);
 			}
-			$w = sqlWhere($role, 'or');
+			$w = sql_where($role, 'or');
 			$where = "{$w}";
 		}
 		$sql = "select * from menu where parent=0 and ({$where}) order by order_num asc";
-		$menu = show($sql);
-		include viewBack('iconShare');
+		$menu = Db::sql($sql);
+		include view_back('iconShare');
 	}
+
+
+	/**
+		* 生成无限级菜单
+		* @param {Object} $data
+		* @param {Object} $where
+		*/
+	function menuTree($data,$where){
+	foreach($data as $v){
+	$v['src']=urldecode($v['src']);
+	if(empty($v['src'])){
+	echo <<<EOT
+	<li>
+		<a>
+			<i class="fa fa-{$v['type']}"></i><span class="nav-label">{$v['title']}</span><span
+				class="fa arrow"></span>
+		</a>
+		<ul class="nav nav-second-level">
+EOT;
+
+			$m = \Dfer\DfPhpCore\Modules\Db::sql("select * from menu where parent={$v['id']} and ({$where}) order by order_num asc",'sql');
+			$this->menuTree($m,$where);
+			echo <<<EOT
+</ul>
+				</li>
+EOT;
+				} else{
+				if(strpos($v['src'],'js:')!==false)
+				$src='onclick="'.str_replace('js:','',$v['src']).'"';
+				else if(strpos($v['src'],'url:')!==false)
+				$src='href="'.str_replace('url:','',$v['src']).'"';
+				else $src='href="'.split_url($v['src']).'"';
+				echo <<<EOT
+<li>
+					<a {$src} class="J_menuItem">
+						<i class="fa fa-{$v['type']}"></i><span
+							class="nav-label">{$v['title']}</span>
+					</a>
+					</li>
+EOT;
+					}
+					}
+}
 
 	/**
 		* 退出登陆
@@ -48,8 +93,9 @@ class HomeController
 		*/
 	public function ext($param)
 	{
-		setcookie(session_name(), session_id(), time() - 1, '/');
-		delSession(\Enum::sesName, "admin/login/index");
+		del_one_cookie(session_name());
+		del_session(\ENUM::SES_NAME);
+		message(1,"admin/login/index");
 	}
 
 	/**
@@ -58,8 +104,75 @@ class HomeController
 		*/
 	public function desktop($param)
 	{
-		include viewBack();
+		include view_back();
 		}
+
+
+
+						// ********************** 修改头像 START **********************
+
+		    public function changePic($param)
+		    {
+										$output = UserModel::where(1)->first();
+		        include view_back();
+		    }
+
+		    /**
+							* 上传头像
+							* @param {Object} $param
+							*/
+		    public function setChangePic($param)
+		    {
+		        $dt = $_POST['data'];
+		        $id = 1;
+										$myValue = UserModel::where($id)->update($dt);
+										message($ret,\ENUM::reloadParent);
+		    }
+
+		    /**
+							* 上传组件
+							* @param {Object} $name
+							*/
+		    public function upChangePic($name)
+		    {
+		        global $files,$common;
+		        $rt= $files->uploadFile(Files::UPLOAD_WEB_UPLOADER, ['size'=>"500*500",'path'=>"view/admin/public/assets/img/logo.png"]);
+										// var_dump($rt);
+										$common->showJsonBase($rt);
+		    }
+
+						// **********************  修改头像 END  **********************
+
+
+		// ********************** 设置密码 START **********************
+
+		    public function setPwd($param)
+		    {
+		        global $other;
+		        $err = $_GET['err']??null;
+		        $id = get_session(\ENUM::SES_NAME);
+		        $id = $id[0];
+										$output = UserModel::where($id)->first();
+		        include view_back();
+		    }
+
+		    /**
+							* 更新密码
+							* @param {Object} $param
+							*/
+		    public function updateSetPwd($param)
+		    {
+		        $dt = $_POST['data'];
+		        $ndt["pw"] = $dt["npw"];
+										$output = UserModel::where($dt['id'])->first();
+		        if ($output['pw'] != $dt['pw'] || empty($dt['pw'])) {
+		            to_url(sprintf("admin/login/set_pwd"), array('err' => '原密码有误'));
+		        }
+										$ret = UserModel::where($dt['id'])->update($ndt);
+										message($ret,str("admin/login/set_pwd"));
+		    }
+
+		// **********************  设置密码 END  **********************
 
 	/**
 		* 框架信息
@@ -111,84 +224,87 @@ class HomeController
 	}
 
 	// ********************** 用户 START **********************
-	public static $db_d = 'df';
-	public function df($param)
+	public function user($param)
 	{
-		$output = showList(self::$db_d);
-		include viewBack();
+		$output = UserModel::select();
+		include view_back();
 	}
 
-	public function dfAdd($param)
+	public function userAdd($param)
 	{
+		global $common;
 		$err = $_GET['err']??null;
-		$output = showFirst(self::$db_d, ["id" => $param]);
-		$type = showList(self::$db_roles);
+		$output = UserModel::where(["id" => $param])->first();
+		$type = RolesModel::select();
 		// var_dump($param,$output);
-		include viewBack();
+		include view_back();
 	}
 
-	public function dfEditUp($name)
+	public function userEditUp($name)
 	{
 		global $files,$common;
 		$common->showJsonBase($files->uploadFile(Files::UPLOAD_UMEDITOR_EDITOR));
 	}
 
-	public function dfView($param)
+	public function userView($param)
 	{
-		$output = show(self::$db_d, $param);
-		include viewBack();
+		$output = UserModel::where($param)->show();
+		include view_back();
 	}
 
 	//更新数据
-	public function dfUpdate()
+	public function userUpdate()
 	{
 		global $common;
 		$dt = $_POST['data'];
 		$id = $_POST['id'];
-		$output = showFirst("df", ['nm'=>$dt['nm']]);
+		$output = UserModel::where(['nm'=>$dt['nm']])->first();
 
 		//新增
 		if ($output == null || $id > 0) {
 			$dt['last_login_time'] = $common->getTime(TIMESTAMP);
-			update(self::$db_d, $dt, $id, "admin/home/" . self::$db_d);
+			UserModel::where($id)->update($dt);
+			message($ret,"admin/home/" . UserModel::getName());
 		}
 		//修改
 		else {
-			toUrl(str("admin/home/{0}_add", [self::$db_d]), array('err' => '用户已经存在'));
+			to_url(str("admin/home/{0}_add", [self::$db_d]), array('err' => '用户已经存在'));
 		}
 	}
 
-	//删除
-	public function dfDel($id)
+	/**
+		* 删除
+		* @param {Object} $id
+		*/
+	public function userDel($id)
 	{
 		if ($id == 1) {
-			message('不允许删除此账号', "admin/home/" . self::$db_d);
+			message(0, "admin/home/" . UserModel::getName(),null,'不允许删除此账号');
 		}
-		$myValue = del(self::$db_d, $id, "admin/home/" . self::$db_d);
+		$ret = UserModel::where($id)->del();
+		message($ret,"admin/home/" . UserModel::getName());
 	}
 
 	// **********************  用户 END  **********************
 
 	// ********************** 权限 START **********************
-	public static $db_roles = 'roles';
 	public function roles($param)
 	{
-		$output = showList(self::$db_roles);
-		include viewBack();
+		$output = RolesModel::select();
+		include view_back();
 	}
 
 	public function rolesAdd($param)
 	{
-		global $m;
 		$err = $_GET['err'];
-		$output = showFirst(self::$db_roles, $param);
-		include viewBack();
+		$output = RolesModel::where($param)->find();
+		include view_back();
 	}
 
 	public function rolesView($param)
 	{
-		$output = showFirst(self::$db_roles, $param);
-		include viewBack();
+		$output = RolesModel::where($param)->first();
+		include view_back();
 	}
 
 	/**
@@ -198,7 +314,7 @@ class HomeController
 	{
 		$dt = $_POST['data'];
 		$id = $_POST['id'];
-		update(self::$db_roles, $dt, $id, "admin/home/" . self::$db_roles);
+		$myValue = RolesModel::where($id)->update($dt,str("admin/home/{0}",[RolesModel::getName()]));
 	}
 
 	/**
@@ -207,7 +323,7 @@ class HomeController
 		*/
 	public function rolesDel($id)
 	{
-		$myValue = del(self::$db_roles, $id, "admin/home/" . self::$db_roles);
+		$myValue = RolesModel::where($id)->del(str("admin/home/{0}",[RolesModel::getName()]));
 	}
 
 	// **********************  权限 END  **********************
@@ -217,19 +333,18 @@ class HomeController
 	public static $db_guests = 'home_user_info';
 	public function guests($param)
 	{
-		$output = showList(self::$db_guests, [], ['id' => 'desc']);
-		include viewBack();
+		$output = HomeUserInfoModel::order(['id' => 'desc'])->select();
+		include view_back();
 	}
 
 	// **********************  访问信息收集 END  **********************
 
 // ********************** 静态页面列表 START **********************
 
-	public static $db_htm = 'html';
 	public function html($param)
 	{
-		$output = showList(self::$db_htm);
-		include viewBack();
+		$output = HtmlModel::select();
+		include view_back();
 	}
 
 	/**
@@ -238,8 +353,8 @@ class HomeController
 		*/
 	public function htmlAdd($param)
 	{
-		$output = showFirst(self::$db_htm, $param);
-		include viewBack();
+		$output = HtmlModel::where($param)->first();
+		include view_back();
 	}
 
 	/**
@@ -248,8 +363,8 @@ class HomeController
 		*/
 	public function htmlView($param)
 	{
-		$output = showFirstow(self::$db_htm, $param);
-		include viewBack();
+		$output = HtmlModel::where($param)->first();
+		include view_back();
 	}
 
 	/**
@@ -259,7 +374,7 @@ class HomeController
 	{
 		$dt = $_POST['data'];
 		$id = $_POST['id'];
-		$myValue = update(self::$db_htm, $dt, $id, ("admin/home/" . self::$db_htm));
+		$myValue = HtmlModel::where($id)->update($dt,str("admin/home/{0}",[HtmlModel::getName()]));
 	}
 
 	/**
@@ -268,33 +383,32 @@ class HomeController
 		*/
 	public function htmlDel($id)
 	{
-		$myValue = del(self::$db_htm, $id, "admin/home/" . self::$db_htm);
+		$myValue = HtmlModel::where($id)->del(str("admin/home/{0}",[HtmlModel::getName()]));
 	}
 
 // **********************  静态页面列表 END  **********************
 
 	// ********************** 菜单 START **********************
 
-	public static $db_menu = 'menu';
 	public function menu($param)
 	{
-		$output = showList(self::$db_menu, ['parent' => empty($param) ? '0' : $param], ['order_num', 'asc']);
+		$output = MenuModel::where(['parent' => empty($param) ? '0' : $param])->order(['order_num', 'asc'])->select();
 		$parent = get('parent');
 		$l_parent = explode(',', $parent);
 		$l_parent_id = $l_parent[count($l_parent) - 1];
 		array_pop($l_parent);
 		$l_parent = implode(',', $l_parent);
-		include  viewBack();
+		include  view_back();
 	}
 
 	public function menuAdd($param)
 	{
 		$type = array('主页' => 'home', '文件夹' => 'folder', '文件' => 'file', '信息' => 'info', '表格' => 'table', '笔记' => 'book', '用户' => 'user', '用户群' => 'users', '记录' => 'history', '刷新' => 'refresh', '星号' => 'asterisk', '评论' => 'comments', '游戏' => 'gamepad', '链接' => 'link', '音乐' => 'music', '电影' => 'film', '锁' => 'lock', '列表' => 'list', '资金' => 'money', '播放' => 'play', 'bug' => 'bug', '地图' => 'map', '服务' => 'server', '云朵' => 'cloud', '闪电' => 'flash', '代码' => 'code', '旗帜' => 'flag', 'safari' => 'safari', '定位' => 'location-arrow', '保存' => 'save', '男人' => 'male', '女人' => 'female', '设置' => 'gear',);
 		if ($param) {
-			$output = showFirst(self::$db_menu, $param);
+			$output = MenuModel::where($param)->first();
 		}
 		if (empty($output)) {
-			$output = tableInit(self::$db_menu);
+			$output = MenuModel::tableInit();
 		}
 		//		var_dump($output);
 		$output['src'] = urldecode($output['src']);
@@ -302,7 +416,7 @@ class HomeController
 		$parent = $_GET['parent'];
 		$parent_id = $_GET['parent_id'];
 
-		include viewBack();
+		include view_back();
 	}
 
 	/**
@@ -315,7 +429,7 @@ class HomeController
 		$id = $_POST['id'];
 		$dt['src'] = urlencode($dt['src']);
 		$parent = $_POST['parent'];
-		$myValue = update(self::$db_menu, $dt, $id, sprintf("admin/home/menu/%s&parent=%s", $dt['parent'], $parent));
+		$myValue = MenuModel::where($id)->update($dt,str("admin/home/menu/{0}&parent={1}",[$dt['parent'],$parent]));
 	}
 
 	/**
@@ -326,7 +440,7 @@ class HomeController
 	{
 		$parent_id = $_GET['parent_id'];
 		$parent = $_GET['parent'];
-		$myValue = del(self::$db_menu, "id={$id} or parent={$id}", sprintf("admin/home/menu/%s&parent=%s", $parent_id, $parent));
+		$myValue = MenuModel::where("id={$id} or parent={$id}")->del(str("admin/home/menu/{0}&parent={1}",[$parent_id,$parent]));
 	}
 
 	// **********************  菜单 END  **********************
@@ -340,10 +454,10 @@ class HomeController
 		global $common;
 		if (!empty($_POST)) {
 			clear('logs');
-			$common->showJson(1, 'clear');
+			show_json(1,'clear');
 		}
-		$output = showList('logs');
-		include viewBack();
+		$output = LogsModel::select();
+		include view_back();
 	}
 
 	/**
@@ -355,11 +469,12 @@ class HomeController
 		global $files,$common;
 
 		//清空数据库缓存
-		$db_cache = del("cache");
+		$db_cache = CacheModel::del();
+
 		//清空文件缓存
 		$files_cache = $files->delDir(ROOT . "/data/cache");
 		$files_logs = $files->delDir(ROOT . "/data/logs");
-		$common->showJson($db_cache, [], $files_cache||$files_logs? '数据库、文件清除成功' : '目录不存在');
+		show_json($db_cache, [], $files_cache||$files_logs? '数据库、文件清除成功' : '目录不存在');
 	}
 
 /**
@@ -376,20 +491,20 @@ class HomeController
 		//生成静态页面
 		$path = "static_pages";
 		$files->mkdirs($path);
-		$list = showList("html");
+		$list = HtmlModel::select();
 		$str = '';
 		foreach ($list as $i) {
 			// $path = $i['file_n'] == 'index' ? '/' : $path;
 			$file_n = str("{0}/{1}/{2}.html", [WEB_ROOT, $path, $i['file_n']]);
 			//echo $file_n;
-			$out = file_get_contents(splitUrl($i['src']));
+			$out = file_get_contents(split_url($i['src']));
 			$files->writeFile($out,$file_n);
 			$file = str("/{0}/{1}.html", [$path, $i['file_n']]);
 			$str .= str("<a href='{file}' target='_blank'>{file}</a>：已生成<br>", ['file'=>$file]);
 		}
 
 		//根据主页内的文字生成html页面，用来制作字体
-		$body = file_get_contents(splitUrl('homepage/home'));
+		$body = file_get_contents(split_url('homepage/home'));
 		$body = $common->getChinese($body);
 
 		$path = '/static_pages/font.html';
@@ -398,7 +513,7 @@ class HomeController
 		$s = sprintf('<html><head><meta charset="UTF-8"><link rel="stylesheet" href="font-awesome.css"></head><body>%s</body></html>', $body);
 		$files->writeFile($s,$file_n);
 		$str .= str("<a href='{path}' target='_blank'>{path}(用来优化字体文件)</a>：已生成<br>", ['path'=>$path]);
-		include viewBack();
+		include view_back();
 	}
 
 

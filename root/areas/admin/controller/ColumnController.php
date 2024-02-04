@@ -2,30 +2,27 @@
 namespace areas\admin\controller;
 
 use Dfer\Tools\Files;
-class ColumnController {
+use areas\admin\model\{HomeLayoutModel,HomeLayoutImgModel,HomeColumnModel,HomeLinkModel,HomeMusicModel,MessageModel,NotepadModel,ColumnModel};
 
+class ColumnController extends BaseController{
 
 	// ********************** 栏目管理 START **********************
-
-	static $db_hc = 'home_column';
 	function homeColumn($param) {
-		global $m;
-		$output = showList(self::$db_hc, [],'asc');
-		include  viewBack();
+		$output = HomeColumnModel::order('asc')->select();
+		// var_dump($output);
+		include  view_back();
 	}
 
 	function homeColumnAdd($param) {
-		global $m;
-		$output = showFirst(self::$db_hc, $param);
-		include  viewBack();
+		$output = HomeColumnModel::where($param)->find();
+		include view_back();
 	}
 
 	function homeColumnUpdate() {
-		global $m;
 		$dt = $_POST['data'];
 		$id = $_POST['id'];
-
-		$myValue = update(self::$db_hc, $dt, $id, ("admin/column/" . self::$db_hc));
+		$ret = HomeColumnModel::where($id)->update($dt);
+		message($ret,"admin/column/" . HomeColumnModel::getName());
 	}
 
 	/**
@@ -33,7 +30,8 @@ class ColumnController {
 		* @param {Object} $id
 		*/
 	function homeColumnDel($id) {
-		$myValue = del(self::$db_hc, $id, "admin/column/" . self::$db_hc);
+		$ret = HomeColumnModel::where($id)->del();
+		message($ret,"admin/column/" . HomeColumnModel::getName());
 	}
 
 	/**
@@ -57,12 +55,9 @@ class ColumnController {
 	// **********************  栏目管理 END  **********************
 
 	// ********************** 留言管理 START **********************
-
-	static $db_mes = 'message';
 	public function message($param) {
-		global $m;
-		$output = showList(self::$db_mes,[], ["time"=>'desc']);
-		include  viewBack();
+		$output = MessageModel::order(["time"=>'desc'])->select();
+		include view_back();
 	}
 
 	/**
@@ -70,38 +65,42 @@ class ColumnController {
 		* @param {Object} $param
 		*/
 	function messageView($param) {
-
-		$output = showFirst(self::$db_mes, $param);
-		update(self::$db_mes, ["status"=>true],$param);
-		include  viewBack();
+		$output = MessageModel::where($param)->first();
+		MessageModel::where($param)->update(["status"=>true]);
+		include view_back();
 	}
+
+	/**
+	 * 删除留言
+	 * @param {Object} $id
+	 */
+	function messageDel($id)
+	{
+		$ret = MessageModel::where($id)->del();
+		message($ret,"homepage/column/" . MessageModel::getName());
+	}
+
 
 	// **********************  留言管理 END  **********************
 
 
 	// ********************** 链接管理 START **********************
 
-	static $db_hl = 'home_link';
 	public function homeLink($param) {
-		global $m;
-		$output = showList(self::$db_hl);
-
-		include  viewBack();
+		$output = HomeLinkModel::select();
+		include  view_back();
 	}
 
 	function homeLinkAdd($param) {
-		global $m;
-		$output = showFirst(self::$db_hl, $param);
-		include  viewBack();
+		$output = HomeLinkModel::where($param)->find();
+		include  view_back();
 	}
 
 	function homeLinkUpdate() {
-
-		global $m;
 		$dt = $_POST['data'];
 		$id = $_POST['id'];
-
-		$myValue = update(self::$db_hl, $dt, $id, ("admin/column/" . self::$db_hl));
+		$ret = HomeLinkModel::where($id)->update($dt);
+		message($ret,"admin/column/" . HomeLinkModel::getName());
 	}
 
 	/**
@@ -109,8 +108,8 @@ class ColumnController {
 		* @param {Object} $id
 		*/
 	function homeLinkDel($id) {
-		global $m;
-		$myValue = del(self::$db_hl, $id, "admin/column/" . self::$db_hl);
+		$ret = HomeLinkModel::where($id)->del();
+		message($ret,"admin/column/" . HomeLinkModel::getName());
 	}
 
 	// **********************  链接管理 END  **********************
@@ -118,28 +117,22 @@ class ColumnController {
 
 	// ********************** 音乐管理 START **********************
 
-	static $db_hm = 'home_music';
 	public function homeMusic($param) {
-
-		global $m;
-		$output = showList(self::$db_hm);
-		include  viewBack();
+		$output = HomeMusicModel::select();
+		include  view_back();
 	}
 
 	function homeMusicAdd($param) {
-		global $m;
-
-		$output = $param != 0 ? showFirst(self::$db_hm, $param) : "";
-		include  viewBack();
+		$output = HomeMusicModel::where($param)->find();
+		include  view_back();
 	}
 
 	function homeMusicUpdate() {
-
-		global $m;
 		$dt = $_POST['data'];
 		$id = $_POST['id'];
-
-		$myValue = update(self::$db_hm, $dt, $id, ("admin/column/" . self::$db_hm));
+		$ret = HomeMusicModel::where($id)->update($dt);
+		// var_dump($ret);
+		message($ret,"admin/column/".HomeMusicModel::getName());
 	}
 
 	/**
@@ -147,37 +140,29 @@ class ColumnController {
 		* @param {Object} $id
 		*/
 	function homeMusicDel($id) {
-		global $m;
-		$myValue = del(self::$db_hm, $id, "admin/column/" . self::$db_hm);
+		$ret = HomeMusicModel::where($id)->del();
+		message($ret,"admin/column/" . HomeMusicModel::getName());
 	}
 
-	/**
-		* 上传组件
-		* @param {Object} $name
-		*/
-	function homeMusicUp($name) {
-		global $files,$common;
-		$common->showJsonBase($files->uploadFile(Files::UPLOAD_WEB_UPLOADER));
-	}
+
 
 	// **********************  音乐管理 END  **********************
 
 
 	// ********************** 布局 START **********************
 
-	static $db_hlo = 'home_layout';
-	static $db_hli = 'home_layout_img';
 	function homeLayout($param = 1) {
-		$output = showFirst(self::$db_hlo, $param);
-		$img = showList(self::$db_hli);
-		//var_dump($img);
-		include viewBack();
+		$output = HomeLayoutModel::where($param)->first();
+		$img = HomeLayoutImgModel::select();
+		include view_back();
 	}
 
 	function homeLayoutUpdate() {
 		$dt = $_POST['data'];
 		$id = $_POST['id'];
-		$myValue = update(self::$db_hlo, $dt, $id, str("admin/column/{0}/1",[self::$db_hlo]));
+		// var_dump($_SERVER['HTTP_REFERER']);die;
+		$ret = HomeLayoutModel::where($id)->update($dt);
+		message($ret,str("admin/column/{0}/1",[HomeLayoutModel::getName()]));
 	}
 
 	/**
@@ -187,14 +172,14 @@ class ColumnController {
 	function homeLayoutPicUp($name) {
 		global $files,$common;
 		$dt['img'] = $files->uploadFile(Files::UPLOAD_WEB_UPLOADER);
-		insert(self::$db_hli, $dt);
+		HomeLayoutImgModel::insert($dt);
 		//不限制尺寸
 		$common->showJsonBase($dt['img']);
 	}
 
 	function homeLayoutUp($name) {
 		global $common;
-		$common->showJsonBase($files->uploadFile(Files::UPLOAD_WEB_UPLOADER));
+		$common->showJsonBase($files->uploadFile(Files::UPLOAD_WEB_UPLOADER,['path'=>VIEW_ASSETS.'/fontFamily/font.TTF']));
 	}
 
 	/**
@@ -204,10 +189,10 @@ class ColumnController {
 	function homeLayoutPicDel($name) {
 		global $_param, $files,$common;
 		$id = $_param['id'];
-		$img = showFirst(self::$db_hli, $id);
-		$rt = del(self::$db_hli, $id) . ',';
+		$img = HomeLayoutImgModel::where($id)->first();
+		$rt = HomeLayoutImgModel::where($id)->del() . ',';
 		$rt .= $files -> delFile($img['img']);
-		$common->showJson(1, $rt);
+		show_json(1, $rt);
 	}
 
 	// **********************  布局 END  **********************
@@ -215,12 +200,10 @@ class ColumnController {
 
 	// ********************** 记事本 START **********************
 
-	public static $db_n = 'notepad';
 	public function notepad($param)
 	{
-		global $m;
-		$output = showList(self::$db_n, [], ['time', 'desc']);
-		include viewBack();
+		$output = NotepadModel::order(['time', 'desc'])->select();
+		$this->view();
 		}
 
 	/**
@@ -229,9 +212,8 @@ class ColumnController {
 		*/
 	public function notepadAdd($param)
 	{
-		global $m;
-		$output = showFirst(self::$db_n, ["id" => $param]);
-		include viewBack();
+		$output = NotepadModel::where(["id" => $param])->first();
+		include view_back();
 		}
 
 	/**
@@ -250,8 +232,8 @@ class ColumnController {
 		*/
 	public function notepadView($param)
 	{
-		$output = showFirst(self::$db_n, ["id" => $param]);
-		include viewBack();
+		$output = NotepadModel::where(["id" => $param])->first();
+		include view_back();
 		}
 
 	/**
@@ -261,7 +243,8 @@ class ColumnController {
 	{
 		$dt = $_POST['data'];
 		$id = $_POST['id'];
-		$myValue = update(self::$db_n, $dt, ["id" => $id], str("admin/column/{0}",[self::$db_n]));
+		$ret = NotepadModel::where(["id" => $id])->update($dt);
+		message($ret,str("admin/column/{0}",[NotepadModel::getName()]));
 	}
 
 	/**
@@ -270,14 +253,16 @@ class ColumnController {
 		*/
 	public function notepadDel($id)
 	{
-		$myValue = del(self::$db_n, $id, str("admin/column/{0}",[self::$db_n]));
+		$ret = NotepadModel::where($id)->del();
+		message($ret,str("admin/column/{0}",[NotepadModel::getName()]));
 	}
 
 
 	public function notepadSs($param)
 	{
 		showPage(self::$db_n, [], str("admin/column/{0}_ss",[self::$db_n]));
-		include viewBack();
+		NotepadModel::showPage(str("admin/column/{0}_ss",[NotepadModel::getName()]));
+		include view_back();
 		}
 
 		/**
@@ -286,9 +271,8 @@ class ColumnController {
 			*/
 		public function notepadSsAdd($param)
 		{
-			global $m;
-			$output = showFirst(self::$db_n, ["id" => $param]);
-			include viewBack();
+			$output = NotepadModel::where(["id" => $param])->first();
+			include view_back();
 			}
 
 			/**
@@ -297,7 +281,8 @@ class ColumnController {
 				*/
 			public function notepadSsDel($id)
 			{
-				$myValue = del(self::$db_n, $id,  str("admin/column/{0}_ss",[self::$db_n]));
+				$ret = NotepadModel::where($id)->del();
+				message($ret,str("admin/column/{0}_ss",[NotepadModel::getName()]));
 			}
 
 			/**
@@ -305,9 +290,10 @@ class ColumnController {
 				*/
 			public function notepadSsUpdate()
 			{
-				$dt = $_POST['data'];
 				$id = $_POST['id'];
-				$myValue = update(self::$db_n, $dt, ["id" => $id], str("admin/column/{0}_ss",[self::$db_n]));
+				$dt = $_POST['data'];
+				$ret = NotepadModel::where(["id" => $id])->update($dt);
+				message($ret,str("admin/column/{0}_ss",[NotepadModel::getName()]));
 			}
 
 
@@ -317,8 +303,8 @@ class ColumnController {
 			*/
 		public function notepadSsView($param)
 		{
-			$output = showFirst(self::$db_n, ["id" => $param]);
-			include viewBack();
+			$output = NotepadModel::where(["id" => $param])->first();
+			include view_back();
 			}
 
 	// **********************  记事本 END  **********************
@@ -326,20 +312,18 @@ class ColumnController {
 
 	// ********************** 栏目 START **********************
 
-	public static $db_c = 'column';
 	public function column($param)
 	{
-		global $m;
-		$output = showFirst(self::$db_c, 1);
-		include viewBack();
+		$output = ColumnModel::where(1)->first();
+		include view_back();
 	}
 
 	public function columnUpdate()
 	{
-		global $m;
-		$dt = $_POST['data'];
 		$id = $_POST['id'];
-		$myValue = update(self::$db_c, $dt, $id, ("admin/column/" . self::$db_c));
+		$dt = $_POST['data'];
+		$ret = ColumnModel::where($id)->update($dt);
+		message($ret,str("admin/column/{0}",[ColumnModel::getName()]));
 	}
 
 	public function columnEditUp($name)
@@ -356,11 +340,8 @@ class ColumnController {
 		*/
 	public function readme($param)
 	{
-		global $m;
-		$output = showFirst(self::$db_c, 1);
-		include viewBack();
+		$output = ColumnModel::where(1)->first();
+		include view_back();
 	}
-
-
 }
 ?>
