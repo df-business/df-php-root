@@ -1,20 +1,112 @@
 /*
  * jq拓展方法
- * 
+ *
  * 依赖于jq插件
  * 需要使用requireJs进行优先加载
- * 
+ *
  * By Df
  */
 
-//jQuery 本身的扩展方法
+
+////////////////////////////////////////////////// jQuery 本身的扩展方法 START //////////////////////////////////////////////////
+
 jQuery.extend({
-	//self
-	df: function() {
-		log('{0}前3个发现这条信息的人，在这个地址留言，找Df领取礼物一份：www.df315.top'.format('——————>'))
-		return true;
+
+	checkAll: function(ischecked, formid) {
+		if (formid) {
+			$("#" + formid + " input[type='checkbox']").attr("checked", ischecked);
+		} else {
+			$("input[type='checkbox']").attr("checked", ischecked);
+		}
+
 	},
-	ProtectPage: function() {
+	selectedCount: function(formid) {
+		var chks = null;
+		var n = 0;
+		if (formid) {
+			chks = $("#" + formid + " input[type='checkbox']");
+		} else {
+			chks = $("input[type='checkbox']");
+		}
+		chks.each(function() {
+			if ($(this).get(0).checked) {
+				n++;
+			}
+		});
+		return n;
+	},
+	selecteds: function(formid) {
+		var ids = "";
+		var chks = null;
+
+		if (formid) {
+			chks = $("#" + formid + " input[type='checkbox']");
+		} else {
+			chks = $("input[type='checkbox']");
+		}
+		chks.each(function() {
+			if ($(this).get(0).checked) {
+				if (ids != "") {
+					ids += ",";
+				}
+				ids += $(this).val();
+			}
+		});
+		return ids;
+
+	},
+	allids: function(formid) {
+		var ids = "";
+		var chks = null;
+
+		if (formid) {
+			chks = $("#" + formid + " input[type='checkbox']");
+		} else {
+			chks = $("input[type='checkbox']");
+		}
+		chks.each(function() {
+
+			if (ids != "") {
+				ids += ",";
+			}
+			ids += $(this).val();
+
+		});
+		return ids;
+
+	},
+	uncheckAll: function(formid) {
+		if (formid) {
+			$("#" + formid + " input[type='checkbox']").attr("checked", false);
+		} else {
+			$("input[type='checkbox']").attr("checked", false);
+		}
+
+	},
+	holder: function(objid) {
+
+		var _this = $("#" + objid);
+		var placeholder = _this.attr("holder");
+		if ($.trim(_this.val()) == "") {
+			_this.addClass("placeholder");
+			_this.val(placeholder);
+		}
+		_this.focus(function() {
+			if ($.trim(_this.val()) == placeholder) {
+				_this.removeClass("placeholder");
+				_this.val("");
+			}
+		}).blur(function() {
+			if ($.trim(_this.val()) == "") {
+				_this.addClass("placeholder");
+				_this.val(placeholder);
+			}
+		});
+	},
+	df: function() {
+		df_tools.log('{0}www.df315.top'.format('——————>'))
+	},
+	protectPage: function() {
 		//阻止查看源码
 		function stop() {
 			return false;
@@ -25,19 +117,19 @@ jQuery.extend({
 	getUrlParam: function(name) {
 		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
 		var r = window.location.search.substr(1).match(reg);
-		if(r != null) return decodeURI(r[2]);
+		if (r != null) return decodeURI(r[2]);
 		return null;
 	},
-	is_weixin: function() {    
+	isWeixin: function() {
 		//获取浏览器标识符
-		var ua = navigator.userAgent.toLowerCase();   
+		var ua = navigator.userAgent.toLowerCase();
 		//微信内置浏览器
-		    
-		if(ua.indexOf('micromessenger') > 0) {               
-			return true;           
-		} else {               
-			return false;           
-		}       
+
+		if (ua.indexOf('micromessenger') > 0) {
+			return true;
+		} else {
+			return false;
+		}
 	},
 	//other
 	isEmail: function(str) {
@@ -85,18 +177,19 @@ jQuery.extend({
 		//var info = "";
 		var strIDno = obj;
 		var idCardLength = strIDno.length;
-		if(!/^\d{17}(\d|x)$/i.test(strIDno) && !/^\d{15}$/i.test(strIDno))
+		if (!/^\d{17}(\d|x)$/i.test(strIDno) && !/^\d{15}$/i.test(strIDno))
 			return false; //非法身份证号
 
-		if(aCity[parseInt(strIDno.substr(0, 2))] == null)
+		if (aCity[parseInt(strIDno.substr(0, 2))] == null)
 			return false; // 非法地区
 
 		// 15位身份证转换为18位
-		if(idCardLength == 15) {
-			sBirthday = "19" + strIDno.substr(6, 2) + "-" + Number(strIDno.substr(8, 2)) + "-" + Number(strIDno.substr(10, 2));
+		if (idCardLength == 15) {
+			sBirthday = "19" + strIDno.substr(6, 2) + "-" + Number(strIDno.substr(8, 2)) + "-" + Number(
+				strIDno.substr(10, 2));
 			var d = new Date(sBirthday.replace(/-/g, "/"))
 			var dd = d.getFullYear().toString() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
-			if(sBirthday != dd)
+			if (sBirthday != dd)
 				return false; //非法生日
 			strIDno = strIDno.substring(0, 6) + "19" + strIDno.substring(6, 15);
 			strIDno = strIDno + GetVerifyBit(strIDno);
@@ -104,7 +197,7 @@ jQuery.extend({
 
 		// 判断是否大于2078年，小于1900年
 		var year = strIDno.substring(6, 10);
-		if(year < 1900 || year > 2078)
+		if (year < 1900 || year > 2078)
 			return false; //非法生日
 
 		//18位身份证处理
@@ -112,22 +205,23 @@ jQuery.extend({
 		//在后面的运算中x相当于数字10,所以转换成a
 		strIDno = strIDno.replace(/x$/i, "a");
 
-		sBirthday = strIDno.substr(6, 4) + "-" + Number(strIDno.substr(10, 2)) + "-" + Number(strIDno.substr(12, 2));
+		sBirthday = strIDno.substr(6, 4) + "-" + Number(strIDno.substr(10, 2)) + "-" + Number(strIDno
+			.substr(12, 2));
 		var d = new Date(sBirthday.replace(/-/g, "/"))
-		if(sBirthday != (d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate()))
+		if (sBirthday != (d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate()))
 			return false; //非法生日
 		// 身份证编码规范验证
-		for(var i = 17; i >= 0; i--)
+		for (var i = 17; i >= 0; i--)
 			iSum += (Math.pow(2, i) % 11) * parseInt(strIDno.charAt(17 - i), 11);
-		if(iSum % 11 != 1)
+		if (iSum % 11 != 1)
 			return false; // 非法身份证号
 
 		// 判断是否屏蔽身份证
 		var words = new Array();
 		words = new Array("11111119111111111", "12121219121212121");
 
-		for(var k = 0; k < words.length; k++) {
-			if(strIDno.indexOf(words[k]) != -1) {
+		for (var k = 0; k < words.length; k++) {
+			if (strIDno.indexOf(words[k]) != -1) {
 				return false;
 			}
 		}
@@ -136,7 +230,8 @@ jQuery.extend({
 
 	},
 	isUrl: function(str) {
-		return /^http:\/\/[A-Za-z0-9]+\.[A-Za-z0-9]+[\/=\?%\-&_~`@[\]\':+!]*([^<>\"\"])*$/.test($.trim(str));
+		return /^http:\/\/[A-Za-z0-9]+\.[A-Za-z0-9]+[\/=\?%\-&_~`@[\]\':+!]*([^<>\"\"])*$/.test($.trim(
+			str));
 	},
 	isInt: function(str) {
 		return /^[-\+]?\d+$/.test($.trim(str));
@@ -167,18 +262,18 @@ jQuery.extend({
 		return !$.isEmpty(str) && !isNaN(str) && 0 < str && str <= 100000000;
 	},
 	isIP: function(str) {
-		if(/^(\d+)\.(\d+)\.(\d+)\.(\d+)$/.test($.trim(str))) {
-			if(RegExp.$1 < 256 && RegExp.$2 < 256 && RegExp.$3 < 256 && RegExp.$4 < 256)
+		if (/^(\d+)\.(\d+)\.(\d+)\.(\d+)$/.test($.trim(str))) {
+			if (RegExp.$1 < 256 && RegExp.$2 < 256 && RegExp.$3 < 256 && RegExp.$4 < 256)
 				return true;
 		}
 		return false;
 	},
 	isDate: function(str) {
 		var r = $.trim(str).split("-");
-		if(r == null)
+		if (r == null)
 			return false;
 		var d = new Date(r[0], r[1] - 1, r[2]);
-		return(d.getFullYear() == r[0] && (d.getMonth() + 1) == r[1] && d.getDate() == r[2]);
+		return (d.getFullYear() == r[0] && (d.getMonth() + 1) == r[1] && d.getDate() == r[2]);
 	},
 	htmlEncode: function(str) {
 		str = str.replace(/&/g, '&amp;');
@@ -212,7 +307,7 @@ jQuery.extend({
 	},
 	arrayIndexOf: function(arr, substr, start) {
 		var ta, rt, d = '\0';
-		if(start != null) {
+		if (start != null) {
 			ta = arr.slice(start);
 			rt = start;
 		} else {
@@ -221,14 +316,14 @@ jQuery.extend({
 		}
 		var str = d + ta.join(d) + d,
 			t = str.indexOf(d + substr + d);
-		if(t == -1)
+		if (t == -1)
 			return -1;
 		rt += str.slice(0, t).replace(/[^\0]/g, '').length;
 		return rt;
 	},
 	arrayLastIndexOf: function(arr, substr, start) {
 		var ta, rt, d = '\0';
-		if(start != null) {
+		if (start != null) {
 			ta = arr.slice(start);
 			rt = start;
 		} else {
@@ -238,7 +333,7 @@ jQuery.extend({
 		ta = ta.reverse();
 		var str = d + ta.join(d) + d,
 			t = str.indexOf(d + substr + d);
-		if(t == -1)
+		if (t == -1)
 			return -1;
 		rt += str.slice(t).replace(/[^\0]/g, '').length - 2;
 		return rt;
@@ -255,47 +350,83 @@ jQuery.extend({
 			d = '\0',
 			str = d + ta.join(d) + d,
 			regstr = reg.toString();
-		reg = new RegExp(regstr.replace(/\/((.|\n)+)\/.*/g, '\\0$1\\0'), regstr.slice(regstr.lastIndexOf('/') + 1));
+		reg = new RegExp(regstr.replace(/\/((.|\n)+)\/.*/g, '\\0$1\\0'), regstr.slice(regstr.lastIndexOf(
+			'/') + 1));
 		t = str.search(reg);
-		if(t == -1)
+		if (t == -1)
 			return -1;
 		return str.slice(0, t).replace(/[^\0]/g, '').length;
 	},
 	nullundefined: function(str) {},
+
+	/**
+	 * 文本复制
+	 * @param {Object} maintext
+	 */
 	setClipboard: function(maintext) {
-		if(window.clipboardData) {
+		if (window.clipboardData) {
 			window.clipboardData.setData("Text", maintext);
 			alert("复制成功！");
-		} else if(window.netscape) {
+		} else if (window.netscape) {
 			try {
 				netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
-			} catch(e) {
-				alert("被浏览器拒绝！\n请在浏览器地址栏输入'about:config'并回车\n然后将 'signed.applets.codebase_principal_support'设置为'true'");
+			} catch (e) {
+				alert(
+					"被浏览器拒绝！\n请在浏览器地址栏输入'about:config'并回车\n然后将 'signed.applets.codebase_principal_support'设置为'true'"
+				);
 				return;
 			}
-			var clip = Components.classes['@mozilla.org/widget/clipboard;1'].createInstance(Components.interfaces.nsIClipboard);
-			if(!clip)
+			var clip = Components.classes['@mozilla.org/widget/clipboard;1'].createInstance(Components
+				.interfaces.nsIClipboard);
+			if (!clip)
 				return;
-			var trans = Components.classes['@mozilla.org/widget/transferable;1'].createInstance(Components.interfaces.nsITransferable);
-			if(!trans)
+			var trans = Components.classes['@mozilla.org/widget/transferable;1'].createInstance(Components
+				.interfaces.nsITransferable);
+			if (!trans)
 				return;
 			trans.addDataFlavor('text/unicode');
 			var str = new Object();
-			var str = Components.classes["@mozilla.org/supports-string;1"].createInstance(Components.interfaces.nsISupportsString);
+			var str = Components.classes["@mozilla.org/supports-string;1"].createInstance(Components
+				.interfaces.nsISupportsString);
 			var copytext = txt;
 			str.data = copytext;
 			trans.setTransferData("text/unicode", str, copytext.length * 2);
 			var clipid = Components.interfaces.nsIClipboard;
-			if(!clip)
+			if (!clip)
 				return false;
 			clip.setData(trans, null, clipid.kGlobalClipboard);
 			alert("复制成功！")
 
 		}
+	},
+	/**
+	 * 验证表单文本框为空
+	 * @param {Object} name
+	 * @param {Object} msg
+	 */
+	formVerifyEmpty: function(name, msg) {
+		if (msg == undefined || msg == '')
+			msg = '不能为空';
+		let div = $(`[name='${name}']`);
+		if (div.next('.field-validation-error').length === 0) {
+			div.after(`<span class="field-validation-error">${msg}</span>`);
+		}
+
+		if (div.val() == "") {
+			div.next().html(`${msg}`)
+			return true;
+		} else {
+			div.next().html('')
+			return false;
+		}
 	}
 });
 
-//jQuery 所选对象扩展方法
+
+//////////////////////////////////////////////////  jQuery 本身的扩展方法 END  //////////////////////////////////////////////////
+
+
+////////////////////////////////////////////////// jQuery 所选对象扩展方法 START //////////////////////////////////////////////////
 $.fn.extend({
 	//self
 	df: function() {
@@ -303,16 +434,15 @@ $.fn.extend({
 		return true;
 	},
 
-	/*
-	 * 
+	/**
+	 *
 	 * 拖拽方法
-	 * 
+	 *
 	 * ojb会被拖动
-	 * 
-	 * 
+	 *
+	 *
 	 * 当dragArea被定义的时候，只允许classname为move的区域接受拖动
-	 * 
-	 * 
+	 *
 	 * eg:	$('#modal1').drag();
 	 */
 	drag: function(dragArea) {
@@ -323,17 +453,16 @@ $.fn.extend({
 		 *         mouseover:fn(){判断如果dragging = true, 则当前坐标位置 - 记录起始坐标位置，绝对定位的元素获得差值}
 		 *         mouseup:fn(){dragging = false, 释放鼠标捕获，防止冒泡}
 		 */
-
 		var obj = this;
 		var dragging = false;
 		var iX, iY;
 		//	console.log(obj)
-		if(obj.on == undefined) return;
+		if (obj.on == undefined) return;
 		obj.on('mousedown', function(e) {
 
 			var clickName = e.target.className;
 			//				console.log(clickName)
-			if(dragArea != undefined & clickName != 'move') {
+			if (dragArea != undefined & clickName != 'move') {
 				log('只允许classname为move的区域接受拖动')
 				return
 
@@ -346,7 +475,7 @@ $.fn.extend({
 		});
 		document.onmousemove = function(e) {
 			//		console.log(dragging)
-			if(dragging) {
+			if (dragging) {
 				var e = e || window.event;
 				var oX = e.clientX - iX;
 				var oY = e.clientY - iY;
@@ -366,18 +495,23 @@ $.fn.extend({
 		return true;
 	},
 
-	//清空obj的内容
+	/**
+	 * 清空obj的内容
+	 */
 	clear: function() {
 		this.html('');
 		this.val('');
 		this.text('');
 		return true;
 	},
-	//给obj设置important的样式
+	/**
+	 * 给obj设置important的样式
+	 * @param {Object} css
+	 */
 	setStyle: function(css) {
 		this.css('cssText', css + ' !important')
 	},
-	//other
+
 	isInt: function() {
 		return $.isInt($(this).val());
 	},
@@ -433,11 +567,11 @@ $.fn.extend({
 		var h = $(this).height();
 		var _img = new Image();
 		_img.src = $(this).attr("src");
-		if(_img.width > _img.height) {
+		if (_img.width > _img.height) {
 			h = (_img.height / _img.width) * w;
 			w = (_img.width > iwidth) ? iwidth : _img.width;
 
-		} else if(_img.width < _img.height) {
+		} else if (_img.width < _img.height) {
 			w = (_img.width / _img.height) * h;
 			h = (_img.height > iheight) ? iheight : _img.height;
 
@@ -454,20 +588,20 @@ $.fn.extend({
 		var _this = $(this);
 		var content = _this.html();
 
-		if(content == undefined) {
+		if (content == undefined) {
 			return;
 		}
-		if(content.length <= width) {
+		if (content.length <= width) {
 			_this.html(content);
 		} else {
 			var str = '';
 
-			for(var i = 0; i < content.length; i++) {
-				if(i % width != 0) {
+			for (var i = 0; i < content.length; i++) {
+				if (i % width != 0) {
 					str += content.substr(i, 1);
 
 				} else {
-					if(i != 0) {
+					if (i != 0) {
 						str += "<br/>" + content.substr(i, 1);
 					}
 				}
@@ -480,12 +614,12 @@ $.fn.extend({
 	limitWidth: function() {
 		var _this = $(this);
 		var elments = _this.getElementsByTagName("*");
-		for(var i = 0; i < elments.length; i++) {
-			if(parseInt(elments[i].getAttribute("width")) > width) {
+		for (var i = 0; i < elments.length; i++) {
+			if (parseInt(elments[i].getAttribute("width")) > width) {
 				elments[i].setAttribute("width", width - 1);
 			}
-			if(elments[i].style.width) {
-				if(parseInt(elments[i].style.width) > width) {
+			if (elments[i].style.width) {
+				if (parseInt(elments[i].style.width) > width) {
 					elments[i].style.width = width - 1;
 				}
 			}
@@ -497,18 +631,18 @@ $.fn.extend({
 		var textarea = $(this);
 
 		var input = null;
-		if(inputID) {
+		if (inputID) {
 			input = $("#" + inputID);
 		}
-		if(input) {
+		if (input) {
 			isInput ? input.val(num - textarea.len()) : input.html(num - textarea.len());
 		}
 
 		function limit(textarea, num) {
-			if(textarea.len() >= num) {
+			if (textarea.len() >= num) {
 				textarea.val(textarea.val().substring(0, num));
 			} else {
-				if(input) {
+				if (input) {
 					isInput ? input.val(num - textarea.len()) : input.html(num - textarea.len());
 				}
 			}
@@ -523,7 +657,6 @@ $.fn.extend({
 		return textarea;
 	},
 	nulldefined: function() {},
-
 	"placeholder": function(options) {
 		options = $.extend({
 			placeholderColor: '#aaa',
@@ -534,27 +667,33 @@ $.fn.extend({
 		$(this).each(function() {
 			var _this = this;
 			var supportPlaceholder = 'placeholder' in document.createElement('input');
-			if(!supportPlaceholder) {
+			if (!supportPlaceholder) {
 				var defaultValue = $(_this).attr('placeholder');
-				if(!defaultValue) {
+				if (!defaultValue) {
 					return;
 				}
 
 				var defaultColor = $(_this).css('color');
-				if(!options.isUseSpan) {
+				if (!options.isUseSpan) {
 
 					$(_this).focus(function() {
 						var pattern = new RegExp("^" + defaultValue + "$|^$");
-						pattern.test($(_this).val()) && $(_this).val('').css('color', defaultColor);
+						pattern.test($(_this).val()) && $(_this).val('').css('color',
+							defaultColor);
 					}).blur(function() {
-						if($(_this).val() == defaultValue) {
+						if ($(_this).val() == defaultValue) {
 							$(_this).css('color', defaultColor);
-						} else if($(_this).val().length == 0) {
-							$(_this).val(defaultValue).css('color', options.placeholderColor)
+						} else if ($(_this).val().length == 0) {
+							$(_this).val(defaultValue).css('color', options
+								.placeholderColor)
 						}
 					}).trigger('blur');
 				} else {
-					var $imitate = $('<span class="wrap-placeholder" style="position:absolute; display:inline-block; overflow:hidden; color:' + options.placeholderColor + '; width:' + $(_this).outerWidth() + 'px; height:' + $(_this).outerHeight() + 'px;">' + defaultValue + '</span>');
+					var $imitate = $(
+						'<span class="wrap-placeholder" style="position:absolute; display:inline-block; overflow:hidden; color:' +
+						options.placeholderColor + '; width:' + $(_this).outerWidth() +
+						'px; height:' + $(_this).outerHeight() + 'px;">' + defaultValue +
+						'</span>');
 					$imitate.css({
 						'margin-left': $(_this).css('margin-left'),
 						'margin-top': $(_this).css('margin-top'),
@@ -562,8 +701,10 @@ $.fn.extend({
 						'font-family': $(_this).css('font-family'),
 						'font-weight': $(_this).css('font-weight'),
 						'padding-left': parseInt($(_this).css('padding-left')) + 2 + 'px',
-						'line-height': _this.nodeName.toLowerCase() == 'textarea' ? $(_this).css('line-weight') : $(_this).outerHeight() + 'px',
-						'padding-top': _this.nodeName.toLowerCase() == 'textarea' ? parseInt($(_this).css('padding-top')) + 2 : 0,
+						'line-height': _this.nodeName.toLowerCase() == 'textarea' ? $(_this)
+							.css('line-weight') : $(_this).outerHeight() + 'px',
+						'padding-top': _this.nodeName.toLowerCase() == 'textarea' ?
+							parseInt($(_this).css('padding-top')) + 2 : 0,
 						"left": $(_this).position().left + "px",
 						"top": $(_this).position().top + "px"
 
@@ -574,11 +715,13 @@ $.fn.extend({
 
 					$(_this).val().length != 0 && $imitate.hide();
 
-					if(!options.onInput) {
+					if (!options.onInput) {
 						//绑定oninput/onpropertychange事件
-						var inputChangeEvent = typeof(_this.oninput) == 'object' ? 'input' : 'propertychange';
+						var inputChangeEvent = typeof(_this.oninput) == 'object' ? 'input' :
+							'propertychange';
 						$(_this).bind(inputChangeEvent, function() {
-							$imitate[0].style.display = $(_this).val().length != 0 ? 'none' : 'inline-block';
+							$imitate[0].style.display = $(_this).val().length != 0 ?
+								'none' : 'inline-block';
 						});
 					} else {
 						$(_this).focus(function() {
@@ -614,11 +757,12 @@ $.fn.extend({
 			$("li", _ul).each(function() {
 
 				var item = $(this);
-				if(item.attr("val") == val) {
-					$("span", $(".selected", _div)).html(item.attr("text").substr(0, options.maxlength));
+				if (item.attr("val") == val) {
+					$("span", $(".selected", _div)).html(item.attr("text").substr(0, options
+						.maxlength));
 				}
 
-				if(item.attr("haschild") == "true") {
+				if (item.attr("haschild") == "true") {
 
 					var _cul = $("#" + _input.attr("id") + "_" + item.attr("val") + "_ul");
 					item.mouseenter(function() {
@@ -642,159 +786,6 @@ $.fn.extend({
 	}
 
 })
+//////////////////////////////////////////////////  jQuery 所选对象扩展方法 END  //////////////////////////////////////////////////
 
-//常用方法组
-var FUNC = {
-	addFavorite: function(url, text) //收藏夹
-	{
-		if(document.all) {
-			window.external.addFavorite(url, text);
-		} else if(window.sidebar) {
-			window.sidebar.addPanel(text, url, "");
-		}
-	},
-
-	holder: function(objid) {
-
-		var _this = $("#" + objid);
-		var placeholder = _this.attr("holder");
-		if($.trim(_this.val()) == "") {
-			_this.addClass("placeholder");
-			_this.val(placeholder);
-		}
-		_this.focus(function() {
-			if($.trim(_this.val()) == placeholder) {
-				_this.removeClass("placeholder");
-				_this.val("");
-			}
-		}).blur(function() {
-			if($.trim(_this.val()) == "") {
-				_this.addClass("placeholder");
-				_this.val(placeholder);
-			}
-		});
-	},
-
-	setHomePage: function(obj, vrl) //首页
-	{
-		if(confirm('确认要将' + vrl + '设置为首页?')) {
-			try {
-				obj.style.behavior = 'url(#default#homepage)';
-				obj.setHomePage(vrl);
-			} catch(e) {
-				if(window.netscape) {
-					try {
-						netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
-					} catch(e) {
-						alert("此操作被浏览器拒绝！\n请在浏览器地址栏填写“about:config”并回车\n然后将[signed.applets.codebase_principal_support]设置为'true'");
-					}
-					var prefs = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefBranch);
-					prefs.setCharPref('browser.startup.homepage', vrl);
-				}
-			}
-		}
-	},
-	undefined: function(variable) {
-		return typeof variable == 'undefined' ? true : false;
-	},
-	form: function(formid) {
-		if(formid == null || formid == undefined) {
-			return document.forms[0];
-		} else {
-			return document.forms[formid];
-		}
-	},
-	openWindow: function(url) {
-		var a = document.createElement("a");
-		a.setAttribute("href", url);
-		a.setAttribute("target", "_blank");
-		a.setAttribute("id", "openwin");
-		document.body.appendChild(a);
-		a.click();
-	},
-	getElementsByName: function(name) {
-		var ret = [];
-		var elements = document.getElementsByTagName("input");
-
-		for(var i = 0; i < elements.length; i++) {
-			if(elements[i].name == name) {
-				ret.push(elements[i]);
-			}
-		}
-		return ret;
-	},
-	checkAll: function(ischecked, formid) {
-
-		if(formid) {
-			$("#" + formid + " input[type='checkbox']").attr("checked", ischecked);
-		} else {
-			$("input[type='checkbox']").attr("checked", ischecked);
-		}
-
-	},
-	selectedCount: function(formid) {
-		var chks = null;
-		var n = 0;
-		if(formid) {
-			chks = $("#" + formid + " input[type='checkbox']");
-		} else {
-			chks = $("input[type='checkbox']");
-		}
-		chks.each(function() {
-			if($(this).get(0).checked) {
-				n++;
-			}
-		});
-		return n;
-	},
-	selecteds: function(formid) {
-		var ids = "";
-		var chks = null;
-
-		if(formid) {
-			chks = $("#" + formid + " input[type='checkbox']");
-		} else {
-			chks = $("input[type='checkbox']");
-		}
-		chks.each(function() {
-			if($(this).get(0).checked) {
-				if(ids != "") {
-					ids += ",";
-				}
-				ids += $(this).val();
-			}
-		});
-		return ids;
-
-	},
-	allids: function(formid) {
-		var ids = "";
-		var chks = null;
-
-		if(formid) {
-			chks = $("#" + formid + " input[type='checkbox']");
-		} else {
-			chks = $("input[type='checkbox']");
-		}
-		chks.each(function() {
-
-			if(ids != "") {
-				ids += ",";
-			}
-			ids += $(this).val();
-
-		});
-		return ids;
-
-	},
-	uncheckAll: function(formid) {
-		if(formid) {
-			$("#" + formid + " input[type='checkbox']").attr("checked", false);
-		} else {
-			$("input[type='checkbox']").attr("checked", false);
-		}
-
-	}
-};
-
-console.log("jqExt loaded");
+console.log("jqExt 加载完成");

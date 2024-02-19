@@ -10,12 +10,12 @@ class ColumnController extends BaseController{
 	function homeColumn($param) {
 		$output = HomeColumnModel::order('asc')->select();
 		// var_dump($output);
-		include  view_back();
+		$this->view(get_defined_vars());
 	}
 
 	function homeColumnAdd($param) {
 		$output = HomeColumnModel::where($param)->find();
-		include view_back();
+		$this->view(get_defined_vars());
 	}
 
 	function homeColumnUpdate() {
@@ -57,7 +57,7 @@ class ColumnController extends BaseController{
 	// ********************** 留言管理 START **********************
 	public function message($param) {
 		$output = MessageModel::order(["time"=>'desc'])->select();
-		include view_back();
+		$this->view(get_defined_vars());
 	}
 
 	/**
@@ -67,7 +67,7 @@ class ColumnController extends BaseController{
 	function messageView($param) {
 		$output = MessageModel::where($param)->first();
 		MessageModel::where($param)->update(["status"=>true]);
-		include view_back();
+		$this->view(get_defined_vars());
 	}
 
 	/**
@@ -88,12 +88,12 @@ class ColumnController extends BaseController{
 
 	public function homeLink($param) {
 		$output = HomeLinkModel::select();
-		include  view_back();
+		$this->view(get_defined_vars());
 	}
 
 	function homeLinkAdd($param) {
 		$output = HomeLinkModel::where($param)->find();
-		include  view_back();
+		$this->view(get_defined_vars());
 	}
 
 	function homeLinkUpdate() {
@@ -119,12 +119,12 @@ class ColumnController extends BaseController{
 
 	public function homeMusic($param) {
 		$output = HomeMusicModel::select();
-		include  view_back();
+		$this->view(get_defined_vars());
 	}
 
 	function homeMusicAdd($param) {
 		$output = HomeMusicModel::where($param)->find();
-		include  view_back();
+		$this->view(get_defined_vars());
 	}
 
 	function homeMusicUpdate() {
@@ -144,8 +144,6 @@ class ColumnController extends BaseController{
 		message($ret,"admin/column/" . HomeMusicModel::getName());
 	}
 
-
-
 	// **********************  音乐管理 END  **********************
 
 
@@ -154,7 +152,7 @@ class ColumnController extends BaseController{
 	function homeLayout($param = 1) {
 		$output = HomeLayoutModel::where($param)->first();
 		$img = HomeLayoutImgModel::select();
-		include view_back();
+		$this->view(get_defined_vars());
 	}
 
 	function homeLayoutUpdate() {
@@ -203,7 +201,7 @@ class ColumnController extends BaseController{
 	public function notepad($param)
 	{
 		$output = NotepadModel::order(['time', 'desc'])->select();
-		$this->view();
+		$this->view(get_defined_vars());
 		}
 
 	/**
@@ -213,7 +211,7 @@ class ColumnController extends BaseController{
 	public function notepadAdd($param)
 	{
 		$output = NotepadModel::where(["id" => $param])->first();
-		include view_back();
+		$this->view(get_defined_vars());
 		}
 
 	/**
@@ -233,7 +231,7 @@ class ColumnController extends BaseController{
 	public function notepadView($param)
 	{
 		$output = NotepadModel::where(["id" => $param])->first();
-		include view_back();
+		$this->view(get_defined_vars());
 		}
 
 	/**
@@ -243,7 +241,8 @@ class ColumnController extends BaseController{
 	{
 		$dt = $_POST['data'];
 		$id = $_POST['id'];
-		$ret = NotepadModel::where(["id" => $id])->update($dt);
+		// var_dump($_POST);die;
+		$ret = NotepadModel::where($id)->update($dt);
 		message($ret,str("admin/column/{0}",[NotepadModel::getName()]));
 	}
 
@@ -260,9 +259,8 @@ class ColumnController extends BaseController{
 
 	public function notepadSs($param)
 	{
-		showPage(self::$db_n, [], str("admin/column/{0}_ss",[self::$db_n]));
 		NotepadModel::showPage(str("admin/column/{0}_ss",[NotepadModel::getName()]));
-		include view_back();
+		$this->view(get_defined_vars());
 		}
 
 		/**
@@ -272,7 +270,7 @@ class ColumnController extends BaseController{
 		public function notepadSsAdd($param)
 		{
 			$output = NotepadModel::where(["id" => $param])->first();
-			include view_back();
+			$this->view(get_defined_vars());
 			}
 
 			/**
@@ -304,7 +302,7 @@ class ColumnController extends BaseController{
 		public function notepadSsView($param)
 		{
 			$output = NotepadModel::where(["id" => $param])->first();
-			include view_back();
+			$this->view(get_defined_vars());
 			}
 
 	// **********************  记事本 END  **********************
@@ -315,7 +313,7 @@ class ColumnController extends BaseController{
 	public function column($param)
 	{
 		$output = ColumnModel::where(1)->first();
-		include view_back();
+		$this->view(get_defined_vars());
 	}
 
 	public function columnUpdate()
@@ -341,7 +339,7 @@ class ColumnController extends BaseController{
 	public function readme($param)
 	{
 		$output = ColumnModel::where(1)->first();
-		include view_back();
+		$this->view(get_defined_vars());
 	}
 }
 ?>

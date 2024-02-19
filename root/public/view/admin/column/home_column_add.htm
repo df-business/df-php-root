@@ -10,16 +10,14 @@
 				<div class="ibox-content">
 					<form method="post"
 						action='{:split_url(str("admin/column/%s_update",[areas\admin\model\HomeColumnModel::getName()]))}'>
-						<input name="id" value="{:isset($output[0])?$output[0]:'0'}" hidden />
-						<input name="data[content]" id="content" hidden="" />
+						<input name="id" value="{:$output[0]??'0'}" hidden />
 
 						<div class="form-horizontal m-t">
 							<div class="form-group">
 								<label class="col-sm-1 control-label">标题：</label>
 								<div class="col-sm-5">
 									<input class="form-control" name="data[title]" size="10" type="text"
-										value="{:isset($output[0])?$output['title']:''}" />
-									<span class="field-validation-error" veri-for=""></span>
+										value="{:$output['title']??''}" />
 								</div>
 							</div>
 
@@ -29,8 +27,7 @@
 								<label class="col-sm-1 control-label">菜单名：</label>
 								<div class="col-sm-5">
 									<input class="form-control" name="data[menu]" size="10" type="text"
-										value="{:isset($output[0])?$output['menu']:''}" />
-									<span class="field-validation-error" veri-for=""></span>
+										value="{:$output['menu']??''}" />
 								</div>
 							</div>
 
@@ -39,8 +36,7 @@
 								<label class="col-sm-1 control-label">描述：</label>
 								<div class="col-sm-5">
 									<input class="form-control" name="data[describe]" size="10" type="text"
-										value="{:isset($output[0])?$output['describe']:''}" />
-									<span class="field-validation-error" veri-for=""></span>
+										value="{:$output['describe']??''}" />
 								</div>
 							</div>
 
@@ -63,10 +59,8 @@
 								<label class="col-sm-1 control-label">内容：</label>
 								<div class="col-sm-11">
 									<!--script标签之间不能有换行和空格，否则新建的时候文本框会自动添加换行和空格-->
-									<script type="text/plain" id="Body">
-										{:isset($output[0])?$output['content']:''}
-								</script>
-									<span class="field-validation-error" veri-for="Body"></span>
+									<script type="text/plain" id="container" name="data[content]">
+										{:$output['content']??''}</script>
 								</div>
 							</div>
 
@@ -87,37 +81,30 @@
 </df-body>
 
 <df-footer>
+
 	<script type="text/javascript">
 		function submit_form() {
-			if ($("input[name='data[title]']").val() == "") {
-				$("[name='data[title]']").next().html('请输入标题')
+			if ($.formVerifyEmpty('data[title]', '请输入标题')) {
 				return false;
 			}
-			if ($("#content").val() == "<p><br></p>") {
-				$("[veri-for='Body']").html('请输入内容')
+			if ($.formVerifyEmpty('data[content]', '请输入内容')) {
 				return false;
 			}
-			$("#content").val($("#Body").html());
 			return true;
 		}
-
-		function reset_body(type, isfullscreen) {
-			if (!isfullscreen) {
-				$("body").css("overflow", "");
-			}
-		}
 	</script>
 
-	<!-- ********************** ueditor START ********************** -->
-	<script type="text/javascript" src="{:VIEW_ASSETS}/ueditor/1.5.0/custom/ueditor.config.js"></script>
-	<script type="text/javascript" src="https://oss.dfer.site/ueditor/1.5.0/ueditor.all.js"></script>
+	<!-- ********************** umeditor START ********************** -->
+	<link type="text/css" rel="stylesheet"
+		href="https://oss.dfer.site/umeditor/1.2.2/themes/default/css/umeditor.min.css">
+	<script type="text/javascript" src='{:VIEW_ASSETS}/umeditor/1.2.2/umeditor.config.js'></script>
+	<script type="text/javascript" src="https://oss.dfer.site/umeditor/1.2.2/umeditor.js"></script>
+	<script type="text/javascript" src="https://oss.dfer.site/umeditor/1.2.2/lang/zh-cn/zh-cn.js"></script>
+
 	<script type="text/javascript">
-		$(() => {
-			var ue = UE.getEditor('Body');
-			ue.addListener('fullscreenchanged', reset_body);
-		})
+		var um = UM.getEditor('container');
 	</script>
-	<!-- **********************  ueditor END  ********************** -->
+	<!-- **********************  umeditor END  ********************** -->
 
 	<!-- ********************** webuploader START ********************** -->
 	<link rel="stylesheet" href="https://oss.dfer.site/webuploader/0.1.5/webuploader.css" type="text/css" />

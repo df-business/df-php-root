@@ -10,7 +10,7 @@ abstract class BaseController {
 			/**
 				* 初始方法
 				*/
-			public function __construct()
+			function __construct()
 			{
 				$this->initialize();
 			}
@@ -23,10 +23,12 @@ abstract class BaseController {
 /**
 	* 视图
 	*/
-			function view()
+		public	function view($params,$template='common')
 			{
 				global $_df;
-				include_once view("common", $_df['area'], false);
+				extract($params);
+				// var_dump(func_get_args(),PHP_EOL,get_defined_vars());
+				include_once view($template, $_df['area']);
 			}
 
 
@@ -93,6 +95,30 @@ abstract class BaseController {
 					$rt = $id;
 				}
 				return $rt;
+			}
+
+			const SUCCESS='alert-success';
+			const ERROR='alert-danger';
+			/**
+			 * 提示
+			 * @param {Object} $msg 变量
+			 **/
+			public function notice($msg = '...',$type=self::ERROR)
+			{
+				$html=<<<STR
+				<div class="alert {$type}" role="alert">{$msg}</div>
+				STR;
+				echo $html;
+			}
+
+
+			/**
+			 * 验证
+			 * @param {Object} $var 变量
+			 **/
+			public function validate($var = null)
+			{
+					return new $var;
 			}
 
 }

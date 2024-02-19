@@ -19,7 +19,6 @@
 								<div class="col-sm-5">
 									<input class="form-control" name="data[title]" size="10" type="text"
 										value="{:$output['title']}" />
-									<span class="field-validation-error" veri-for=""></span>
 								</div>
 							</div>
 
@@ -28,7 +27,6 @@
 								<div class="col-sm-5">
 									<input class="form-control" name="data[src]" size="10" type="text"
 										value="{:$output['src']}" />
-									<span class="field-validation-error" veri-for=""></span>
 								</div>
 							</div>
 
@@ -37,7 +35,6 @@
 								<div class="col-sm-5">
 									<input class="form-control" name="data[order_num]" size="10" type="text"
 										value="{:$output['order_num']}" />
-									<span class="field-validation-error" veri-for=""></span>
 								</div>
 							</div>
 
@@ -71,19 +68,12 @@
 <df-footer>
 
 	<script type="text/javascript">
-		//验证输入
-		function verify() {
-			if ($("input[name='data[title]']").val() == "") {
-				$("[name='data[title]']").next().html('请输入标题')
-				return false;
-			}
-
-			return true;
-		}
 
 		function submit_form() {
-
-			return verify();
+			if ($.formVerifyEmpty('data[title]','请输入标题')) {
+				return false;
+			}
+			return true;
 		}
 	</script>
 

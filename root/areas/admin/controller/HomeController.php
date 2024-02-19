@@ -104,7 +104,7 @@ EOT;
 		*/
 	public function desktop($param)
 	{
-		include view_back();
+		$this->view(get_defined_vars());
 		}
 
 
@@ -114,7 +114,7 @@ EOT;
 		    public function changePic($param)
 		    {
 										$output = UserModel::where(1)->first();
-		        include view_back();
+		        $this->view(get_defined_vars());
 		    }
 
 		    /**
@@ -153,7 +153,7 @@ EOT;
 		        $id = get_session(\ENUM::SES_NAME);
 		        $id = $id[0];
 										$output = UserModel::where($id)->first();
-		        include view_back();
+		        $this->view(get_defined_vars());
 		    }
 
 		    /**
@@ -227,7 +227,7 @@ EOT;
 	public function user($param)
 	{
 		$output = UserModel::select();
-		include view_back();
+		$this->view(get_defined_vars());
 	}
 
 	public function userAdd($param)
@@ -237,7 +237,7 @@ EOT;
 		$output = UserModel::where(["id" => $param])->first();
 		$type = RolesModel::select();
 		// var_dump($param,$output);
-		include view_back();
+		$this->view(get_defined_vars());
 	}
 
 	public function userEditUp($name)
@@ -249,7 +249,7 @@ EOT;
 	public function userView($param)
 	{
 		$output = UserModel::where($param)->show();
-		include view_back();
+		$this->view(get_defined_vars());
 	}
 
 	//更新数据
@@ -291,20 +291,20 @@ EOT;
 	public function roles($param)
 	{
 		$output = RolesModel::select();
-		include view_back();
+		$this->view(get_defined_vars());
 	}
 
 	public function rolesAdd($param)
 	{
 		$err = $_GET['err'];
 		$output = RolesModel::where($param)->find();
-		include view_back();
+		$this->view(get_defined_vars());
 	}
 
 	public function rolesView($param)
 	{
 		$output = RolesModel::where($param)->first();
-		include view_back();
+		$this->view(get_defined_vars());
 	}
 
 	/**
@@ -334,7 +334,7 @@ EOT;
 	public function guests($param)
 	{
 		$output = HomeUserInfoModel::order(['id' => 'desc'])->select();
-		include view_back();
+		$this->view(get_defined_vars());
 	}
 
 	// **********************  访问信息收集 END  **********************
@@ -344,7 +344,7 @@ EOT;
 	public function html($param)
 	{
 		$output = HtmlModel::select();
-		include view_back();
+		$this->view(get_defined_vars());
 	}
 
 	/**
@@ -354,7 +354,7 @@ EOT;
 	public function htmlAdd($param)
 	{
 		$output = HtmlModel::where($param)->first();
-		include view_back();
+		$this->view(get_defined_vars());
 	}
 
 	/**
@@ -364,7 +364,7 @@ EOT;
 	public function htmlView($param)
 	{
 		$output = HtmlModel::where($param)->first();
-		include view_back();
+		$this->view(get_defined_vars());
 	}
 
 	/**
@@ -398,7 +398,7 @@ EOT;
 		$l_parent_id = $l_parent[count($l_parent) - 1];
 		array_pop($l_parent);
 		$l_parent = implode(',', $l_parent);
-		include  view_back();
+		$this->view(get_defined_vars());
 	}
 
 	public function menuAdd($param)
@@ -416,7 +416,7 @@ EOT;
 		$parent = $_GET['parent'];
 		$parent_id = $_GET['parent_id'];
 
-		include view_back();
+		$this->view(get_defined_vars());
 	}
 
 	/**
@@ -457,7 +457,7 @@ EOT;
 			show_json(1,'clear');
 		}
 		$output = LogsModel::select();
-		include view_back();
+		$this->view(get_defined_vars());
 	}
 
 	/**
@@ -513,7 +513,7 @@ EOT;
 		$s = sprintf('<html><head><meta charset="UTF-8"><link rel="stylesheet" href="font-awesome.css"></head><body>%s</body></html>', $body);
 		$files->writeFile($s,$file_n);
 		$str .= str("<a href='{path}' target='_blank'>{path}(用来优化字体文件)</a>：已生成<br>", ['path'=>$path]);
-		include view_back();
+		$this->view(get_defined_vars());
 	}
 
 

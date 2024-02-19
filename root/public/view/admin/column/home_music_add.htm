@@ -1,6 +1,4 @@
 <df-body>
-
-
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="ibox float-e-margins">
@@ -10,16 +8,15 @@
 				<div class="ibox-content">
 					<form method="post"
 						action='{:split_url(str("admin/column/%s_update",[areas\admin\model\HomeMusicModel::getName()]))}'>
-						<input name="id" value="{:isset($output[0])?$output[0]:'0'}" hidden />
-						<input name="data[src]" id="src" value="{:isset($output[0])?$output['src']:'0'}" hidden />
+						<input name="id" value="{:$output[0]??'0'}" hidden />
+						<input name="data[src]" id="src" value="{:$output['src']??'0'}" hidden />
 
 						<div class="form-horizontal m-t">
 							<div class="form-group">
 								<label class="col-sm-1 control-label">标题：</label>
 								<div class="col-sm-5">
 									<input class="form-control" name="data[title]" size="10" type="text"
-										value="{:isset($output[0])?$output['title']:''}" />
-									<span class="field-validation-error" veri-for=""></span>
+										value="{:$output['title']??''}" />
 								</div>
 							</div>
 
@@ -76,22 +73,15 @@
 	<!-- **********************  webuploader END  ********************** -->
 
 	<script type="text/javascript">
-		//验证输入
-		function verify() {
-			if ($("input[name='data[title]']").val() == "") {
-				$("[name='data[title]']").next().html('请输入标题')
-				return false;
-			}
-			if ($("#html").val() == "<p><br></p>") {
-				$("[veri-for='Body']").html('请输入内容')
-				return false;
-			}
-			return true;
-		}
 
 		function submit_form() {
-			$("#html").val($("#Body").html());
-			return verify();
+			function submit_form() {
+				if ($.formVerifyEmpty('data[title]', '请输入标题')) {
+					return false;
+				}
+
+				return true;
+			}
 		}
 	</script>
 

@@ -2,86 +2,79 @@
 
 
 
-<div class="row">
-	<div class="col-sm-12">
-		<div class="ibox float-e-margins">
-			<div class="ibox-title">
-				<h5></h5>
-			</div>
-			<div class="ibox-content">
-				<form method="post" action='{:split_url(str("admin/column/{0}_ss_update ",[areas\admin\model\NotepadModel::getName()]))!!'>
-					<input name="id" value="{:isset($output[0])?$output[0]:'0'!!" hidden/>
-					<input name="data[content]" id="content" hidden="" />
-					<input name="data[time]" value='{:isset($output[0])?$output["time"]:date(" Y-m-d H:i:s ")!!' hidden/>
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="ibox float-e-margins">
+				<div class="ibox-title">
+					<h5></h5>
+				</div>
+				<div class="ibox-content">
+					<form method="post"
+						action='{:split_url(str("admin/column/%s_ss_update ",[areas\admin\model\NotepadModel::getName()]))}'>
+						<input name="id" value="{:$output[0]??0}" hidden />
+						<input name="data[time]" value='{:$output["time"]??date(" Y-m-d H:i:s ")}'
+							hidden />
 
-					<div class="form-horizontal m-t">
-						<div class="form-group">
-							<label class="col-sm-1 control-label">标题：</label>
-							<div class="col-sm-5">
-								<input class="form-control" name="data[title]" size="10" type="text" value="{:isset($output[0])?$output['title']:''!!" />
-								<span class="field-validation-error" veri-for=""></span>
+						<div class="form-horizontal m-t">
+							<div class="form-group">
+								<label class="col-sm-1 control-label">标题：</label>
+								<div class="col-sm-5">
+									<input class="form-control" name="data[title]" size="10" type="text"
+										value="{$output['title']}" />
+								</div>
 							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-1 control-label">内容：</label>
-							<div class="col-sm-11">
-								<script type="text/plain" id="Body">{:isset($output['content'])?$output['content']:''!!</script>
-								<span class="field-validation-error" veri-for="Body"></span>
+							<div class="form-group">
+								<label class="col-sm-1 control-label">内容：</label>
+								<div class="col-sm-11">
+									<script type="text/plain" id="container" name="data[content]">
+										{:$output['content']??''}</script>
+								</div>
 							</div>
-						</div>
 
-						<div class="form-group">
-							<div class="col-sm-2 col-sm-offset-1">
-								<button class="btn btn-primary" onclick="return submit_form()">保存</button>
-								<a href='{:split_url(str("admin/column/{0}_ss",[areas\admin\model\NotepadModel::getName()]))!!' class="btn btn-sm btn-white"> 返 回 </a>
+							<div class="form-group">
+								<div class="col-sm-2 col-sm-offset-1">
+									<button class="btn btn-primary" onclick="return submit_form()">保存</button>
+									<a href='{:split_url(str("admin/column/%s_ss",[areas\admin\model\NotepadModel::getName()]))}'
+										class="btn btn-sm btn-white"> 返 回 </a>
+								</div>
 							</div>
 						</div>
-					</div>
-				</form>
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
 
 </df-body>
 
 <df-footer>
 
 
-<!-- umeditor-->
-<link type="text/css" rel="stylesheet" href="{:VIEW_ASSETS}/umeditor/themes/default/css/umeditor.css">
-<script type="text/javascript" src='{:VIEW_ASSETS}/umeditor/umeditor.config.js?time=!!date("Ymdhis")!!'></script>
-<script type="text/javascript" src="{:VIEW_ASSETS}/umeditor/umeditor.js"></script>
-<script type="text/javascript" src="{:VIEW_ASSETS}/umeditor/lang/zh-cn/zh-cn.js"></script>
+	<!-- ********************** umeditor START ********************** -->
+	<link type="text/css" rel="stylesheet"
+		href="https://oss.dfer.site/umeditor/1.2.2/themes/default/css/umeditor.min.css">
+	<script type="text/javascript" src='{:VIEW_ASSETS}/umeditor/1.2.2/umeditor.config.js'></script>
+	<script type="text/javascript" src="https://oss.dfer.site/umeditor/1.2.2/umeditor.js"></script>
+	<script type="text/javascript" src="https://oss.dfer.site/umeditor/1.2.2/lang/zh-cn/zh-cn.js"></script>
 
-<script type="text/javascript">
-	//验证输入
-	function verify() {
-		if($("input[name='data[title]']").val() == "") {
-			$("[name='data[title]']").next().html('请输入标题')
-			return false;
+	<script type="text/javascript">
+		var um = UM.getEditor('container');
+	</script>
+	<!-- **********************  umeditor END  ********************** -->
+
+
+	<script type="text/javascript">
+		function submit_form() {
+			if ($.formVerifyEmpty('data[title]', '请输入标题')) {
+				return false;
+			}
+			if ($.formVerifyEmpty('data[content]', '请输入内容')) {
+				return false;
+			}
+			return true;
 		}
-		if($("#content").val() == "<p><br></p>") {
-			$("[veri-for='Body']").html('请输入内容')
-			return false;
-		}
-		return true;
-	}
+	</script>
 
-	function submit_form() {
-		$("#content").val($("#Body").html());
-		return verify();
-	}
 
-	window.UMEDITOR_CONFIG.imageUrl = '{:split_url(sprintf("admin/column/%s_edit_up",self::$db_n))!!';
-	var um1 = UM.getEditor('Body');
-	um1.addListener('fullscreenchanged', resetbody);
-
-	function resetbody(type, isfullscreen) {
-		if(!isfullscreen) {
-			$("body").css("overflow", "");
-		}
-	}
-</script>
 
 </df-footer>

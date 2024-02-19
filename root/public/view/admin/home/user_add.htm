@@ -1,5 +1,4 @@
 <df-body>
-
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="ibox float-e-margins">
@@ -7,20 +6,17 @@
 					<h5></h5>
 				</div>
 				<div class="ibox-content">
-					<form method="post" action='{:split_url(sprintf("admin/home/%s_update ",table_name("UserModel")))}'>
-						<input name="id" value="{:isset($output[0])?$output[0]:'0'}" hidden />
+					<form method="post" action='{:split_url(str("admin/home/%s_update ",[table_name("UserModel")]))}'>
+						<input name="id" value="{:$output[0]??'0'}" hidden />
 
-						<input name="data[create_time]"
-							value="{:isset($output['create_time'])?$output['create_time']:$common->getTime()}"
-							hidden />
+						<input name="data[create_time]" value="{:$output['create_time']??$common->getTime()}" hidden />
 
 						<div class="form-horizontal m-t">
 							<div class="form-group">
 								<label class="col-sm-1 control-label">账号：</label>
 								<div class="col-sm-5">
 									<input class="form-control" name="data[nm]" size="10" type="text"
-										value="{:isset($output[0])?$output['nm']:''}" />
-									<span class="field-validation-error" veri-for="">{:$err}</span>
+										value="{:$output['nm']??''}" />
 								</div>
 							</div>
 
@@ -28,8 +24,7 @@
 								<label class="col-sm-1 control-label">密码：</label>
 								<div class="col-sm-5">
 									<input class="form-control" name="data[pw]" size="10" type="password"
-										value="{:isset($output[0])?$output['pw']:''}" />
-									<span class="field-validation-error" veri-for=""></span>
+										value="{:$output['pw']??''}" />
 								</div>
 							</div>
 
@@ -38,11 +33,11 @@
 								<div class="col-sm-5">
 									<select class="site-select-tem" name="data[role]">
 										<df-each $type>
-											<option value="{::Id}" {:$v['id']==($output['role']??null)? 'selected' : ''}>{::nm}
+											<option value="{::Id}" {:$v['id']==($output['role']??null)? 'selected' : ''
+												}>{::nm}
 											</option>
 										</df-each>
 									</select>
-									<span class="field-validation-error" veri-for=""></span>
 								</div>
 							</div>
 
@@ -65,30 +60,14 @@
 </df-body>
 <df-footer>
 
-	<!-- umeditor-->
-	<link type="text/css" rel="stylesheet" href="{:VIEW_ASSETS}/umeditor/themes/default/css/umeditor.css">
-	<script type="text/javascript" src='{:VIEW_ASSETS}/umeditor/umeditor.config.js'>
-	</script>
-	<script type="text/javascript" src="{:VIEW_ASSETS}/umeditor/umeditor.js"></script>
-	<script type="text/javascript" src="{:VIEW_ASSETS}/umeditor/lang/zh-cn/zh-cn.js"></script>
 
 	<script type="text/javascript">
-		//验证输入
-		function verify() {
-			if ($("input[name='data[title]']").val() == "") {
-				$("[name='data[nm]']").next().html('请输入标题')
-				return false;
-			}
-			if ($("#content").val() == "<p><br></p>") {
-				$("[veri-for='Body']").html('请输入内容')
-				return false;
-			}
-			return true;
-		}
-
 		function submit_form() {
-			$("#content").val($("#Body").html());
-			return verify();
+			if ($.formVerifyEmpty('data[nm]', '')) {
+				return false;
+			}
+
+			return true;
 		}
 	</script>
 

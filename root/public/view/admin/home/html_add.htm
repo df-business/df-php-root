@@ -8,25 +8,21 @@
 					<h5></h5>
 				</div>
 				<div class="ibox-content">
-					<form method="post" action='{:split_url(sprintf("admin/home/%s_update",table_name("HtmlModel")))}'>
-						<input name="id" value="{:isset($output[0])?$output[0]:'0'}" hidden />
-
-
+					<form method="post" action='{:split_url(str("admin/home/%s_update",[table_name("HtmlModel")]))}'>
+						<input name="id" value="{:$output[0]??'0'}" hidden />
 						<div class="form-horizontal m-t">
 							<div class="form-group">
 								<label class="col-sm-1 control-label">htm文件名：</label>
 								<div class="col-sm-5">
 									<input class="form-control" name="data[file_n]" size="10" type="text"
-										value="{:isset($output[0])?$output['file_n']:''}" />
-									<span class="field-validation-error" veri-for=""></span>
+										value="{:$output['file_n']??''}" />
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-1 control-label">路径：</label>
 								<div class="col-sm-5">
 									<input class="form-control" name="data[src]" size="10" type="text"
-										value="{:isset($output[0])?$output['src']:''}" />
-									<span class="field-validation-error" veri-for=""></span>
+										value="{:$output['src']??''}" />
 								</div>
 							</div>
 
@@ -34,8 +30,7 @@
 								<label class="col-sm-1 control-label">备注：</label>
 								<div class="col-sm-5">
 									<input class="form-control" name="data[comment]" size="10" type="text"
-										value="{:isset($output[0])?$output['comment']:''}" />
-									<span class="field-validation-error" veri-for=""></span>
+										value="{:$output['comment']??''}" />
 								</div>
 							</div>
 
@@ -58,6 +53,9 @@
 <df-footer>
 	<script type="text/javascript">
 		function submit_form() {
+			if ($.formVerifyEmpty('data[src]')) {
+				return false;
+			}
 			return true;
 		}
 	</script>

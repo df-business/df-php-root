@@ -2,6 +2,8 @@
 namespace areas\admin\controller;
 use \Dfer\Tools\Files;
 use areas\admin\model\{UserModel};
+use areas\admin\validate\{LoginValidate};
+use Dfer\DfPhpCore\Modules\Lang;
 
 class LoginController extends BaseController{
 
@@ -17,10 +19,14 @@ class LoginController extends BaseController{
         global $other, $_df,$common;
         get_web();
         $this -> verifyLogin();
-        $err="";
         //接收post
         if (isset($_POST['submit'])) {
             $user_sm = $_POST['data'];
+												$result=LoginValidate::check($user_sm);
+												if(!$result->status){
+													$this->notice($result->error);
+												}
+												else{
 												$user = UserModel::where(['nm'=>$user_sm['nm']])->first();
             if ($user != null) {
                 if ($user["pw"] == $user_sm["pw"] && $user["nm"] == $user_sm["nm"]) {
@@ -31,9 +37,10 @@ class LoginController extends BaseController{
 																				to_url("admin/home/index");
                 }
             }
-            $err="同志，请确定你的账号和密码";
+												$this->notice('同志，请确定你的账号和密码');
+												}
         }
-        include view_back('iconShare');
+								$this->view(get_defined_vars(),'iconShare');
     }
 
 				// **********************  登陆 END  **********************

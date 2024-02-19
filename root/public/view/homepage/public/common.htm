@@ -1,4 +1,5 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE HTML
+	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<title>{$home_layout['title']} - DfPHP v{:VERSION}</title>
@@ -45,42 +46,42 @@
 		</style>
 		<!--通用脚本-->
 		<script>
-		 //所有资源加载完成则执行
-		 function loaded() {
-		  //在js加载前添加loading效果，增加页面友好度，加载完成则删除
-		  $('#first_loading').remove();
-		  //如果有调用字体
-		  if ($('script[src$="fontFamily/init.js"]').length > 0) {
-		   $("<style>").html(
-		    '*{font-family: ft !important; }'
-		   ).appendTo("head");
-		   log('自定义字体加载完成')
-		  } else {
-		   log('未使用自定义字体')
-		  }
+			//所有资源加载完成则执行
+			function loaded() {
+				//在js加载前添加loading效果，增加页面友好度，加载完成则删除
+				$('#first_loading').remove();
+				//如果有调用字体
+				if ($('script[src$="fontFamily/init.js"]').length > 0) {
+					$("<style>").html(
+						'*{font-family: ft !important; }'
+					).appendTo("head");
+					log('自定义字体加载完成')
+				} else {
+					log('未使用自定义字体')
+				}
 
-		  loading(2);
-		  log('web complete');
-		  df_init();
-		 }
+				loading(2);
+				log('web complete');
+				df_init();
+			}
 
-		 //dom加载完毕
-		 function ready() {
-		  $.ProtectPage();
-		  story("欢迎光临寒舍，有问题联系：www.dfer.site", "black")
-		  // hacker(1, '!!$home_layout["color"]!!');
-		  $('#body').removeAttr('hidden')
-		  loading(1);
-		  log('dom complete');
-		 }
+			//dom加载完毕
+			function ready() {
+				$.ProtectPage();
+				story("欢迎光临寒舍，有问题联系：www.dfer.site", "black")
+				// hacker(1, '!!$home_layout["color"]!!');
+				$('#body').removeAttr('hidden')
+				loading(1);
+				log('dom complete');
+			}
 
-		 //只能识别执行到此加载的元素，故而放在网页尾部（识别出整个网页已加载完毕）
-		 $(ready);
-		 $(window).on('load', loaded);
+			//只能识别执行到此加载的元素，故而放在网页尾部（识别出整个网页已加载完毕）
+			$(ready);
+			$(window).on('load', loaded);
 		</script>
 
 
-		<df-header/>
+		<df-header />
 		<style>
 			html,
 			body {
@@ -95,12 +96,13 @@
 	</head>
 
 	<body>
-		<div hidden="" id="first_loading" style="z-index:66666;position: fixed;left: 49%;top: 45%;"><img src="{:VIEW_ASSETS}/img/loading-1.gif"></div>
+		<div hidden="" id="first_loading" style="z-index:66666;position: fixed;left: 49%;top: 45%;"><img
+				src="{:VIEW_ASSETS}/img/loading-1.gif"></div>
 		<div hidden="" id="body">
-			<df-body/>
+			<df-body />
 		</div>
 	</body>
 
-	<df-footer/>
+	<df-footer />
 
 </html>
