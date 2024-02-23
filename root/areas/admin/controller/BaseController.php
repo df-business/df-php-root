@@ -31,6 +31,14 @@ abstract class BaseController {
 				include_once view($template, $_df['area']);
 			}
 
+			/**
+			 * 网页跳转的提示页面
+			 * @param {Object} $var 变量
+			 **/
+			public function message($layout,$status=true)
+			{
+			 	message(view('message', $_df['area'],true),$layout,$status);
+			}
 
 			/**
 			 *
@@ -42,7 +50,7 @@ abstract class BaseController {
 			{
 				global $common;
 
-				$login = get_session(\ENUM::SES_NAME);
+				$login = session_get(\ENUM::SES_NAME);
 
 				if (!empty($login)) {
 					$id = $login[0];
@@ -84,10 +92,10 @@ abstract class BaseController {
 					return $_GET['wx_id'];
 				}
 				if ($id != '') {
-					set_session('wx', $id);
+					session_set('wx', $id);
 					return $id;
 				}
-				$id = get_session('wx');
+				$id = session_get('wx');
 				if ($id == "") { //缓存不存在就读数据库
 					$dt = show("wx", -1);
 					$rt = $dt[0][0];
@@ -120,6 +128,8 @@ abstract class BaseController {
 			{
 					return new $var;
 			}
+
+
 
 }
 ?>

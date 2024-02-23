@@ -1,7 +1,7 @@
 <?php
 namespace areas\homepage\controller;
 use areas\admin\model\{HomeLayoutModel,HomeColumnModel,HomeLinkModel,HomeMusicModel,MessageModel};
-use Dfer\DfPhpCore\Modules\Db;
+use Dfer\DfPhpCore\Modules\Static\{Mysql,Lang};
 
 class HomeController extends BaseController
 {
@@ -12,15 +12,14 @@ class HomeController extends BaseController
 		*/
 	function index($param)
 	{
-		global $other;
 		$home_layout = HomeLayoutModel::first();
 		$home_column =HomeColumnModel::order(["id" => "asc"])->select();
 		$home_link = HomeLinkModel::select();
 		$home_music = HomeMusicModel::select();
 		//访问量
-		Db::sql("update dt set val=val+1 where `key`='hits'");
+		Mysql::run("update dt set val=val+1 where `key`='hits'");
 		$this->colUserInfo();
-		include view_front();
+		$this->view(get_defined_vars());
 	}
 
 
@@ -29,7 +28,7 @@ class HomeController extends BaseController
 	static $db_mes = 'message';
 	function postMsg()
 	{
-		$dt = $_POST['data'];
+		$dt = post('data');
 		//var_dump($dt);
 		$dt["time"] = date("Y-m-d H:i:s");
 		$id = 0; //add

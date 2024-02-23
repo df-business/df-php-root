@@ -1,7 +1,7 @@
 <?php
 namespace areas\admin\controller;
 
-use Dfer\Tools\Files;
+use Dfer\Tools\Files\Static\{Common};
 use areas\admin\model\{HomeLayoutModel,HomeLayoutImgModel,HomeColumnModel,HomeLinkModel,HomeMusicModel,MessageModel,NotepadModel,ColumnModel};
 
 class ColumnController extends BaseController{
@@ -19,8 +19,8 @@ class ColumnController extends BaseController{
 	}
 
 	function homeColumnUpdate() {
-		$dt = $_POST['data'];
-		$id = $_POST['id'];
+		$dt = post('data');
+		$id = post('id');
 		$ret = HomeColumnModel::where($id)->update($dt);
 		message($ret,"admin/column/" . HomeColumnModel::getName());
 	}
@@ -49,7 +49,7 @@ class ColumnController extends BaseController{
 		*/
 	function homeColumnUp($name) {
 		global $files,$common;
-		$common->showJsonBase($files->uploadFile(Files::UPLOAD_WEB_UPLOADER));
+		Common::showJsonBase($files->uploadFile(Files::UPLOAD_WEB_UPLOADER));
 	}
 
 	// **********************  栏目管理 END  **********************
@@ -97,8 +97,8 @@ class ColumnController extends BaseController{
 	}
 
 	function homeLinkUpdate() {
-		$dt = $_POST['data'];
-		$id = $_POST['id'];
+		$dt = post('data');
+		$id = post('id');
 		$ret = HomeLinkModel::where($id)->update($dt);
 		message($ret,"admin/column/" . HomeLinkModel::getName());
 	}
@@ -128,8 +128,8 @@ class ColumnController extends BaseController{
 	}
 
 	function homeMusicUpdate() {
-		$dt = $_POST['data'];
-		$id = $_POST['id'];
+		$dt = post('data');
+		$id = post('id');
 		$ret = HomeMusicModel::where($id)->update($dt);
 		// var_dump($ret);
 		message($ret,"admin/column/".HomeMusicModel::getName());
@@ -156,8 +156,8 @@ class ColumnController extends BaseController{
 	}
 
 	function homeLayoutUpdate() {
-		$dt = $_POST['data'];
-		$id = $_POST['id'];
+		$dt = post('data');
+		$id = post('id');
 		// var_dump($_SERVER['HTTP_REFERER']);die;
 		$ret = HomeLayoutModel::where($id)->update($dt);
 		message($ret,str("admin/column/{0}/1",[HomeLayoutModel::getName()]));
@@ -239,8 +239,8 @@ class ColumnController extends BaseController{
 		*/
 	public function notepadUpdate()
 	{
-		$dt = $_POST['data'];
-		$id = $_POST['id'];
+		$dt = post('data');
+		$id = post('id');
 		// var_dump($_POST);die;
 		$ret = NotepadModel::where($id)->update($dt);
 		message($ret,str("admin/column/{0}",[NotepadModel::getName()]));
@@ -288,8 +288,8 @@ class ColumnController extends BaseController{
 				*/
 			public function notepadSsUpdate()
 			{
-				$id = $_POST['id'];
-				$dt = $_POST['data'];
+				$id = post('id');
+				$dt = post('data');
 				$ret = NotepadModel::where(["id" => $id])->update($dt);
 				message($ret,str("admin/column/{0}_ss",[NotepadModel::getName()]));
 			}
@@ -318,8 +318,8 @@ class ColumnController extends BaseController{
 
 	public function columnUpdate()
 	{
-		$id = $_POST['id'];
-		$dt = $_POST['data'];
+		$id = post('id');
+		$dt = post('data');
 		$ret = ColumnModel::where($id)->update($dt);
 		message($ret,str("admin/column/{0}",[ColumnModel::getName()]));
 	}

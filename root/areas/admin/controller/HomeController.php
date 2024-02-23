@@ -2,7 +2,7 @@
 namespace areas\admin\controller;
 use Dfer\Tools\Files;
 use areas\admin\model\{UserModel,ConfigModel,MessageModel,RolesModel,HomeUserInfoModel,HtmlModel,MenuModel,CacheModel};
-use Dfer\DfPhpCore\Modules\Db;
+use Dfer\DfPhpCore\Modules\Static\Mysql;
 class HomeController extends BaseController{
 
 	/**
@@ -12,23 +12,21 @@ class HomeController extends BaseController{
 	public function index($param)
 	{
 		global $other, $common;
+
 		$id = $this->verifyLogin(1);
-		if (!empty($_POST['top-search'])) {
-			show_json(true, null, $_POST['top-search']);
+		if (!empty(post('top-search'))) {
+			show_json(true, null, post('top-search'));
 		}
 		//验证登录
-		// $output = showFirst("df", ['id' => $id]);
 		$output = UserModel::where(['id' => $id])->first();
-		// $hits = showFirst("dt", ['key' => 'hits']);
 		$hits = ConfigModel::where(['key' => 'hits'])->first()['val'];
 		//留言
-		// $message = showList("message", ['status' => 0]);
 		$message = MessageModel::where(['status' => 0])->select();
 		if ($output['nm'] == 'df') {
 			$where = '1';
 			$output['role'] = "超级管理员";
 		} else {
-			$roles = showFirst("roles", $output['role']);
+			$roles = RolesModel::where($output['role'])->first();
 			$output['role'] = $roles['nm'];
 			$roles = $roles['roles'];
 			$roles = explode('|', $roles);
@@ -40,8 +38,8 @@ class HomeController extends BaseController{
 			$where = "{$w}";
 		}
 		$sql = "select * from menu where parent=0 and ({$where}) order by order_num asc";
-		$menu = Db::sql($sql);
-		include view_back('iconShare');
+		$menu = Mysql::run($sql);
+		$this->view(get_defined_vars(),'iconShare');
 	}
 
 
@@ -63,7 +61,7 @@ class HomeController extends BaseController{
 		<ul class="nav nav-second-level">
 EOT;
 
-			$m = \Dfer\DfPhpCore\Modules\Db::sql("select * from menu where parent={$v['id']} and ({$where}) order by order_num asc",'sql');
+			$m =Mysql::run("select * from menu where parent={$v['id']} and ({$where}) order by order_num asc",'sql');
 			$this->menuTree($m,$where);
 			echo <<<EOT
 </ul>
@@ -93,8 +91,8 @@ EOT;
 		*/
 	public function ext($param)
 	{
-		del_one_cookie(session_name());
-		del_session(\ENUM::SES_NAME);
+		cookie_del(session_name());
+		session_del(\ENUM::SES_NAME);
 		message(1,"admin/login/index");
 	}
 
@@ -123,10 +121,10 @@ EOT;
 							*/
 		    public function setChangePic($param)
 		    {
-		        $dt = $_POST['data'];
+		        $dt = post('data');
 		        $id = 1;
-										$myValue = UserModel::where($id)->update($dt);
-										message($ret,\ENUM::reloadParent);
+										$ret = UserModel::where($id)->update($dt);
+										$this->message($ret,\ENUM::RELOAD_PARENT);
 		    }
 
 		    /**
@@ -148,9 +146,8 @@ EOT;
 
 		    public function setPwd($param)
 		    {
-		        global $other;
 		        $err = $_GET['err']??null;
-		        $id = get_session(\ENUM::SES_NAME);
+		        $id = session_get(\ENUM::SES_NAME);
 		        $id = $id[0];
 										$output = UserModel::where($id)->first();
 		        $this->view(get_defined_vars());
@@ -162,7 +159,7 @@ EOT;
 							*/
 		    public function updateSetPwd($param)
 		    {
-		        $dt = $_POST['data'];
+		        $dt = post('data');
 		        $ndt["pw"] = $dt["npw"];
 										$output = UserModel::where($dt['id'])->first();
 		        if ($output['pw'] != $dt['pw'] || empty($dt['pw'])) {
@@ -180,10 +177,8 @@ EOT;
 		*/
 	public function info($param)
 	{
-		global $other;
-		$id = $other->verifyLogin(1);
-		// var_dump(getenv());
-		$df = str(<<<EOT
+
+		$str = str(<<<EOT
 				<!-- ********************** layui START ********************** -->
 				<link href="//unpkg.com/layui@2.8.15/dist/css/layui.css" rel="stylesheet">
 				<script src="//unpkg.com/layui@2.8.15/dist/layui.js"></script>
@@ -220,7 +215,7 @@ EOT;
 							</tbody>
 				</table>
 				EOT,[PHP_VERSION,PHP_VERSION_MIN,VERSION,getenv('SERVER_SOFTWARE')]);
-		die($df);
+		die($str);
 	}
 
 	// ********************** 用户 START **********************
@@ -256,8 +251,8 @@ EOT;
 	public function userUpdate()
 	{
 		global $common;
-		$dt = $_POST['data'];
-		$id = $_POST['id'];
+		$dt = post('data');
+		$id = post('id');
 		$output = UserModel::where(['nm'=>$dt['nm']])->first();
 
 		//新增
@@ -312,8 +307,8 @@ EOT;
 		*/
 	public function rolesUpdate()
 	{
-		$dt = $_POST['data'];
-		$id = $_POST['id'];
+		$dt = post('data');
+		$id = post('id');
 		$myValue = RolesModel::where($id)->update($dt,str("admin/home/{0}",[RolesModel::getName()]));
 	}
 
@@ -372,8 +367,8 @@ EOT;
 		*/
 	public function htmlUpdate()
 	{
-		$dt = $_POST['data'];
-		$id = $_POST['id'];
+		$dt = post('data');
+		$id = post('id');
 		$myValue = HtmlModel::where($id)->update($dt,str("admin/home/{0}",[HtmlModel::getName()]));
 	}
 
@@ -424,11 +419,11 @@ EOT;
 		*/
 	public function menuUpdate()
 	{
-		$dt = $_POST['data'];
+		$dt = post('data');
 		$dt['parent'] = empty($dt['parent']) ? 0 : $dt['parent'];
-		$id = $_POST['id'];
+		$id = post('id');
 		$dt['src'] = urlencode($dt['src']);
-		$parent = $_POST['parent'];
+		$parent = post('parent');
 		$myValue = MenuModel::where($id)->update($dt,str("admin/home/menu/{0}&parent={1}",[$dt['parent'],$parent]));
 	}
 
@@ -516,15 +511,5 @@ EOT;
 		$this->view(get_defined_vars());
 	}
 
-
-	/**
-	 * 创建数据库
-	 * @param {Object} $var 变量
-	 **/
-	public function createDb($var = null)
-	{
-		global $other,$db;
-		$other->createDb($db);
-	}
 
 }

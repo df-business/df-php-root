@@ -19,7 +19,15 @@ abstract class BaseController {
 			{
 			}
 
-
+		/**
+			* 视图
+			*/
+				public	function view($params,$template='common')
+				{
+					global $_df;
+					extract($params);
+					include_once view($template, $_df['area']);
+				}
 
 
 			/**
@@ -50,7 +58,7 @@ abstract class BaseController {
 			{
 				//商户订单号，商户网站订单系统中唯一订单号，必填
 				$out_trade_no = sprintf("Df-%s-%s-%s", TIMESTAMP, rand(), IP);
-				set_session('dfOrder', $out_trade_no);
+				session_set('dfOrder', $out_trade_no);
 				$config_url = ROOT . sprintf("/module/alipay/%s.php", $config_url);
 				$pay_url = ROOT . '/module/alipay/pagepay/pagepay.php';
 				require $pay_url;
