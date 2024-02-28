@@ -1,8 +1,8 @@
 <?php
 namespace areas\admin\controller;
 
-use Dfer\Tools\Files\Static\{Common};
 use areas\admin\model\{HomeLayoutModel,HomeLayoutImgModel,HomeColumnModel,HomeLinkModel,HomeMusicModel,MessageModel,NotepadModel,ColumnModel};
+use Dfer\Tools\Statics\{Common,Files};
 
 class ColumnController extends BaseController{
 
@@ -22,7 +22,7 @@ class ColumnController extends BaseController{
 		$dt = post('data');
 		$id = post('id');
 		$ret = HomeColumnModel::where($id)->update($dt);
-		message($ret,"admin/column/" . HomeColumnModel::getName());
+		$this->jumpPrompt($ret, HomeColumnModel::getName());
 	}
 
 	/**
@@ -31,7 +31,7 @@ class ColumnController extends BaseController{
 		*/
 	function homeColumnDel($id) {
 		$ret = HomeColumnModel::where($id)->del();
-		message($ret,"admin/column/" . HomeColumnModel::getName());
+		$this->jumpPrompt($ret,HomeColumnModel::getName());
 	}
 
 	/**
@@ -40,7 +40,7 @@ class ColumnController extends BaseController{
 		*/
 	function homeColumnEditUp($name) {
 		global $files,$common;
-		$common->showJsonBase($files->uploadFile(Files::UPLOAD_UMEDITOR_EDITOR));
+		Common::showJsonBase(Files::uploadFile(Files::UPLOAD_UMEDITOR_EDITOR));
 	}
 
 	/**
@@ -49,7 +49,7 @@ class ColumnController extends BaseController{
 		*/
 	function homeColumnUp($name) {
 		global $files,$common;
-		Common::showJsonBase($files->uploadFile(Files::UPLOAD_WEB_UPLOADER));
+		Common::showJsonBase(Files::uploadFile(Files::UPLOAD_WEB_UPLOADER));
 	}
 
 	// **********************  栏目管理 END  **********************
@@ -77,7 +77,7 @@ class ColumnController extends BaseController{
 	function messageDel($id)
 	{
 		$ret = MessageModel::where($id)->del();
-		message($ret,"homepage/column/" . MessageModel::getName());
+		$this->jumpPrompt($ret,MessageModel::getName());
 	}
 
 
@@ -100,7 +100,7 @@ class ColumnController extends BaseController{
 		$dt = post('data');
 		$id = post('id');
 		$ret = HomeLinkModel::where($id)->update($dt);
-		message($ret,"admin/column/" . HomeLinkModel::getName());
+		$this->jumpPrompt($ret,HomeLinkModel::getName());
 	}
 
 	/**
@@ -109,7 +109,7 @@ class ColumnController extends BaseController{
 		*/
 	function homeLinkDel($id) {
 		$ret = HomeLinkModel::where($id)->del();
-		message($ret,"admin/column/" . HomeLinkModel::getName());
+		$this->jumpPrompt($ret,HomeLinkModel::getName());
 	}
 
 	// **********************  链接管理 END  **********************
@@ -132,7 +132,7 @@ class ColumnController extends BaseController{
 		$id = post('id');
 		$ret = HomeMusicModel::where($id)->update($dt);
 		// var_dump($ret);
-		message($ret,"admin/column/".HomeMusicModel::getName());
+		$this->jumpPrompt($ret,HomeMusicModel::getName());
 	}
 
 	/**
@@ -141,7 +141,7 @@ class ColumnController extends BaseController{
 		*/
 	function homeMusicDel($id) {
 		$ret = HomeMusicModel::where($id)->del();
-		message($ret,"admin/column/" . HomeMusicModel::getName());
+		$this->jumpPrompt($ret,HomeMusicModel::getName());
 	}
 
 	// **********************  音乐管理 END  **********************
@@ -160,7 +160,7 @@ class ColumnController extends BaseController{
 		$id = post('id');
 		// var_dump($_SERVER['HTTP_REFERER']);die;
 		$ret = HomeLayoutModel::where($id)->update($dt);
-		message($ret,str("admin/column/{0}/1",[HomeLayoutModel::getName()]));
+		$this->jumpPrompt($ret,HomeLayoutModel::getName());
 	}
 
 	/**
@@ -168,16 +168,14 @@ class ColumnController extends BaseController{
 		* @param {Object} $name
 		*/
 	function homeLayoutPicUp($name) {
-		global $files,$common;
-		$dt['img'] = $files->uploadFile(Files::UPLOAD_WEB_UPLOADER);
+		$dt['img'] = Files::uploadFile(Files::UPLOAD_WEB_UPLOADER);
 		HomeLayoutImgModel::insert($dt);
 		//不限制尺寸
-		$common->showJsonBase($dt['img']);
+		Common::showJsonBase($dt['img']);
 	}
 
 	function homeLayoutUp($name) {
-		global $common;
-		$common->showJsonBase($files->uploadFile(Files::UPLOAD_WEB_UPLOADER,['path'=>VIEW_ASSETS.'/fontFamily/font.TTF']));
+		Common::showJsonBase(Files::uploadFile(Files::UPLOAD_WEB_UPLOADER,['path'=>VIEW_ASSETS.'/fontFamily/font.TTF']));
 	}
 
 	/**
@@ -185,8 +183,7 @@ class ColumnController extends BaseController{
 		* @param {Object} $name
 		*/
 	function homeLayoutPicDel($name) {
-		global $_param, $files,$common;
-		$id = $_param['id'];
+		$id = param('id');
 		$img = HomeLayoutImgModel::where($id)->first();
 		$rt = HomeLayoutImgModel::where($id)->del() . ',';
 		$rt .= $files -> delFile($img['img']);
@@ -221,7 +218,7 @@ class ColumnController extends BaseController{
 	public function notepadEditUp($name)
 	{
 		global $files,$common;
-		$common->showJsonBase($files->uploadFile(Files::UPLOAD_UMEDITOR_EDITOR));
+		Common::showJsonBase(Files::uploadFile(Files::UPLOAD_UMEDITOR_EDITOR));
 	}
 
 	/**
@@ -243,7 +240,7 @@ class ColumnController extends BaseController{
 		$id = post('id');
 		// var_dump($_POST);die;
 		$ret = NotepadModel::where($id)->update($dt);
-		message($ret,str("admin/column/{0}",[NotepadModel::getName()]));
+		$this->jumpPrompt($ret,NotepadModel::getName());
 	}
 
 	/**
@@ -253,7 +250,7 @@ class ColumnController extends BaseController{
 	public function notepadDel($id)
 	{
 		$ret = NotepadModel::where($id)->del();
-		message($ret,str("admin/column/{0}",[NotepadModel::getName()]));
+		$this->jumpPrompt($ret,NotepadModel::getName());
 	}
 
 
@@ -280,7 +277,7 @@ class ColumnController extends BaseController{
 			public function notepadSsDel($id)
 			{
 				$ret = NotepadModel::where($id)->del();
-				message($ret,str("admin/column/{0}_ss",[NotepadModel::getName()]));
+				$this->jumpPrompt($ret,str("{0}_ss",[NotepadModel::getName()]));
 			}
 
 			/**
@@ -290,8 +287,8 @@ class ColumnController extends BaseController{
 			{
 				$id = post('id');
 				$dt = post('data');
-				$ret = NotepadModel::where(["id" => $id])->update($dt);
-				message($ret,str("admin/column/{0}_ss",[NotepadModel::getName()]));
+				$ret = NotepadModel::where($id)->update($dt);
+				$this->jumpPrompt($ret,str("{0}_ss",[NotepadModel::getName()]));
 			}
 
 
@@ -321,13 +318,12 @@ class ColumnController extends BaseController{
 		$id = post('id');
 		$dt = post('data');
 		$ret = ColumnModel::where($id)->update($dt);
-		message($ret,str("admin/column/{0}",[ColumnModel::getName()]));
+		$this->jumpPrompt($ret,ColumnModel::getName());
 	}
 
 	public function columnEditUp($name)
 	{
-		global $files,$common;
-		$common->showJsonBase($files->uploadFile(Files::UPLOAD_UMEDITOR_EDITOR));
+		Common::showJsonBase(Files::uploadFile(Files::UPLOAD_UMEDITOR_EDITOR));
 	}
 
 	// **********************  栏目 END  **********************

@@ -17,8 +17,8 @@
 										<div id="uploadPreview1">
 											<df-if isset($output['pic'])>
 												<img src='{$output["pic"]}' />
-											<df-else>
-												暂无图片
+												<df-else>
+													暂无图片
 											</df-if>
 										</div>
 										<div class="left">
@@ -48,7 +48,7 @@
 	<script type="text/javascript" src="https://oss.dfer.site/webuploader/0.1.5/webuploader.min.js"></script>
 	<script>
 		$(() => {
-			upload('#uploadBut1', "#uploadPreview1", "#pic", UPLOAD_API.WEB_UPLOADER);
+			upload('#uploadBut1', "#uploadPreview1", "#pic", '{:split_url("upChangePic")}');
 		})
 	</script>
 	<!-- **********************  webuploader END  ********************** -->

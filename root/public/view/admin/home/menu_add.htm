@@ -1,17 +1,23 @@
+<df-header>
+<df-code>
+	use Dfer\Tools\Statics\{Common};
+</df-code>
+
+</df-header>
 <df-body>
 
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="ibox float-e-margins">
 				<div class="ibox-title">
-					<h5>{:$common->setVal(showFirst('menu',str_replace(',','',$parent))['title'],"")!!>>>!!$output[0]}
+					<h5>{$title}
 					</h5>
 				</div>
 				<div class="ibox-content">
 					<form method="post" action='{:split_url(sprintf("admin/home/%s_update",table_name("MenuModel")))}'>
 						<input name="id" value="{:$output[0]}" hidden />
-						<input name="data[parent]" value="{:$common->setVal($output['parent'],$parent_id)}" hidden />
-						<input name="parent" value="{:$common->setVal($parent,0)}" hidden />
+						<input name="data[parent]" value="{:Common::setVal($output['parent'],$parent_id)}" hidden />
+						<input name="parent" value="{:Common::setVal($parent,0)}" hidden />
 
 						<div class="form-horizontal m-t">
 							<div class="form-group">
@@ -43,7 +49,7 @@
 								<div class="col-sm-8">
 									<select class="site-select-tem" name="data[type]">
 										<df-each $type>
-											<option value="{::value}" {:$v==$output["type"]? "selected" : "" }>{::key}
+											<option value="{$value}" {:$value==$output["type"]? "selected" : "" }>{$key}
 											</option>
 										</df-each>
 									</select>
@@ -68,9 +74,8 @@
 <df-footer>
 
 	<script type="text/javascript">
-
 		function submit_form() {
-			if ($.formVerifyEmpty('data[title]','请输入标题')) {
+			if ($.formVerifyEmpty('data[title]', '请输入标题')) {
 				return false;
 			}
 			return true;

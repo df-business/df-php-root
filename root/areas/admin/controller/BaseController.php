@@ -1,7 +1,7 @@
 <?php
 namespace areas\admin\controller;
 use areas\admin\model\{UserModel};
-
+use Dfer\Tools\Statics\{Common};
 /**
 	* 基础类
 	*/
@@ -25,19 +25,23 @@ abstract class BaseController {
 	*/
 		public	function view($params,$template='common')
 			{
-				global $_df;
 				extract($params);
 				// var_dump(func_get_args(),PHP_EOL,get_defined_vars());
-				include_once view($template, $_df['area']);
+				include_once view($template);
 			}
 
 			/**
 			 * 网页跳转的提示页面
 			 * @param {Object} $var 变量
 			 **/
-			public function message($layout,$status=true)
+			public function jumpPrompt($status=true,$redirect=\ENUM::GO_BACK,$msg="")
 			{
-			 	message(view('message', $_df['area'],true),$layout,$status);
+				global $_param;
+				if(!is_int($redirect)){
+					$redirect=split_url($redirect);
+					// var_dump($url,$redirect);die;
+				}
+			 	message(view('message',true),$status,$redirect,$status?$msg:null,!$status?$msg:null);
 			}
 
 			/**
@@ -48,18 +52,14 @@ abstract class BaseController {
 			 */
 			public function verifyLogin($type = 0)
 			{
-				global $common;
-
-				$login = session_get(\ENUM::SES_NAME);
-
+				$login = session_get(\ENUM::USER_BACK);
 				if (!empty($login)) {
 					$id = $login[0];
-					$nm = $common->hexToStr($login[1]);
-					$pw = $common->hexToStr($login[2]);
+					$nm = Common::hexToStr($login[1]);
+					$pw = Common::hexToStr($login[2]);
 					if ($type == 'all') {
 						return array($id, $nm, $pw);
 					}
-					// $user = showFirst('df', ['nm' => $nm]);
 
 					$user = UserModel::where(['nm' => $nm])->first();
 

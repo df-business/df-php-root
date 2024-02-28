@@ -1,7 +1,4 @@
 <df-header>
-	<df-code>
-		$is_df=$other->verifyLogin('all')[1]=='df'?true:false;
-	</df-code>
 </df-header>
 
 <df-body>
@@ -10,7 +7,7 @@
 		<div class="col-sm-12">
 			<div class="ibox float-e-margins">
 				<div class="ibox-title">
-					<h5>{:$l_parent_id?showFirst('menu',$l_parent_id)['title']:''}>>{:$param?showFirst('menu',$param)['title']:''}
+					<h5>{$title}
 					</h5>
 				</div>
 				<div class="ibox-content">
@@ -57,7 +54,7 @@
 											href='{:url("admin","home",table_name("MenuModel"),$value[0],array("parent"=>$parent.",".$param))}'>[下级]</a>
 										<a
 											href='{:url("admin","home",table_name("MenuModel")."_add",$value[0],array("parent_id"=>$param,"parent"=>$parent))}'>[编辑]</a>
-										<df-if $_df[ 'admin' ]||$is_df>
+										<df-if param('admin')||$is_df>
 											<a href='{:url("admin","home",table_name("MenuModel")."_del",$value[0],array("parent_id"=>$param,"parent"=>$parent))}'
 												onclick='return confirm("您确认要删除吗？")'>[删除]</a>
 										</df-if>

@@ -43,8 +43,8 @@
 <df-footer>
 	<script>
 		function clear_log() {
-			post('', {
-				a: 1
+			df_tools.post('', {
+				clear: true
 			}, function() {
 				location.reload()
 			}, true);

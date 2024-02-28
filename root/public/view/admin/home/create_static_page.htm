@@ -21,7 +21,7 @@
 <df-body>
 
 
-	<df onclick="window.refresh()">刷新</df>
+	<df onclick="location.reload()">刷新</df>
 
 	{$str}
 
@@ -31,14 +31,6 @@
 
 
 	<script>
-		function clear() {
-			post('', {
-				a: 1
-			}, function() {
-				location.reload()
-			});
-
-		}
 	</script>
 
 </df-footer>

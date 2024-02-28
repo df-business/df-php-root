@@ -1,5 +1,4 @@
 <df-header>
-
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="renderer" content="webkit">
@@ -13,15 +12,17 @@
 	<link href="{:VIEW_ASSETS}/admin/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
 	<link href="{:VIEW_ASSETS}/admin/css/style.css?v=4.1.0" rel="stylesheet">
 
-	<script src="{:VIEW_ASSETS}/df.js"></script>
+	<script src="{:VIEW_ASSETS}/DfTools.js"></script>
 	<script>
+		var df_tools = new DfTools();
+
 		$(function() {
 			refresh_data = function() {
 				layer.confirm('确定刷新服务器数据么？', {
 					title: "二选一",
 					btn: ['是', '否']
 				}, function() {
-					post('{:split_url("admin/home/fresh_cache")}', "",
+					df_tools.post('{:split_url("admin/home/fresh_cache")}', "",
 						function(x) {
 							if (x.status)
 								layer.msg(x.msg);
@@ -208,7 +209,7 @@
 						{:date("Y-m-d H:i:s A")}
 					</div>
 					<div style="float: left;margin-right: 3%;">
-						{:$common->getBrowser()}
+						{:Dfer\Tools\Statics\Common::getBrowser()}
 					</div>
 					<div onclick="changeSSL()" style="{:SSL_STATE?'color: red;':''}float: left;margin-right: 3%;">
 						{:SSL_STATE?"ssl开启":"ssl关闭"}</div>

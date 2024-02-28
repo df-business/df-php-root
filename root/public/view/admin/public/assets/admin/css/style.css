@@ -1,6 +1,6 @@
 /*
  * user agent stylesheet
- * 
+ *
  * 重置
  * */
 
@@ -98,12 +98,13 @@ a:focus {
 	color: #a7b1c2;
 	font-weight: 600;
 	padding: 14px 20px 14px 25px;
-}
-
-.nav li>a {
 	display: block;
 	/*white-space: nowrap;*/
 }
+
+
+
+
 
 .nav.navbar-right>li>a {
 	color: #999c9e;
@@ -128,6 +129,8 @@ a:focus {
 .nav .open>a:focus {
 	background: #fff;
 }
+
+
 
 .nav>li>a i {
 	margin-right: 6px;
@@ -248,9 +251,13 @@ body.body-small .navbar-top-links li:last-child {
 	font-size: 12px;
 }
 
+.profile-element {
+	text-align: center;
+}
+
 .nav-header {
-	padding: 10px 35px;
-	background: url("patterns/header-profile.png") no-repeat;
+	padding: 35px 25px 25px 25px;
+	background: url("patterns/header-profile.png");
 }
 
 .pace-done .nav-header {
@@ -723,6 +730,7 @@ body.canvas-menu.mini-navbar nav.navbar-static-side {
 	.menu-visible-md {
 		display: block !important;
 	}
+
 	.menu-visible-lg {
 		display: block !important;
 	}
@@ -767,7 +775,7 @@ body.canvas-menu.mini-navbar nav.navbar-static-side {
 .btn-danger.btn-outline:hover {
 	color: #fff;
 }
-
+/*
 .btn-primary {
 	background-color: #1ab394;
 	border-color: #1ab394;
@@ -807,7 +815,7 @@ fieldset[disabled] .btn-primary:active,
 fieldset[disabled] .btn-primary.active {
 	background-color: #1dc5a3;
 	border-color: #1dc5a3;
-}
+} */
 
 .btn-success {
 	background-color: #1c84c6;
@@ -2932,6 +2940,7 @@ a.forum-item-title:hover {
 		/* Comment this is you want to show forum info in small devices */
 		display: none;
 	}
+
 	.forum-desc {
 		float: none !important;
 	}
@@ -3002,6 +3011,7 @@ a.forum-item-title:hover {
 		margin-top: 3em;
 		margin-bottom: 3em;
 	}
+
 	#vertical-timeline.center-orientation:before {
 		left: 50%;
 		margin-left: -2px;
@@ -3037,9 +3047,11 @@ a.forum-item-title:hover {
 	.center-orientation .vertical-timeline-block {
 		margin: 4em 0;
 	}
+
 	.center-orientation .vertical-timeline-block:first-child {
 		margin-top: 0;
 	}
+
 	.center-orientation .vertical-timeline-block:last-child {
 		margin-bottom: 0;
 	}
@@ -3078,10 +3090,12 @@ a.forum-item-title:hover {
 		-webkit-backface-visibility: hidden;
 		font-size: 19px;
 	}
+
 	.center-orientation .vertical-timeline-icon i {
 		margin-left: -12px;
 		margin-top: -10px;
 	}
+
 	.center-orientation .cssanimations .vertical-timeline-icon.is-hidden {
 		visibility: hidden;
 	}
@@ -3136,6 +3150,7 @@ a.forum-item-title:hover {
 	.vertical-timeline-content h2 {
 		font-size: 18px;
 	}
+
 	.vertical-timeline-content p {
 		font-size: 13px;
 	}
@@ -3147,15 +3162,18 @@ a.forum-item-title:hover {
 		padding: 1.6em;
 		width: 45%;
 	}
+
 	.center-orientation .vertical-timeline-content::before {
 		top: 24px;
 		left: 100%;
 		border-color: transparent;
 		border-left-color: white;
 	}
+
 	.center-orientation .vertical-timeline-content .btn {
 		float: left;
 	}
+
 	.center-orientation .vertical-timeline-content .vertical-date {
 		position: absolute;
 		width: 100%;
@@ -3163,9 +3181,11 @@ a.forum-item-title:hover {
 		top: 2px;
 		font-size: 14px;
 	}
+
 	.center-orientation .vertical-timeline-block:nth-child(even) .vertical-timeline-content {
 		float: right;
 	}
+
 	.center-orientation .vertical-timeline-block:nth-child(even) .vertical-timeline-content::before {
 		top: 24px;
 		left: auto;
@@ -3173,14 +3193,17 @@ a.forum-item-title:hover {
 		border-color: transparent;
 		border-right-color: white;
 	}
+
 	.center-orientation .vertical-timeline-block:nth-child(even) .vertical-timeline-content .btn {
 		float: right;
 	}
+
 	.center-orientation .vertical-timeline-block:nth-child(even) .vertical-timeline-content .vertical-date {
 		left: auto;
 		right: 122%;
 		text-align: right;
 	}
+
 	.center-orientation .cssanimations .vertical-timeline-content.is-hidden {
 		visibility: hidden;
 	}
@@ -3467,7 +3490,7 @@ video {
 /* Summernote text editor  */
 
 .note-editor {
-	height: auto!important;
+	height: auto !important;
 	min-height: 100px;
 	border: solid 1px #e5e6e7;
 }
@@ -5460,6 +5483,7 @@ dd.project-people {
 }
 
 @media (max-width: 992px) {
+
 	.chat-users,
 	.chat-statistic {
 		margin-left: 0px;
@@ -5894,10 +5918,12 @@ del {
 		-webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg);
 		transform: perspective(120px) rotateX(0deg) rotateY(0deg);
 	}
+
 	50% {
 		-webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
 		transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
 	}
+
 	100% {
 		-webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
 		transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
@@ -5909,10 +5935,12 @@ del {
 		-webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg);
 		transform: perspective(120px) rotateX(0deg) rotateY(0deg);
 	}
+
 	50% {
 		-webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
 		transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
 	}
+
 	100% {
 		-webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
 		transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
@@ -5957,11 +5985,13 @@ del {
 }
 
 @-webkit-keyframes sk-doubleBounce {
+
 	0%,
 	100% {
 		-webkit-transform: scale(0);
 		transform: scale(0);
 	}
+
 	50% {
 		-webkit-transform: scale(1);
 		transform: scale(1);
@@ -5969,11 +5999,13 @@ del {
 }
 
 @keyframes sk-doubleBounce {
+
 	0%,
 	100% {
 		-webkit-transform: scale(0);
 		transform: scale(0);
 	}
+
 	50% {
 		-webkit-transform: scale(1);
 		transform: scale(1);
@@ -6032,12 +6064,14 @@ del {
 }
 
 @-webkit-keyframes sk-waveStretchDelay {
+
 	0%,
 	40%,
 	100% {
 		-webkit-transform: scaleY(0.4);
 		transform: scaleY(0.4);
 	}
+
 	20% {
 		-webkit-transform: scaleY(1);
 		transform: scaleY(1);
@@ -6045,12 +6079,14 @@ del {
 }
 
 @keyframes sk-waveStretchDelay {
+
 	0%,
 	40%,
 	100% {
 		-webkit-transform: scaleY(0.4);
 		transform: scaleY(0.4);
 	}
+
 	20% {
 		-webkit-transform: scaleY(1);
 		transform: scaleY(1);
@@ -6097,19 +6133,23 @@ del {
 		-webkit-transform: translateX(42px) rotate(-90deg) scale(0.5);
 		transform: translateX(42px) rotate(-90deg) scale(0.5);
 	}
+
 	50% {
 		/* Hack to make FF rotate in the right direction */
 		-webkit-transform: translateX(42px) translateY(42px) rotate(-179deg);
 		transform: translateX(42px) translateY(42px) rotate(-179deg);
 	}
+
 	50.1% {
 		-webkit-transform: translateX(42px) translateY(42px) rotate(-180deg);
 		transform: translateX(42px) translateY(42px) rotate(-180deg);
 	}
+
 	75% {
 		-webkit-transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
 		transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
 	}
+
 	100% {
 		-webkit-transform: rotate(-360deg);
 		transform: rotate(-360deg);
@@ -6121,19 +6161,23 @@ del {
 		-webkit-transform: translateX(42px) rotate(-90deg) scale(0.5);
 		transform: translateX(42px) rotate(-90deg) scale(0.5);
 	}
+
 	50% {
 		/* Hack to make FF rotate in the right direction */
 		-webkit-transform: translateX(42px) translateY(42px) rotate(-179deg);
 		transform: translateX(42px) translateY(42px) rotate(-179deg);
 	}
+
 	50.1% {
 		-webkit-transform: translateX(42px) translateY(42px) rotate(-180deg);
 		transform: translateX(42px) translateY(42px) rotate(-180deg);
 	}
+
 	75% {
 		-webkit-transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
 		transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
 	}
+
 	100% {
 		-webkit-transform: rotate(-360deg);
 		transform: rotate(-360deg);
@@ -6163,6 +6207,7 @@ del {
 		-webkit-transform: scale(0);
 		transform: scale(0);
 	}
+
 	100% {
 		-webkit-transform: scale(1);
 		transform: scale(1);
@@ -6175,6 +6220,7 @@ del {
 		-webkit-transform: scale(0);
 		transform: scale(0);
 	}
+
 	100% {
 		-webkit-transform: scale(1);
 		transform: scale(1);
@@ -6238,11 +6284,13 @@ del {
 }
 
 @-webkit-keyframes sk-chasingDotsBounce {
+
 	0%,
 	100% {
 		-webkit-transform: scale(0);
 		transform: scale(0);
 	}
+
 	50% {
 		-webkit-transform: scale(1);
 		transform: scale(1);
@@ -6250,11 +6298,13 @@ del {
 }
 
 @keyframes sk-chasingDotsBounce {
+
 	0%,
 	100% {
 		-webkit-transform: scale(0);
 		transform: scale(0);
 	}
+
 	50% {
 		-webkit-transform: scale(1);
 		transform: scale(1);
@@ -6303,12 +6353,14 @@ del {
 }
 
 @-webkit-keyframes sk-threeBounceDelay {
+
 	0%,
 	80%,
 	100% {
 		-webkit-transform: scale(0);
 		transform: scale(0);
 	}
+
 	40% {
 		-webkit-transform: scale(1);
 		transform: scale(1);
@@ -6316,12 +6368,14 @@ del {
 }
 
 @keyframes sk-threeBounceDelay {
+
 	0%,
 	80%,
 	100% {
 		-webkit-transform: scale(0);
 		transform: scale(0);
 	}
+
 	40% {
 		-webkit-transform: scale(1);
 		transform: scale(1);
@@ -6501,12 +6555,14 @@ del {
 }
 
 @-webkit-keyframes sk-circleBounceDelay {
+
 	0%,
 	80%,
 	100% {
 		-webkit-transform: scale(0);
 		transform: scale(0);
 	}
+
 	40% {
 		-webkit-transform: scale(1);
 		transform: scale(1);
@@ -6514,12 +6570,14 @@ del {
 }
 
 @keyframes sk-circleBounceDelay {
+
 	0%,
 	80%,
 	100% {
 		-webkit-transform: scale(0);
 		transform: scale(0);
 	}
+
 	40% {
 		-webkit-transform: scale(1);
 		transform: scale(1);
@@ -6614,12 +6672,14 @@ del {
 }
 
 @-webkit-keyframes sk-cubeGridScaleDelay {
+
 	0%,
 	70%,
 	100% {
 		-webkit-transform: scale3D(1, 1, 1);
 		transform: scale3D(1, 1, 1);
 	}
+
 	35% {
 		-webkit-transform: scale3D(0, 0, 1);
 		transform: scale3D(0, 0, 1);
@@ -6627,12 +6687,14 @@ del {
 }
 
 @keyframes sk-cubeGridScaleDelay {
+
 	0%,
 	70%,
 	100% {
 		-webkit-transform: scale3D(1, 1, 1);
 		transform: scale3D(1, 1, 1);
 	}
+
 	35% {
 		-webkit-transform: scale3D(0, 0, 1);
 		transform: scale3D(0, 0, 1);
@@ -6676,6 +6738,7 @@ del {
 		-webkit-transform: rotate(0);
 		transform: rotate(0);
 	}
+
 	100% {
 		-webkit-transform: rotate(360deg);
 		transform: rotate(360deg);
@@ -6687,6 +6750,7 @@ del {
 		-webkit-transform: rotate(0);
 		transform: rotate(0);
 	}
+
 	100% {
 		-webkit-transform: rotate(360deg);
 		transform: rotate(360deg);
@@ -6866,22 +6930,26 @@ del {
 }
 
 @-webkit-keyframes sk-circleFadeDelay {
+
 	0%,
 	39%,
 	100% {
 		opacity: 0;
 	}
+
 	40% {
 		opacity: 1;
 	}
 }
 
 @keyframes sk-circleFadeDelay {
+
 	0%,
 	39%,
 	100% {
 		opacity: 0;
 	}
+
 	40% {
 		opacity: 1;
 	}
@@ -7023,6 +7091,7 @@ body.rtls .footer.fixed {
 }
 
 @media (max-width: 992px) {
+
 	body.rtls .chat-users,
 	body.rtls .chat-statistic {
 		margin-right: 0px;
@@ -7096,26 +7165,31 @@ body.rtls.top-navigation .footer.fixed {
 	body.rtls .navbar-top-links li:last-child {
 		margin-left: 20px;
 	}
+
 	.body-small.rtls #page-wrapper {
 		position: inherit;
 		margin: 0 0 0 0px;
 		min-height: 1000px;
 	}
+
 	.body-small.rtls .navbar-static-side {
 		display: none;
 		z-index: 2001;
 		position: absolute;
 		width: 70px;
 	}
+
 	.body-small.rtls.mini-navbar .navbar-static-side {
 		display: block;
 	}
+
 	.rtls.fixed-sidebar.body-small .navbar-static-side {
 		display: none;
 		z-index: 2001;
 		position: fixed;
 		width: 220px;
 	}
+
 	.rtls.fixed-sidebar.body-small.mini-navbar .navbar-static-side {
 		display: block;
 	}
@@ -7224,6 +7298,17 @@ body.rtls.top-navigation .footer.fixed {
 	color: #fff;
 }
 
+.minimalize-styl-2 {
+	margin: 14px 5px 5px 30px;
+}
+
+.navbar-minimalize {
+	background: #2f4050;
+	border-color: #2f4050;
+	color:#a7b1c2;
+}
+
+
 
 /*
  *
@@ -7234,6 +7319,11 @@ body.rtls.top-navigation .footer.fixed {
 
 .skin-1 .minimalize-styl-2 {
 	margin: 14px 5px 5px 30px;
+}
+
+.skin-1 .navbar-minimalize {
+	background: #0e9aef;
+	border-color: #0e9aef;
 }
 
 .skin-1 .navbar-top-links li:last-child {
@@ -7269,19 +7359,23 @@ body.rtls.top-navigation .footer.fixed {
 	background: #3a4459;
 }
 
-.skin-1 .nav>li>a {
+.skin-1 .sidebar-collapse {
 	color: #fff0d0;
 	background: #0e9aef;
 }
+
+.skin-1 .sidebar-collapse .nav>li>a {
+	color: #fff0d0;
+	background: #0e9aef;
+}
+
+
 
 .skin-1 .nav>li.active>a {
 	color: #fff;
 }
 
-.skin-1 .navbar-minimalize {
-	background: #0e9aef;
-	border-color: #0e9aef;
-}
+
 
 body.skin-1 {
 	background: #3e495f;
@@ -7427,10 +7521,17 @@ body.boxed-layout.skin-3 #wrapper {
 	background: #fff;
 }
 
-.skin-3 .nav>li>a {
+
+.skin-3 .sidebar-collapse {
 	color: #361016;
 	background: #ecba52;
 }
+
+.skin-3 .sidebar-collapse .nav>li>a {
+	color: #361016;
+	background: #ecba52;
+}
+
 
 .skin-3 .nav>li.active>a {
 	color: #fff;
@@ -7514,7 +7615,7 @@ body.skin-3 {
 }
 
 .skin-3 .content-tabs {
-	border-bottom: solid 2px #3e2c42;
+	border-bottom: solid 2px #ecba52;
 }
 
 .skin-3 .nav.nav-tabs>li.active {
@@ -7522,17 +7623,18 @@ body.skin-3 {
 }
 
 .skin-3 .page-tabs a.active {
-	background: #3e2c42;
+	background: #ecba52;
 	color: #fff;
 }
 
 .skin-3 .page-tabs a.active:hover,
 .skin-3 .page-tabs a.active i:hover {
-	background: #38283c;
+	background: #ecba52;
 	color: #fff;
 }
 
 @media (min-width: 768px) {
+
 	.navbar-top-links .dropdown-messages,
 	.navbar-top-links .dropdown-tasks,
 	.navbar-top-links .dropdown-alerts {
@@ -7544,49 +7646,61 @@ body.skin-3 {
 	body.fixed-sidebar .navbar-static-side {
 		display: none;
 	}
+
 	body.fixed-sidebar.mini-navbar .navbar-static-side {
 		width: 70px;
 	}
+
 	.lock-word {
 		display: none;
 	}
+
 	.navbar-form-custom {
 		display: none;
 	}
+
 	.navbar-header {
 		display: inline;
 		float: left;
 	}
+
 	.sidebard-panel {
 		z-index: 2;
 		position: relative;
 		width: auto;
 		min-height: 100% !important;
 	}
+
 	.sidebar-content .wrapper {
 		padding-right: 0px;
 		z-index: 1;
 	}
+
 	.fixed-sidebar.body-small .navbar-static-side {
 		display: none;
 		z-index: 2001;
 		position: fixed;
 		width: 220px;
 	}
+
 	.fixed-sidebar.body-small.mini-navbar .navbar-static-side {
 		display: block;
 	}
+
 	.ibox-tools {
 		float: none;
 		text-align: right;
 		display: block;
 	}
+
 	.content-tabs {
 		display: none;
 	}
+
 	#content-main {
 		height: calc(100% - 100px);
 	}
+
 	.fixed-nav #content-main {
 		height: calc(100% - 38px);
 	}
@@ -7613,18 +7727,22 @@ body.skin-3 {
 	body.fixed-sidebar.mini-navbar .navbar-static-side {
 		width: 0;
 	}
+
 	.nav-close {
 		display: block;
 	}
+
 	#page-wrapper {
-		margin-left: 0!important;
+		margin-left: 0 !important;
 	}
+
 	.timeline-item .date {
 		text-align: left;
 		width: 110px;
 		position: relative;
 		padding-top: 30px;
 	}
+
 	.timeline-item .date i {
 		position: absolute;
 		top: 0;
@@ -7635,15 +7753,18 @@ body.skin-3 {
 		border: 1px solid #e7eaec;
 		background: #f8f8f8;
 	}
+
 	.timeline-item .content {
 		border-left: none;
 		border-top: 1px solid #e7eaec;
 		padding-top: 10px;
 		min-height: 100px;
 	}
+
 	.nav.navbar-top-links li.dropdown {
 		display: none;
 	}
+
 	.ibox-tools {
 		float: none;
 		text-align: left;
@@ -7906,6 +8027,7 @@ body.skin-3 {
 		margin-right: 0;
 		margin-left: 0
 	}
+
 	.bs-glyphicons li {
 		width: 12.5%;
 		font-size: 12px

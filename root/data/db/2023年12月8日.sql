@@ -35,7 +35,7 @@ SET `src` = 'admin%2Fcolumn%2Fcolumn'
 WHERE
 	`title` = '关于此站点';
 UPDATE `menu`
-SET `src` = 'admin%2Fhome%2Fcreate_db'
+SET `src` = 'admin%2Flogin%2Fcreate_db'
 WHERE
 	`title` = '装载数据';
 UPDATE `menu`

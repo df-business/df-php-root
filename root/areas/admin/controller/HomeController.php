@@ -1,8 +1,9 @@
 <?php
 namespace areas\admin\controller;
-use Dfer\Tools\Files;
-use areas\admin\model\{UserModel,ConfigModel,MessageModel,RolesModel,HomeUserInfoModel,HtmlModel,MenuModel,CacheModel};
-use Dfer\DfPhpCore\Modules\Static\Mysql;
+use areas\admin\model\{UserModel,ConfigModel,MessageModel,RolesModel,HomeUserInfoModel,HtmlModel,MenuModel,CacheModel,LogsModel};
+use Dfer\DfPhpCore\Modules\Statics\Mysql;
+
+use Dfer\Tools\Static\{Common,Files};
 class HomeController extends BaseController{
 
 	/**
@@ -11,8 +12,6 @@ class HomeController extends BaseController{
 		*/
 	public function index($param)
 	{
-		global $other, $common;
-
 		$id = $this->verifyLogin(1);
 		if (!empty(post('top-search'))) {
 			show_json(true, null, post('top-search'));
@@ -92,8 +91,8 @@ EOT;
 	public function ext($param)
 	{
 		cookie_del(session_name());
-		session_del(\ENUM::SES_NAME);
-		message(1,"admin/login/index");
+		session_del(\ENUM::USER_BACK);
+		$this->jumpPrompt(1,"admin.login.index");
 	}
 
 	/**
@@ -124,7 +123,7 @@ EOT;
 		        $dt = post('data');
 		        $id = 1;
 										$ret = UserModel::where($id)->update($dt);
-										$this->message($ret,\ENUM::RELOAD_PARENT);
+										$this->jumpPrompt($ret,\ENUM::RELOAD_PARENT);
 		    }
 
 		    /**
@@ -133,10 +132,9 @@ EOT;
 							*/
 		    public function upChangePic($name)
 		    {
-		        global $files,$common;
-		        $rt= $files->uploadFile(Files::UPLOAD_WEB_UPLOADER, ['size'=>"500*500",'path'=>"view/admin/public/assets/img/logo.png"]);
-										// var_dump($rt);
-										$common->showJsonBase($rt);
+		        $rt= Files::uploadFile(Files::UPLOAD_WEB_UPLOADER, ['size'=>"500*500"]);
+										// var_dump($rt);die;
+										Common::showJsonBase($rt);
 		    }
 
 						// **********************  修改头像 END  **********************
@@ -147,7 +145,7 @@ EOT;
 		    public function setPwd($param)
 		    {
 		        $err = $_GET['err']??null;
-		        $id = session_get(\ENUM::SES_NAME);
+		        $id = session_get(\ENUM::USER_BACK);
 		        $id = $id[0];
 										$output = UserModel::where($id)->first();
 		        $this->view(get_defined_vars());
@@ -163,10 +161,12 @@ EOT;
 		        $ndt["pw"] = $dt["npw"];
 										$output = UserModel::where($dt['id'])->first();
 		        if ($output['pw'] != $dt['pw'] || empty($dt['pw'])) {
-		            to_url(sprintf("admin/login/set_pwd"), array('err' => '原密码有误'));
+														// $this->notice('');
+														$this->jumpPrompt(false,"set_pwd",'同志，原密码有误');
+		            // to_url(sprintf("set_pwd"));
 		        }
 										$ret = UserModel::where($dt['id'])->update($ndt);
-										message($ret,str("admin/login/set_pwd"));
+										$this->jumpPrompt($ret,"set_pwd");
 		    }
 
 		// **********************  设置密码 END  **********************
@@ -227,8 +227,6 @@ EOT;
 
 	public function userAdd($param)
 	{
-		global $common;
-		$err = $_GET['err']??null;
 		$output = UserModel::where(["id" => $param])->first();
 		$type = RolesModel::select();
 		// var_dump($param,$output);
@@ -237,8 +235,7 @@ EOT;
 
 	public function userEditUp($name)
 	{
-		global $files,$common;
-		$common->showJsonBase($files->uploadFile(Files::UPLOAD_UMEDITOR_EDITOR));
+		Common::showJsonBase(Files::uploadFile(Files::UPLOAD_UMEDITOR_EDITOR));
 	}
 
 	public function userView($param)
@@ -250,16 +247,15 @@ EOT;
 	//更新数据
 	public function userUpdate()
 	{
-		global $common;
 		$dt = post('data');
 		$id = post('id');
 		$output = UserModel::where(['nm'=>$dt['nm']])->first();
 
 		//新增
 		if ($output == null || $id > 0) {
-			$dt['last_login_time'] = $common->getTime(TIMESTAMP);
-			UserModel::where($id)->update($dt);
-			message($ret,"admin/home/" . UserModel::getName());
+			$dt['last_login_time'] = Common::getTime(TIMESTAMP);
+			$ret=UserModel::where($id)->update($dt);
+			$this->jumpPrompt($ret,UserModel::getName());
 		}
 		//修改
 		else {
@@ -274,10 +270,10 @@ EOT;
 	public function userDel($id)
 	{
 		if ($id == 1) {
-			message(0, "admin/home/" . UserModel::getName(),null,'不允许删除此账号');
+			$this->jumpPrompt(0,UserModel::getName(),'不允许删除此账号');
 		}
 		$ret = UserModel::where($id)->del();
-		message($ret,"admin/home/" . UserModel::getName());
+		$this->jumpPrompt($ret,UserModel::getName());
 	}
 
 	// **********************  用户 END  **********************
@@ -309,7 +305,8 @@ EOT;
 	{
 		$dt = post('data');
 		$id = post('id');
-		$myValue = RolesModel::where($id)->update($dt,str("admin/home/{0}",[RolesModel::getName()]));
+		$ret = RolesModel::where($id)->update($dt);
+		$this->jumpPrompt($ret,RolesModel::getName());
 	}
 
 	/**
@@ -318,14 +315,14 @@ EOT;
 		*/
 	public function rolesDel($id)
 	{
-		$myValue = RolesModel::where($id)->del(str("admin/home/{0}",[RolesModel::getName()]));
+		$ret = RolesModel::where($id)->del();
+		$this->jumpPrompt($ret,RolesModel::getName());
 	}
 
 	// **********************  权限 END  **********************
 
 	// ********************** 访问信息收集 START **********************
 
-	public static $db_guests = 'home_user_info';
 	public function guests($param)
 	{
 		$output = HomeUserInfoModel::order(['id' => 'desc'])->select();
@@ -348,7 +345,7 @@ EOT;
 		*/
 	public function htmlAdd($param)
 	{
-		$output = HtmlModel::where($param)->first();
+		$output = HtmlModel::where($param)->find();
 		$this->view(get_defined_vars());
 	}
 
@@ -369,7 +366,8 @@ EOT;
 	{
 		$dt = post('data');
 		$id = post('id');
-		$myValue = HtmlModel::where($id)->update($dt,str("admin/home/{0}",[HtmlModel::getName()]));
+		$ret = HtmlModel::where($id)->update($dt);
+		$this->jumpPrompt($ret,HtmlModel::getName());
 	}
 
 	/**
@@ -378,7 +376,8 @@ EOT;
 		*/
 	public function htmlDel($id)
 	{
-		$myValue = HtmlModel::where($id)->del(str("admin/home/{0}",[HtmlModel::getName()]));
+		$ret = HtmlModel::where($id)->del();
+		$this->jumpPrompt($ret,HtmlModel::getName());
 	}
 
 // **********************  静态页面列表 END  **********************
@@ -393,6 +392,11 @@ EOT;
 		$l_parent_id = $l_parent[count($l_parent) - 1];
 		array_pop($l_parent);
 		$l_parent = implode(',', $l_parent);
+
+		$is_df=$this->verifyLogin('all')[1]=='df'?true:false;
+// {:$l_parent_id?showFirst('menu',$l_parent_id)['title']:''}>>{:$param?showFirst('menu',$param)['title']:''}
+		$title=str("{0}>>{1}",[$l_parent_id?MenuModel::where($l_parent_id)->find()['title']:'',$param?MenuModel::where($param)->find()['title']:'']);
+
 		$this->view(get_defined_vars());
 	}
 
@@ -410,7 +414,7 @@ EOT;
 
 		$parent = $_GET['parent'];
 		$parent_id = $_GET['parent_id'];
-
+		$title=str("%s>>>%s",[Common::setVal(MenuModel::where(str_replace(',','',$parent))->find()['title'],""),$output[0]]);
 		$this->view(get_defined_vars());
 	}
 
@@ -424,7 +428,8 @@ EOT;
 		$id = post('id');
 		$dt['src'] = urlencode($dt['src']);
 		$parent = post('parent');
-		$myValue = MenuModel::where($id)->update($dt,str("admin/home/menu/{0}&parent={1}",[$dt['parent'],$parent]));
+		$ret = MenuModel::where($id)->update($dt);
+		$this->jumpPrompt($ret,str("admin/home/menu/{0}&parent={1}",[$dt['parent'],$parent]));
 	}
 
 	/**
@@ -435,7 +440,8 @@ EOT;
 	{
 		$parent_id = $_GET['parent_id'];
 		$parent = $_GET['parent'];
-		$myValue = MenuModel::where("id={$id} or parent={$id}")->del(str("admin/home/menu/{0}&parent={1}",[$parent_id,$parent]));
+		$ret = MenuModel::where("id={$id} or parent={$id}")->del();
+		$this->jumpPrompt($ret,str("admin/home/menu/{0}&parent={1}",[$parent_id,$parent]));
 	}
 
 	// **********************  菜单 END  **********************
@@ -446,9 +452,8 @@ EOT;
 	*/
 	public function log($param)
 	{
-		global $common;
-		if (!empty($_POST)) {
-			clear('logs');
+		if (!empty(post('clear'))) {
+			LogsModel::del();
 			show_json(1,'clear');
 		}
 		$output = LogsModel::select();
@@ -461,14 +466,13 @@ EOT;
 		*/
 	public function freshCache($name)
 	{
-		global $files,$common;
 
 		//清空数据库缓存
 		$db_cache = CacheModel::del();
 
 		//清空文件缓存
-		$files_cache = $files->delDir(ROOT . "/data/cache");
-		$files_logs = $files->delDir(ROOT . "/data/logs");
+		$files_cache = Files::delDir(ROOT . "/data/cache");
+		$files_logs = Files::delDir(ROOT . "/data/logs");
 		show_json($db_cache, [], $files_cache||$files_logs? '数据库、文件清除成功' : '目录不存在');
 	}
 
@@ -482,10 +486,9 @@ EOT;
 	*/
 	public function createStaticPage($param)
 	{
-		global $common, $_param, $_df, $files;
 		//生成静态页面
 		$path = "static_pages";
-		$files->mkdirs($path);
+		Files::mkdirs($path);
 		$list = HtmlModel::select();
 		$str = '';
 		foreach ($list as $i) {
@@ -493,20 +496,20 @@ EOT;
 			$file_n = str("{0}/{1}/{2}.html", [WEB_ROOT, $path, $i['file_n']]);
 			//echo $file_n;
 			$out = file_get_contents(split_url($i['src']));
-			$files->writeFile($out,$file_n);
+			Files::writeFile($out,$file_n);
 			$file = str("/{0}/{1}.html", [$path, $i['file_n']]);
 			$str .= str("<a href='{file}' target='_blank'>{file}</a>：已生成<br>", ['file'=>$file]);
 		}
 
 		//根据主页内的文字生成html页面，用来制作字体
 		$body = file_get_contents(split_url('homepage/home'));
-		$body = $common->getChinese($body);
+		$body = Common::getChinese($body);
 
 		$path = '/static_pages/font.html';
 		$file_n = str("{0}/{1}", [WEB_ROOT, $path]);
 		//		echo $file_n;
 		$s = sprintf('<html><head><meta charset="UTF-8"><link rel="stylesheet" href="font-awesome.css"></head><body>%s</body></html>', $body);
-		$files->writeFile($s,$file_n);
+		Files::writeFile($s,$file_n);
 		$str .= str("<a href='{path}' target='_blank'>{path}(用来优化字体文件)</a>：已生成<br>", ['path'=>$path]);
 		$this->view(get_defined_vars());
 	}

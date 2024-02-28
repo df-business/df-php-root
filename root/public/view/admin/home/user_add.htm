@@ -1,3 +1,8 @@
+<df-header>
+	<df-code>
+		use Dfer\Tools\Statics\{Common};
+	</df-code>
+</df-header>
 <df-body>
 	<div class="row">
 		<div class="col-sm-12">
@@ -9,7 +14,7 @@
 					<form method="post" action='{:split_url(str("admin/home/%s_update ",[table_name("UserModel")]))}'>
 						<input name="id" value="{:$output[0]??'0'}" hidden />
 
-						<input name="data[create_time]" value="{:$output['create_time']??$common->getTime()}" hidden />
+						<input name="data[create_time]" value="{:$output['create_time']??Common::getTime()}" hidden />
 
 						<div class="form-horizontal m-t">
 							<div class="form-group">

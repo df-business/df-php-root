@@ -1,8 +1,7 @@
 <?php
 namespace areas\admin\controller;
 
-use Dfer\Tools\Files;
-use areas\admin\model\{HomeLayoutModel,HomeLayoutImgModel,HomeColumnModel,HomeLinkModel,HomeMusicModel,MessageModel,NotepadModel,ColumnModel};
+use Dfer\Tools\Statics\{Common,Files};
 
 class UploadController extends BaseController{
 
@@ -12,8 +11,7 @@ class UploadController extends BaseController{
 		* @param {Object} $name
 		*/
 	function umeditorUpload($name) {
-		global $files,$common;
-		$common->showJsonBase($files->uploadFile(Files::UPLOAD_UMEDITOR_EDITOR,['name'=>'upfile']));
+		Common::showJsonBase(Files::uploadFile(Files::UPLOAD_UMEDITOR_EDITOR,['name'=>'upfile']));
 	}
 
 /**
@@ -22,8 +20,7 @@ class UploadController extends BaseController{
 	* @param {Object} $name
 	*/
 	function webUpload($name) {
-		global $files,$common;
-		$common->showJsonBase($files->uploadFile(Files::UPLOAD_WEB_UPLOADER));
+		Common::showJsonBase(Files::uploadFile(Files::UPLOAD_WEB_UPLOADER));
 	}
 
 }

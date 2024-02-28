@@ -24,9 +24,8 @@ abstract class BaseController {
 			*/
 				public	function view($params,$template='common')
 				{
-					global $_df;
 					extract($params);
-					include_once view($template, $_df['area']);
+					include_once view($template, param('area'));
 				}
 
 
@@ -35,14 +34,14 @@ abstract class BaseController {
 			 */
 			public function colUserInfo()
 			{
-				global $_df;
+				global $_site;
 				$user = HomeUserInfoModel::where(['ip' => IP])->first();
 				if ($user) {
-					$dt = array('browser' => $_SERVER['HTTP_USER_AGENT'] ?? null, 'hits' => $user['hits'] + 1, 'time' => $_df['time']);
+					$dt = array('browser' => $_SERVER['HTTP_USER_AGENT'] ?? null, 'hits' => $user['hits'] + 1, 'time' => $_site['time']);
 					HomeUserInfoModel::where($user['id'])->update($dt);
 				} else {
-					$dt = array('ip' => IP, 'browser' => $_SERVER['HTTP_USER_AGENT'], 'hits' => 0, 'first_time' => $_df['time'], 'time' => $_df['time']);
-					update($db, $dt);
+					$dt = array('ip' => IP, 'browser' => $_SERVER['HTTP_USER_AGENT'], 'hits' => 0, 'first_time' => $_site['time'], 'time' => $_site['time']);
+				HomeUserInfoModel::insert($dt);
 				}
 			}
 

@@ -1,7 +1,7 @@
 <?php
 namespace areas\homepage\controller;
 use areas\admin\model\{HomeLayoutModel,HomeColumnModel,HomeLinkModel,HomeMusicModel,MessageModel};
-use Dfer\DfPhpCore\Modules\Static\{Mysql,Lang};
+use Dfer\DfPhpCore\Modules\Statics\{Mysql,Lang};
 
 class HomeController extends BaseController
 {
@@ -25,7 +25,6 @@ class HomeController extends BaseController
 
 	// ********************** 留言 START **********************
 
-	static $db_mes = 'message';
 	function postMsg()
 	{
 		$dt = post('data');

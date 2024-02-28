@@ -9,7 +9,7 @@
 				<div class="ibox-content">
 					<div class="row form-horizontal form-group">
 						<div class="col-sm-1">
-							<a href='{:split_url(str("admin/home/%s_add",[table_name("HtmlModel")]))}'
+							<a href='{:split_url(str("%s_add",[table_name("HtmlModel")]))}'
 								class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>&nbsp;添加</a>
 						</div>
 
@@ -34,13 +34,13 @@
 										<a href='/html/{::file_n}'>{::file_n}</a>
 									</td>
 									<td>
-										<a href='{:split_url($value["src"])!!'>{::src}</a>
+										<a href='{:split_url($value["src"])}'>{::src}</a>
 									</td>
 									<td>{::comment}</td>
 									<td class='center'>
 										<a
-											href='{:split_url(str("admin/home/%s_add/%s",[table_name("HtmlModel")]))}'>[编辑]</a>
-										<a href='{:split_url(str("admin/home/%s_del/%s",[table_name("HtmlModel")]))}'
+											href='{:split_url(str("admin/home/%s_add/%s",[table_name("HtmlModel"),$value[0]]))}'>[编辑]</a>
+										<a href='{:split_url(str("admin/home/%s_del/%s",[table_name("HtmlModel"),$value[0]]))}'
 											onclick='return confirm("您确认要删除吗？")'>[删除]</a>
 									</td>
 								</tr>
