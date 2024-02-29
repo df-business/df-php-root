@@ -12,10 +12,7 @@
 	<link href="{:VIEW_ASSETS}/admin/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
 	<link href="{:VIEW_ASSETS}/admin/css/style.css?v=4.1.0" rel="stylesheet">
 
-	<script src="{:VIEW_ASSETS}/DfTools.js"></script>
 	<script>
-		var df_tools = new DfTools();
-
 		$(function() {
 			refresh_data = function() {
 				layer.confirm('确定刷新服务器数据么？', {
@@ -31,29 +28,12 @@
 									icon: 1
 								});
 						})
-
 				}, function() {})
 			}
 
 			changeSSL = function() {
-
-				location.href = "{:SSL_STATE?str_replace('https','http',URL):str_replace('http','https',URL)}"
-
+				location.href = "{:SSL_STATE?str_replace('https','http',URL):str_replace('http','https',URL)}";
 			}
-
-			$('#top-search').keypress(function(e) {
-				if (e.keyCode == 13) {
-					post('', {
-						'top-search': $(this).val()
-					}, function(x) {
-						if (x.status) {
-							layer.msg('搜索：{0}'.format(x.msg));
-
-						}
-					})
-					return false;
-				}
-			})
 
 		})
 	</script>
@@ -120,27 +100,14 @@
 						<div class="navbar-header">
 							<a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i
 									class="fa fa-bars"></i> </a>
-
-							<form role="search" class="navbar-form-custom">
-								<div class="form-group">
-									<input type="text" placeholder="请输入您需要查找的内容 …" class="form-control"
-										name="top-search" id="top-search">
-								</div>
-							</form>
 							<ul class="nav navbar-top-links navbar-right">
 								<li class="hidden-xs">
 									<a href="/" target="_blank"><i class="fa fa fa-home"></i>站点首页</a>
 								</li>
 								<li class="hidden-xs">
-									<a href="javascript:history.back(-1);" data-index="0"><i
-											class="fa fa fa-backward"></i>返回</a>
-								</li>
-
-								<li class="hidden-xs">
 									<a href="javascript:window.location.reload();" data-index="0"><i
 											class="fa fa-refresh"></i>刷新</a>
 								</li>
-
 								<li class="dropdown  m-l-xl">
 									<a class="dropdown-toggle count-info J_menuItem"
 										href="{:split_url('admin/column/message/')}">

@@ -2,8 +2,8 @@
 namespace areas\admin\controller;
 use areas\admin\model\{UserModel,ConfigModel,MessageModel,RolesModel,HomeUserInfoModel,HtmlModel,MenuModel,CacheModel,LogsModel};
 use Dfer\DfPhpCore\Modules\Statics\Mysql;
+use Dfer\Tools\Statics\{Common,Files};
 
-use Dfer\Tools\Static\{Common,Files};
 class HomeController extends BaseController{
 
 	/**
@@ -13,9 +13,7 @@ class HomeController extends BaseController{
 	public function index($param)
 	{
 		$id = $this->verifyLogin(1);
-		if (!empty(post('top-search'))) {
-			show_json(true, null, post('top-search'));
-		}
+
 		//验证登录
 		$output = UserModel::where(['id' => $id])->first();
 		$hits = ConfigModel::where(['key' => 'hits'])->first()['val'];
@@ -139,8 +137,7 @@ EOT;
 
 						// **********************  修改头像 END  **********************
 
-
-		// ********************** 设置密码 START **********************
+		    // ********************** 设置密码 START **********************
 
 		    public function setPwd($param)
 		    {
@@ -177,45 +174,7 @@ EOT;
 		*/
 	public function info($param)
 	{
-
-		$str = str(<<<EOT
-				<!-- ********************** layui START ********************** -->
-				<link href="//unpkg.com/layui@2.8.15/dist/css/layui.css" rel="stylesheet">
-				<script src="//unpkg.com/layui@2.8.15/dist/layui.js"></script>
-				<!-- **********************  layui END  ********************** -->
-				<table class="layui-table" style="width: 50%;">
-							<colgroup>
-									<col width="35%">
-									<col width="65%">
-							</colgroup>
-							<thead>
-									<tr>
-											<th colspan="2">框架信息</th>
-									</tr>
-							</thead>
-							<tbody>
-									<tr>
-											<td>php 当前版本</td>
-											<td>{0}</td>
-									</tr>
-									<tr>
-											<td>php 需求版本</td>
-											<td>{1}</td>
-									</tr>
-									<tr>
-											<td>DfPHP 当前版本</td>
-											<td>{2}</td>
-									</tr>
-
-									<tr>
-											<td>php 环境</td>
-											<td>{3}</td>
-									</tr>
-
-							</tbody>
-				</table>
-				EOT,[PHP_VERSION,PHP_VERSION_MIN,VERSION,getenv('SERVER_SOFTWARE')]);
-		die($str);
+		$this->view(get_defined_vars(),'pure_share');
 	}
 
 	// ********************** 用户 START **********************
@@ -492,9 +451,8 @@ EOT;
 		$list = HtmlModel::select();
 		$str = '';
 		foreach ($list as $i) {
-			// $path = $i['file_n'] == 'index' ? '/' : $path;
+			// var_dump(split_url('homepage/home/'));
 			$file_n = str("{0}/{1}/{2}.html", [WEB_ROOT, $path, $i['file_n']]);
-			//echo $file_n;
 			$out = file_get_contents(split_url($i['src']));
 			Files::writeFile($out,$file_n);
 			$file = str("/{0}/{1}.html", [$path, $i['file_n']]);
@@ -502,7 +460,7 @@ EOT;
 		}
 
 		//根据主页内的文字生成html页面，用来制作字体
-		$body = file_get_contents(split_url('homepage/home'));
+		$body = file_get_contents(split_url('homepage/home/'));
 		$body = Common::getChinese($body);
 
 		$path = '/static_pages/font.html';

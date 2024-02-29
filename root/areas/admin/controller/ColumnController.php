@@ -1,7 +1,7 @@
 <?php
 namespace areas\admin\controller;
 
-use areas\admin\model\{HomeLayoutModel,HomeLayoutImgModel,HomeColumnModel,HomeLinkModel,HomeMusicModel,MessageModel,NotepadModel,ColumnModel};
+use areas\admin\model\{ConfigModel,HomeLayoutImgModel,HomeColumnModel,HomeLinkModel,HomeMusicModel,MessageModel,NotepadModel,ColumnModel};
 use Dfer\Tools\Statics\{Common,Files};
 
 class ColumnController extends BaseController{
@@ -149,8 +149,8 @@ class ColumnController extends BaseController{
 
 	// ********************** 布局 START **********************
 
-	function homeLayout($param = 1) {
-		$output = HomeLayoutModel::where($param)->first();
+	function homeLayout($param) {
+		$output = ConfigModel::where(['key' => 'home_layout'])->find()['val'];
 		$img = HomeLayoutImgModel::select();
 		$this->view(get_defined_vars());
 	}
@@ -158,9 +158,8 @@ class ColumnController extends BaseController{
 	function homeLayoutUpdate() {
 		$dt = post('data');
 		$id = post('id');
-		// var_dump($_SERVER['HTTP_REFERER']);die;
-		$ret = HomeLayoutModel::where($id)->update($dt);
-		$this->jumpPrompt($ret,HomeLayoutModel::getName());
+		$ret = ConfigModel::where(['key' => 'home_layout'])->update(['val'=>$dt]);
+		$this->jumpPrompt($ret,"homeLayout");
 	}
 
 	/**
@@ -186,7 +185,7 @@ class ColumnController extends BaseController{
 		$id = param('id');
 		$img = HomeLayoutImgModel::where($id)->first();
 		$rt = HomeLayoutImgModel::where($id)->del() . ',';
-		$rt .= $files -> delFile($img['img']);
+		$rt .= Files::delFile($img['img']);
 		show_json(1, $rt);
 	}
 
@@ -305,11 +304,15 @@ class ColumnController extends BaseController{
 	// **********************  记事本 END  **********************
 
 
-	// ********************** 栏目 START **********************
+	// ********************** 关于此站点 START **********************
 
-	public function column($param)
-	{
-		$output = ColumnModel::where(1)->first();
+	function column($param) {
+		$output = ColumnModel::order('asc')->select();
+		$this->view(get_defined_vars());
+	}
+
+	function columnAdd($param) {
+		$output = ColumnModel::where($param)->find();
 		$this->view(get_defined_vars());
 	}
 
@@ -326,16 +329,18 @@ class ColumnController extends BaseController{
 		Common::showJsonBase(Files::uploadFile(Files::UPLOAD_UMEDITOR_EDITOR));
 	}
 
-	// **********************  栏目 END  **********************
-
 	/**
 		* 使用说明
 		* @param {Object} $param
 		*/
 	public function readme($param)
 	{
-		$output = ColumnModel::where(1)->first();
+		$output = ColumnModel::order('asc')->select();
 		$this->view(get_defined_vars());
 	}
+
+	// **********************  关于此站点 END  **********************
+
+
 }
 ?>

@@ -9,20 +9,24 @@
 	<legend>说明</legend>
 	</fieldset>
 	<div class="layui-collapse" lay-accordion="">
-		<div class="layui-colla-item">
-			<h2 class="layui-colla-title">{$output['title']}</h2>
-			<div class="layui-colla-content layui-show">
-				<p>
-					{$output['content']}</p>
-			</div>
-		</div>
-		<div class="layui-colla-item">
-			<h2 class="layui-colla-title">白日依山尽</h2>
-			<div class="layui-colla-content">
-				<p>黄河入海流</p>
-			</div>
-		</div>
 
+		<df-each $output>
+			<div class="layui-colla-item">
+				<h2 class="layui-colla-title">{::title}</h2>
+				<df-if $key==0>
+					<div class="layui-colla-content layui-show">
+						<p>
+							{::content}</p>
+					</div>
+					<df-else>
+						<div class="layui-colla-content">
+							<p>
+								{::content}</p>
+						</div>
+				</df-if>
+
+			</div>
+		</df-each>
 
 	</div>
 

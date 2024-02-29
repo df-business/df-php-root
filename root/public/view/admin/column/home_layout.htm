@@ -8,7 +8,7 @@
 				</div>
 				<div class="ibox-content">
 					<form method="post"
-						action='{:split_url(str("admin/column/%s_update",[areas\admin\model\HomeLayoutModel::getName()]))}'
+						action='{:split_url(str("admin/column/%s_update",["homeLayout"]))}'
 						class="layui-form">
 						<input name="id" value="{:$output[0]??'0'}" hidden />
 						<input name="data[bg_img]" id="bg_img" value="{:$output['bg_img']??''}"
@@ -105,11 +105,11 @@
 							<div class="form-group">
 								<df-each $img>
 									<div class="img_{$id}" style="float: left;margin-right: 15px;">
-										<a href="javascript:sele_pic('{$img}')" title="点击更换图片">
-											<img style="width: 55px;height: 55px;" src="!`img`">
+										<a href="javascript:sele_pic('{::img}')" title="点击更换图片">
+											<img style="width: 55px;height: 55px;" src="{::img}">
 										</a>
 										<div style="text-align: center;">
-											<a href="javascript:del_pic('{$id}')"
+											<a href="javascript:del_pic('{::id}')"
 												onclick='return confirm("确认删除吗？")'>删除</a>
 										</div>
 									</div>
@@ -137,7 +137,7 @@
 	<script>
 		$(() => {
 			upload("#uploadButton1", "#uploadPreview1", "#bg_img",
-				`{:split_url(str("admin/column/%s_pic_up",[areas\admin\model\HomeLayoutModel::getName()]))}`);
+				`{:split_url(str("admin/column/%s_pic_up",["homeLayout"]))}`);
 			upload("#uploadButton2", "#uploadPreview2", null, UPLOAD_API.WEB_UPLOADER);
 		})
 	</script>
@@ -187,7 +187,7 @@
 		}
 
 		function del_pic(id) {
-			post('{:split_url(str("admin/column/%s_pic_del",[table_name("HomeLayoutModel")]))}', {
+			df_tools.post('{:split_url(str("admin/column/%s_pic_del",["homeLayout"]))}', {
 				id: id
 			}, function(x) {
 				$('.img_' + id).remove();
