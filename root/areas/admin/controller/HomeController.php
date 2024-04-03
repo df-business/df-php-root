@@ -2,7 +2,7 @@
 namespace areas\admin\controller;
 use areas\admin\model\{UserModel,ConfigModel,MessageModel,RolesModel,HomeUserInfoModel,HtmlModel,MenuModel,CacheModel,LogsModel};
 use Dfer\DfPhpCore\Modules\Statics\Mysql;
-use Dfer\Tools\Statics\{Common,Files};
+use Dfer\Tools\Statics\{Common};
 
 class HomeController extends BaseController{
 
@@ -130,7 +130,7 @@ EOT;
 							*/
 		    public function upChangePic($name)
 		    {
-		        $rt= Files::uploadFile(Files::UPLOAD_WEB_UPLOADER, ['size'=>"500*500"]);
+		        $rt= Common::uploadFile(Common::UPLOAD_WEB_UPLOADER, ['size'=>"500*500"]);
 										// var_dump($rt);die;
 										Common::showJsonBase($rt);
 		    }
@@ -194,7 +194,7 @@ EOT;
 
 	public function userEditUp($name)
 	{
-		Common::showJsonBase(Files::uploadFile(Files::UPLOAD_UMEDITOR_EDITOR));
+		Common::showJsonBase(Common::uploadFile(Common::UPLOAD_UMEDITOR_EDITOR));
 	}
 
 	public function userView($param)
@@ -430,8 +430,8 @@ EOT;
 		$db_cache = CacheModel::del();
 
 		//清空文件缓存
-		$files_cache = Files::delDir(ROOT . "/data/cache");
-		$files_logs = Files::delDir(ROOT . "/data/logs");
+		$files_cache = Common::delDir(ROOT . "/data/cache");
+		$files_logs = Common::delDir(ROOT . "/data/logs");
 		show_json($db_cache, [], $files_cache||$files_logs? '数据库、文件清除成功' : '目录不存在');
 	}
 
@@ -447,14 +447,14 @@ EOT;
 	{
 		//生成静态页面
 		$path = "static_pages";
-		Files::mkdirs($path);
+		Common::mkdirs($path);
 		$list = HtmlModel::select();
 		$str = '';
 		foreach ($list as $i) {
 			// var_dump(split_url('homepage/home/'));
 			$file_n = str("{0}/{1}/{2}.html", [WEB_ROOT, $path, $i['file_n']]);
 			$out = file_get_contents(split_url($i['src']));
-			Files::writeFile($out,$file_n);
+			Common::writeFile($out,$file_n);
 			$file = str("/{0}/{1}.html", [$path, $i['file_n']]);
 			$str .= str("<a href='{file}' target='_blank'>{file}</a>：已生成<br>", ['file'=>$file]);
 		}
@@ -467,7 +467,7 @@ EOT;
 		$file_n = str("{0}/{1}", [WEB_ROOT, $path]);
 		//		echo $file_n;
 		$s = sprintf('<html><head><meta charset="UTF-8"><link rel="stylesheet" href="font-awesome.css"></head><body>%s</body></html>', $body);
-		Files::writeFile($s,$file_n);
+		Common::writeFile($s,$file_n);
 		$str .= str("<a href='{path}' target='_blank'>{path}(用来优化字体文件)</a>：已生成<br>", ['path'=>$path]);
 		$this->view(get_defined_vars());
 	}

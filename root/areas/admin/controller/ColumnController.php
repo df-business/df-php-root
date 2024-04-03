@@ -2,7 +2,7 @@
 namespace areas\admin\controller;
 
 use areas\admin\model\{ConfigModel,HomeLayoutImgModel,HomeColumnModel,HomeLinkModel,HomeMusicModel,MessageModel,NotepadModel,ColumnModel};
-use Dfer\Tools\Statics\{Common,Files};
+use Dfer\Tools\Statics\{Common};
 
 class ColumnController extends BaseController{
 
@@ -39,8 +39,7 @@ class ColumnController extends BaseController{
 		* @param {Object} $name
 		*/
 	function homeColumnEditUp($name) {
-		global $files,$common;
-		Common::showJsonBase(Files::uploadFile(Files::UPLOAD_UMEDITOR_EDITOR));
+		Common::showJsonBase(Common::uploadFile(Common::UPLOAD_UMEDITOR_EDITOR));
 	}
 
 	/**
@@ -48,8 +47,7 @@ class ColumnController extends BaseController{
 		* @param {Object} $name
 		*/
 	function homeColumnUp($name) {
-		global $files,$common;
-		Common::showJsonBase(Files::uploadFile(Files::UPLOAD_WEB_UPLOADER));
+		Common::showJsonBase(Common::uploadFile(Common::UPLOAD_WEB_UPLOADER));
 	}
 
 	// **********************  栏目管理 END  **********************
@@ -167,14 +165,14 @@ class ColumnController extends BaseController{
 		* @param {Object} $name
 		*/
 	function homeLayoutPicUp($name) {
-		$dt['img'] = Files::uploadFile(Files::UPLOAD_WEB_UPLOADER);
+		$dt['img'] = Common::uploadFile(Common::UPLOAD_WEB_UPLOADER);
 		HomeLayoutImgModel::insert($dt);
 		//不限制尺寸
 		Common::showJsonBase($dt['img']);
 	}
 
 	function homeLayoutUp($name) {
-		Common::showJsonBase(Files::uploadFile(Files::UPLOAD_WEB_UPLOADER,['path'=>VIEW_ASSETS.'/fontFamily/font.TTF']));
+		Common::showJsonBase(Common::uploadFile(Common::UPLOAD_WEB_UPLOADER,['path'=>VIEW_ASSETS.'/fontFamily/font.TTF']));
 	}
 
 	/**
@@ -185,7 +183,7 @@ class ColumnController extends BaseController{
 		$id = param('id');
 		$img = HomeLayoutImgModel::where($id)->first();
 		$rt = HomeLayoutImgModel::where($id)->del() . ',';
-		$rt .= Files::delFile($img['img']);
+		$rt .= Common::delFile($img['img']);
 		show_json(1, $rt);
 	}
 
@@ -216,8 +214,7 @@ class ColumnController extends BaseController{
 		*/
 	public function notepadEditUp($name)
 	{
-		global $files,$common;
-		Common::showJsonBase(Files::uploadFile(Files::UPLOAD_UMEDITOR_EDITOR));
+		Common::showJsonBase(Common::uploadFile(Common::UPLOAD_UMEDITOR_EDITOR));
 	}
 
 	/**
@@ -326,7 +323,7 @@ class ColumnController extends BaseController{
 
 	public function columnEditUp($name)
 	{
-		Common::showJsonBase(Files::uploadFile(Files::UPLOAD_UMEDITOR_EDITOR));
+		Common::showJsonBase(Common::uploadFile(Common::UPLOAD_UMEDITOR_EDITOR));
 	}
 
 	/**

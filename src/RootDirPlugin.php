@@ -14,7 +14,7 @@ class RootDirPlugin implements PluginInterface
         $projectRootDir = dirname($vendorDir) . DIRECTORY_SEPARATOR;
         $moduleRootDir    = $vendorDir . DIRECTORY_SEPARATOR . 'dfer' . DIRECTORY_SEPARATOR . 'df-php-root' . DIRECTORY_SEPARATOR . 'root'. DIRECTORY_SEPARATOR;
 		
-		$files = new \Dfer\Tools\Files;
+		$files = new \Dfer\Tools\Statics\Common;
         if (is_dir($moduleRootDir)) {
 			echo $moduleRootDir . "	>>>	".$projectRootDir.PHP_EOL;
             echo "////////////////////////////////////////////////// 文件复制 START //////////////////////////////////////////////////".PHP_EOL;
