@@ -1,7 +1,6 @@
 <df-body>
 
 
-
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="ibox float-e-margins">
@@ -11,7 +10,7 @@
 				<div class="ibox-content">
 					<div class="row form-horizontal form-group">
 						<div class="col-sm-1">
-							<a href='{:split_url(str("admin/column/%s_add",[areas\admin\model\HomeLinkModel::getName()]))}'
+							<a href='{:split_url(str("admin/column/%s_add",[areas\admin\model\MusicModel::getName()]))}'
 								class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>&nbsp;添加</a>
 						</div>
 
@@ -27,8 +26,6 @@
 						</thead>
 						<tbody>
 							<df-each $output>
-
-
 								<tr>
 									<td>{$index}</td>
 									<td>
@@ -37,8 +34,8 @@
 									<td>{::src}</td>
 									<td class='center'>
 										<a
-											href='{:split_url(str("admin/column/%s_add/%s",[areas\admin\model\HomeLinkModel::getName(),$value[0]]))}'>[编辑]</a>
-										<a href='{:split_url(str("admin/column/%s_del/%s",[areas\admin\model\HomeLinkModel::getName(),$value[0]]))}'
+											href='{:split_url(str("admin/column/%s_add/%s",[areas\admin\model\MusicModel::getName(),$value[0]]))}'>[编辑]</a>
+										<a href='{:split_url(str("admin/column/%s_del/%s",[areas\admin\model\MusicModel::getName(),$value[0]]))}'
 											onclick='return confirm("您确认要删除吗?")'>[删除]</a>
 									</td>
 								</tr>
@@ -49,7 +46,6 @@
 			</div>
 		</div>
 	</div>
-
 </df-body>
 <df-footer>
 
@@ -71,4 +67,5 @@
 		});
 	</script>
 	<!-- **********************  DATATABLE END  ********************** -->
+
 </df-footer>

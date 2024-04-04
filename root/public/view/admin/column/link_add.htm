@@ -1,5 +1,6 @@
 <df-body>
 
+
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="ibox float-e-margins">
@@ -8,8 +9,9 @@
 				</div>
 				<div class="ibox-content">
 					<form method="post"
-						action="{:split_url(sprintf('admin/column/%s_update',areas\admin\model\ColumnModel::getName()))}">
+						action='{:split_url(str("admin/column/%s_update",[areas\admin\model\LinkModel::getName()]))}'>
 						<input name="id" value="{:$output[0]??'0'}" hidden />
+
 						<div class="form-horizontal m-t">
 							<div class="form-group">
 								<label class="col-sm-1 control-label">标题：</label>
@@ -18,17 +20,21 @@
 										value="{:$output['title']??''}" />
 								</div>
 							</div>
+
 							<div class="form-group">
-								<label class="col-sm-1 control-label">内容：</label>
-								<div class="col-sm-11">
-									<script type="text/plain" id="container" name="data[content]">
-										{:$output['content']??''}</script>
+								<label class="col-sm-1 control-label">链接：</label>
+								<div class="col-sm-5">
+									<input class="form-control" name="data[src]" size="10" type="text"
+										value="{:$output['src']??''}" />
 								</div>
 							</div>
+
 
 							<div class="form-group">
 								<div class="col-sm-2 col-sm-offset-1">
 									<button class="btn btn-primary" onclick="return submit_form()">保存</button>
+									<a href='{:split_url(str("admin/column/%s",[areas\admin\model\LinkModel::getName()]))}'
+										class="btn btn-sm btn-white"> 返 回 </a>
 								</div>
 							</div>
 						</div>
@@ -37,32 +43,26 @@
 			</div>
 		</div>
 	</div>
-
 </df-body>
+
 <df-footer>
 
 
-	<!-- ********************** umeditor START ********************** -->
-	<link type="text/css" rel="stylesheet"
-		href="https://oss.dfer.site/umeditor/1.2.2/themes/default/css/umeditor.min.css">
-	<script type="text/javascript" src='{:VIEW_ASSETS}/umeditor/1.2.2/umeditor.config.js'></script>
-	<script type="text/javascript" src="https://oss.dfer.site/umeditor/1.2.2/umeditor.js"></script>
-	<script type="text/javascript" src="https://oss.dfer.site/umeditor/1.2.2/lang/zh-cn/zh-cn.js"></script>
 
 	<script type="text/javascript">
-		var um = UM.getEditor('container');
-	</script>
-	<!-- **********************  umeditor END  ********************** -->
 
-	<script type="text/javascript">
+
 		function submit_form() {
 			if ($.formVerifyEmpty('data[title]', '请输入标题')) {
 				return false;
 			}
-			if ($.formVerifyEmpty('data[content]', '请输入内容')) {
-				return false;
-			}
+
 			return true;
 		}
+
+
 	</script>
+
+
+
 </df-footer>

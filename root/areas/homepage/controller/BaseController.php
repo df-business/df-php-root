@@ -1,7 +1,6 @@
 <?php
 namespace areas\homepage\controller;
-use areas\admin\model\{UserModel,ConfigModel,MessageModel,RolesModel,HomeUserInfoModel,HtmlModel,MenuModel,CacheModel};
-
+use areas\admin\model\{UserModel,ConfigModel,MessageModel,RolesModel,UserInfoModel,HtmlModel,MenuModel,CacheModel};
 /**
 	* 基础类
 	*/
@@ -35,13 +34,13 @@ abstract class BaseController {
 			public function colUserInfo()
 			{
 				global $_site;
-				$user = HomeUserInfoModel::where(['ip' => IP])->first();
+				$user = UserInfoModel::where(['ip' => IP])->first();
 				if ($user) {
 					$dt = array('browser' => $_SERVER['HTTP_USER_AGENT'] ?? null, 'hits' => $user['hits'] + 1, 'time' => $_site['time']);
-					HomeUserInfoModel::where($user['id'])->update($dt);
+					UserInfoModel::where($user['id'])->update($dt);
 				} else {
 					$dt = array('ip' => IP, 'browser' => $_SERVER['HTTP_USER_AGENT'], 'hits' => 0, 'first_time' => $_site['time'], 'time' => $_site['time']);
-				HomeUserInfoModel::insert($dt);
+				UserInfoModel::insert($dt);
 				}
 			}
 

@@ -1,44 +1,44 @@
 <?php
 namespace areas\admin\controller;
 
-use areas\admin\model\{ConfigModel,HomeLayoutImgModel,HomeColumnModel,HomeLinkModel,HomeMusicModel,MessageModel,NotepadModel,ColumnModel};
+use areas\admin\model\{ConfigModel,LayoutImgModel,ArticleModel,LinkModel,MusicModel,MessageModel,NotepadModel};
 use Dfer\Tools\Statics\{Common};
 
 class ColumnController extends BaseController{
 
-	// ********************** 栏目管理 START **********************
-	function homeColumn($param) {
-		$output = HomeColumnModel::order('asc')->select();
+	// ********************** 文章管理 START **********************
+	function article($param) {
+		$output = ArticleModel::order('asc')->select();
 		// var_dump($output);
 		$this->view(get_defined_vars());
 	}
 
-	function homeColumnAdd($param) {
-		$output = HomeColumnModel::where($param)->find();
+	function articleAdd($param) {
+		$output = ArticleModel::where($param)->find();
 		$this->view(get_defined_vars());
 	}
 
-	function homeColumnUpdate() {
+	function articleUpdate() {
 		$dt = post('data');
 		$id = post('id');
-		$ret = HomeColumnModel::where($id)->update($dt);
-		$this->jumpPrompt($ret, HomeColumnModel::getName());
+		$ret = ArticleModel::where($id)->update($dt);
+		$this->jumpPrompt($ret, ArticleModel::getName());
 	}
 
 	/**
 		* 删除
 		* @param {Object} $id
 		*/
-	function homeColumnDel($id) {
-		$ret = HomeColumnModel::where($id)->del();
-		$this->jumpPrompt($ret,HomeColumnModel::getName());
+	function articleDel($id) {
+		$ret = ArticleModel::where($id)->del();
+		$this->jumpPrompt($ret,ArticleModel::getName());
 	}
 
 	/**
 		* 富文本上传组件
 		* @param {Object} $name
 		*/
-	function homeColumnEditUp($name) {
+	function articleEditUp($name) {
 		Common::showJsonBase(Common::uploadFile(Common::UPLOAD_UMEDITOR_EDITOR));
 	}
 
@@ -46,11 +46,12 @@ class ColumnController extends BaseController{
 		* 单文件上传组件
 		* @param {Object} $name
 		*/
-	function homeColumnUp($name) {
+	function articleUp($name) {
 		Common::showJsonBase(Common::uploadFile(Common::UPLOAD_WEB_UPLOADER));
 	}
 
-	// **********************  栏目管理 END  **********************
+
+	// **********************  文章管理 END  **********************
 
 	// ********************** 留言管理 START **********************
 	public function message($param) {
@@ -84,30 +85,30 @@ class ColumnController extends BaseController{
 
 	// ********************** 链接管理 START **********************
 
-	public function homeLink($param) {
-		$output = HomeLinkModel::select();
+	public function link($param) {
+		$output = LinkModel::select();
 		$this->view(get_defined_vars());
 	}
 
-	function homeLinkAdd($param) {
-		$output = HomeLinkModel::where($param)->find();
+	function linkAdd($param) {
+		$output = LinkModel::where($param)->find();
 		$this->view(get_defined_vars());
 	}
 
-	function homeLinkUpdate() {
+	function linkUpdate() {
 		$dt = post('data');
 		$id = post('id');
-		$ret = HomeLinkModel::where($id)->update($dt);
-		$this->jumpPrompt($ret,HomeLinkModel::getName());
+		$ret = LinkModel::where($id)->update($dt);
+		$this->jumpPrompt($ret,LinkModel::getName());
 	}
 
 	/**
 		* 删除
 		* @param {Object} $id
 		*/
-	function homeLinkDel($id) {
-		$ret = HomeLinkModel::where($id)->del();
-		$this->jumpPrompt($ret,HomeLinkModel::getName());
+	function linkDel($id) {
+		$ret = LinkModel::where($id)->del();
+		$this->jumpPrompt($ret,LinkModel::getName());
 	}
 
 	// **********************  链接管理 END  **********************
@@ -115,31 +116,31 @@ class ColumnController extends BaseController{
 
 	// ********************** 音乐管理 START **********************
 
-	public function homeMusic($param) {
-		$output = HomeMusicModel::select();
+	public function music($param) {
+		$output = MusicModel::select();
 		$this->view(get_defined_vars());
 	}
 
-	function homeMusicAdd($param) {
-		$output = HomeMusicModel::where($param)->find();
+	function musicAdd($param) {
+		$output = MusicModel::where($param)->find();
 		$this->view(get_defined_vars());
 	}
 
-	function homeMusicUpdate() {
+	function musicUpdate() {
 		$dt = post('data');
 		$id = post('id');
-		$ret = HomeMusicModel::where($id)->update($dt);
+		$ret = MusicModel::where($id)->update($dt);
 		// var_dump($ret);
-		$this->jumpPrompt($ret,HomeMusicModel::getName());
+		$this->jumpPrompt($ret,MusicModel::getName());
 	}
 
 	/**
 		* 删除
 		* @param {Object} $id
 		*/
-	function homeMusicDel($id) {
-		$ret = HomeMusicModel::where($id)->del();
-		$this->jumpPrompt($ret,HomeMusicModel::getName());
+	function musicDel($id) {
+		$ret = MusicModel::where($id)->del();
+		$this->jumpPrompt($ret,MusicModel::getName());
 	}
 
 	// **********************  音乐管理 END  **********************
@@ -147,31 +148,31 @@ class ColumnController extends BaseController{
 
 	// ********************** 布局 START **********************
 
-	function homeLayout($param) {
-		$output = ConfigModel::where(['key' => 'home_layout'])->find()['val'];
-		$img = HomeLayoutImgModel::select();
+	function layout($param) {
+		$output = ConfigModel::where(['key' => 'layout'])->find()['val'];
+		$img = LayoutImgModel::select();
 		$this->view(get_defined_vars());
 	}
 
-	function homeLayoutUpdate() {
+	function layoutUpdate() {
 		$dt = post('data');
 		$id = post('id');
-		$ret = ConfigModel::where(['key' => 'home_layout'])->update(['val'=>$dt]);
-		$this->jumpPrompt($ret,"homeLayout");
+		$ret = ConfigModel::where(['key' => 'layout'])->update(['val'=>$dt]);
+		$this->jumpPrompt($ret,"layout");
 	}
 
 	/**
 		* 主页背景图
 		* @param {Object} $name
 		*/
-	function homeLayoutPicUp($name) {
+	function layoutPicUp($name) {
 		$dt['img'] = Common::uploadFile(Common::UPLOAD_WEB_UPLOADER);
-		HomeLayoutImgModel::insert($dt);
+		LayoutImgModel::insert($dt);
 		//不限制尺寸
 		Common::showJsonBase($dt['img']);
 	}
 
-	function homeLayoutUp($name) {
+	function layoutUp($name) {
 		Common::showJsonBase(Common::uploadFile(Common::UPLOAD_WEB_UPLOADER,['path'=>VIEW_ASSETS.'/fontFamily/font.TTF']));
 	}
 
@@ -179,10 +180,10 @@ class ColumnController extends BaseController{
 		* 图片删除
 		* @param {Object} $name
 		*/
-	function homeLayoutPicDel($name) {
+	function layoutPicDel($name) {
 		$id = param('id');
-		$img = HomeLayoutImgModel::where($id)->first();
-		$rt = HomeLayoutImgModel::where($id)->del() . ',';
+		$img = LayoutImgModel::where($id)->first();
+		$rt = LayoutImgModel::where($id)->del() . ',';
 		$rt .= Common::delFile($img['img']);
 		show_json(1, $rt);
 	}
@@ -301,42 +302,8 @@ class ColumnController extends BaseController{
 	// **********************  记事本 END  **********************
 
 
-	// ********************** 关于此站点 START **********************
 
-	function column($param) {
-		$output = ColumnModel::order('asc')->select();
-		$this->view(get_defined_vars());
-	}
 
-	function columnAdd($param) {
-		$output = ColumnModel::where($param)->find();
-		$this->view(get_defined_vars());
-	}
-
-	public function columnUpdate()
-	{
-		$id = post('id');
-		$dt = post('data');
-		$ret = ColumnModel::where($id)->update($dt);
-		$this->jumpPrompt($ret,ColumnModel::getName());
-	}
-
-	public function columnEditUp($name)
-	{
-		Common::showJsonBase(Common::uploadFile(Common::UPLOAD_UMEDITOR_EDITOR));
-	}
-
-	/**
-		* 使用说明
-		* @param {Object} $param
-		*/
-	public function readme($param)
-	{
-		$output = ColumnModel::order('asc')->select();
-		$this->view(get_defined_vars());
-	}
-
-	// **********************  关于此站点 END  **********************
 
 
 }

@@ -2,7 +2,7 @@
 namespace areas\admin\model;
 use Dfer\DfPhpCore\Modules\Model;
 
-class HomeLinkModel extends Model
+class LayoutImgModel extends Model
 {
 
 }

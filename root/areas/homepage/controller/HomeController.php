@@ -1,6 +1,6 @@
 <?php
 namespace areas\homepage\controller;
-use areas\admin\model\{HomeColumnModel,HomeLinkModel,HomeMusicModel,MessageModel,ConfigModel};
+use areas\admin\model\{ArticleModel,LinkModel,MusicModel,MessageModel,ConfigModel};
 use Dfer\DfPhpCore\Modules\Statics\{Mysql,Lang};
 
 class HomeController extends BaseController
@@ -12,17 +12,26 @@ class HomeController extends BaseController
 		*/
 	function index($param)
 	{
-		$home_layout = ConfigModel::where(['key' => 'home_layout'])->value('val');
-		$home_column =HomeColumnModel::order(["id" => "asc"])->select();
-		$home_link = HomeLinkModel::select();
-		$home_music = HomeMusicModel::select();
-		// var_dump($home_column);
+		$layout = ConfigModel::where(['key' => 'layout'])->value('val');
+		$column =ArticleModel::order(["id" => "asc"])->select();
+		$link = LinkModel::select();
+		$music = MusicModel::select();
+		// var_dump($column);
 		//访问量
 		Mysql::run("update dt set val=val+1 where `key`='hits'");
 		$this->colUserInfo();
 		$this->view(get_defined_vars());
 	}
 
+	/**
+		* 使用说明
+		* @param {Object} $param
+		*/
+	public function readme($param)
+	{
+		$output = ArticleModel::order('asc')->select();
+		$this->view(get_defined_vars());
+	}
 
 	// ********************** 留言 START **********************
 

@@ -8,7 +8,7 @@
 				</div>
 				<div class="ibox-content">
 					<form method="post"
-						action='{:split_url(str("admin/column/%s_update",["homeLayout"]))}'
+						action='{:split_url(str("admin/column/%s_update",["layout"]))}'
 						class="layui-form">
 						<input name="id" value="{:$output[0]??'0'}" hidden />
 						<input name="data[bg_img]" id="bg_img" value="{:$output['bg_img']??''}"
@@ -137,7 +137,7 @@
 	<script>
 		$(() => {
 			upload("#uploadButton1", "#uploadPreview1", "#bg_img",
-				`{:split_url(str("admin/column/%s_pic_up",["homeLayout"]))}`);
+				`{:split_url(str("admin/column/%s_pic_up",["layout"]))}`);
 			upload("#uploadButton2", "#uploadPreview2", null, UPLOAD_API.WEB_UPLOADER);
 		})
 	</script>
@@ -187,7 +187,7 @@
 		}
 
 		function del_pic(id) {
-			df_tools.post('{:split_url(str("admin/column/%s_pic_del",["homeLayout"]))}', {
+			df_tools.post('{:split_url(str("admin/column/%s_pic_del",["layout"]))}', {
 				id: id
 			}, function(x) {
 				$('.img_' + id).remove();

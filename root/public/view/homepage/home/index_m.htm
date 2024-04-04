@@ -1,6 +1,5 @@
 <df-header>
-	<style>
-	</style>
+	<title>{$layout['title']} - DfPHP v{:VERSION}</title>
 </df-header>
 
 <df-body>
@@ -8,7 +7,7 @@
 	<div style="padding: 20px;">
 		<div class="layui-row layui-col-space15">
 
-			<df-each $home_column>
+			<df-each $column>
 				<df-if !ctype_space($v["title"])>
 					<div class="layui-col-md6">
 						<div class="layui-card">
@@ -23,7 +22,7 @@
 		</div>
 	</div>
 
-	<div class="foot" style="color: {$home_layout['color']};">{$home_layout['inscribe']}</div>
+	<div class="foot" style="color: {$layout['color']};">{$layout['inscribe']}</div>
 
 </df-body>
 <df-footer>

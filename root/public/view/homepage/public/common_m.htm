@@ -2,10 +2,9 @@
 	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<title>{$home_layout['title']} - DfPHP v{:VERSION}</title>
 		<meta name="author" content="Df" />
-		<meta name="keywords" content="{$home_layout['keywords']}" />
-		<meta name="description" content="{$home_layout['description']}" />
+		<meta name="keywords" content="{$layout['keywords']}" />
+		<meta name="description" content="{$layout['description']}" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta http-equiv="content-type" content="text/html;charset=utf-8" />
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width" />
@@ -69,7 +68,7 @@
 			function ready() {
 				//		$.ProtectPage();
 				//		story()
-				//		hacker(1, '{$home_layout["color"]}');
+				//		hacker(1, '{$layout["color"]}');
 				//rJs加载会在插件还没加载完就显示页面，从而导致页面显示不健全，所以需要隐藏body，在rJs加载之后显示
 				$('#body').removeAttr('hidden')
 				loading(1);
@@ -93,7 +92,7 @@
 			}
 
 			#body {
-				background: url({$home_layout['bg_img']}) no-repeat;
+				background: url({$layout['bg_img']}) no-repeat;
 				background-size: 100% 100%;
 			}
 		</style>

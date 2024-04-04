@@ -1,6 +1,6 @@
 <?php
 namespace areas\admin\controller;
-use areas\admin\model\{UserModel,ConfigModel,MessageModel,RolesModel,HomeUserInfoModel,HtmlModel,MenuModel,CacheModel,LogsModel};
+use areas\admin\model\{UserModel,ConfigModel,MessageModel,RolesModel,UserInfoModel,HtmlModel,MenuModel,CacheModel,LogsModel};
 use Dfer\DfPhpCore\Modules\Statics\Mysql;
 use Dfer\Tools\Statics\{Common};
 
@@ -284,7 +284,7 @@ EOT;
 
 	public function guests($param)
 	{
-		$output = HomeUserInfoModel::order(['id' => 'desc'])->select();
+		$output = UserInfoModel::order(['id' => 'desc'])->select();
 		$this->view(get_defined_vars());
 	}
 

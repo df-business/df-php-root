@@ -1,11 +1,13 @@
+<df-code>
+	use Dfer\Tools\Statics\Common;
+</df-code>
 <!DOCTYPE HTML
 	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<title>{$home_layout['title']} - DfPHP v{:VERSION}</title>
 		<meta name="author" content="Df" />
-		<meta name="keywords" content="{:$home_layout['keywords']}" />
-		<meta name="description" content="{:$home_layout['description']}" />
+		<meta name="keywords" content="{:$layout['keywords']}" />
+		<meta name="description" content="{:$layout['description']}" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta http-equiv="content-type" content="text/html;charset=utf-8" />
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width" />
@@ -27,8 +29,6 @@
 		<script src="{:VIEW_ASSETS}/jquery.ext.js"></script>
 		<!-- **********************  jq END  ********************** -->
 
-		<script src="{:VIEW_ASSETS}/df.js"></script>
-
 		<!-- ********************** layui START ********************** -->
 		<link href="https://api.dfer.site/gitcode/github_dfer/layui/main/dist/css/layui.css" rel="stylesheet">
 		<script src="https://api.dfer.site/gitcode/github_dfer/layui/main/dist/layui.js"></script>
@@ -39,6 +39,14 @@
 		<script src="{:VIEW_ASSETS}/loaders/main.js"></script>
 		<!-- **********************  loader END  ********************** -->
 
+		<!-- ********************** bootstrap START ********************** -->
+		<link href="https://api.dfer.site/gitee/github_dfer/bootstrap/v5.3.2/dist/css/bootstrap.min.css"
+			rel="stylesheet">
+		<script src="https://api.dfer.site/gitee/github_dfer/bootstrap/v5.3.2/dist/js/bootstrap.min.js"></script>
+		<!-- **********************  bootstrap END  ********************** -->
+
+
+		<script src="{:VIEW_ASSETS}/df.js"></script>
 		<!-- <script src="/assets/fontFamily/init.js"></script> -->
 
 		<style>
@@ -69,7 +77,7 @@
 			function ready() {
 				$.ProtectPage();
 				story("欢迎光临寒舍，有问题联系：www.dfer.site", "black")
-				// hacker(1, '!!$home_layout["color"]!!');
+				// hacker(1, '!!$layout["color"]!!');
 				$('#body').removeAttr('hidden')
 				loading(1);
 				log('dom complete');
@@ -89,9 +97,12 @@
 			}
 
 			#body {
-				background: url({:$home_layout['bg_img']}) no-repeat;
+				background: url({$layout['bg_img']}) no-repeat;
 				background-size: 100% 100%;
+				height: 100%;
 			}
+
+
 		</style>
 	</head>
 
