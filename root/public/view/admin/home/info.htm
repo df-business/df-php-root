@@ -1,0 +1,39 @@
+<df-html>
+	<!-- ********************** layui START ********************** -->
+	<link href="https://api.dfer.site/gitcode/github_dfer/layui/main/dist/css/layui.css" rel="stylesheet">
+	<script src="https://api.dfer.site/gitcode/github_dfer/layui/main/dist/layui.js"></script>
+	<!-- **********************  layui END  ********************** -->
+
+	<table class="layui-table" style="width: 50%;">
+		<colgroup>
+			<col width="35%">
+			<col width="65%">
+		</colgroup>
+		<thead>
+			<tr>
+				<th colspan="2">框架信息</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>php 当前版本</td>
+				<td>{:PHP_VERSION}</td>
+			</tr>
+			<tr>
+				<td>php 需求版本</td>
+				<td>{:PHP_VERSION_MIN}</td>
+			</tr>
+			<tr>
+				<td>DfPHP 当前版本</td>
+				<td>{:VERSION}</td>
+			</tr>
+
+			<tr>
+				<td>php 环境</td>
+				<td>{:getenv('SERVER_SOFTWARE')}</td>
+			</tr>
+
+		</tbody>
+	</table>
+
+</df-html>
