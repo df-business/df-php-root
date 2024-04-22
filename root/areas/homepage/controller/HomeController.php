@@ -18,7 +18,7 @@ class HomeController extends BaseController
   $music = MusicModel::select();
   // var_dump($column);
   //访问量
-  Mysql::run("update dt set val=val+1 where `key`='hits'");
+  Mysql::run(str("update {0} set val=val+1 where `key`='hits'",[ConfigModel::getName()]));
   $this->colUserInfo();
   $this->view(get_defined_vars());
  }
