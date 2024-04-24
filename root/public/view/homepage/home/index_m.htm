@@ -1,31 +1,32 @@
 <df-header>
-	<title>{$layout['title']} - DfPHP v{:VERSION}</title>
+    <title>{$layout['title']} - DfPHP v{:VERSION}</title>
 </df-header>
 
 <df-body>
 
-	<div style="padding: 20px;">
-		<div class="layui-row layui-col-space15">
+    <div style="padding: 20px;">
+        <div class="layui-row layui-col-space15">
 
-			<df-each $column>
-				<df-if !ctype_space($v["title"])>
-					<div class="layui-col-md6">
-						<div class="layui-card">
-							<div class="layui-card-header">{::title}</div>
-							<div class="layui-card-body">
-								{::content}
-							</div>
-						</div>
-					</div>
-				</df-if>
-			</df-each>
-		</div>
-	</div>
+            <df-each $column>
+                <df-if !ctype_space($v["title"])>
+                    <div class="layui-col-md6">
+                        <div class="layui-card">
+                            <div class="layui-card-header">{::title}</div>
+                            <div class="layui-card-body">
+                                {::content}
+                            </div>
+                        </div>
+                    </div>
+                </df-if>
+            </df-each>
+        </div>
+    </div>
 
-	<div class="foot" style="color: {$layout['color']};">{$layout['inscribe']}</div>
+    <div class="foot" style="padding: .3rem 1rem;background-color: rgba(0,0,0,.5);color: {$layout['color']};">©
+        2023-{:Common::getTime(null,'Y')}</div>
 
 </df-body>
 <df-footer>
-	<script>
-	</script>
+    <script>
+    </script>
 </df-footer>
