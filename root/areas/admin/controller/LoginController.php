@@ -15,8 +15,6 @@ class LoginController extends BaseController{
     // ********************** 登陆 START **********************
     public function index($param)
     {
-        get_web();
-
         $this -> verifyLogin();
         // var_dump(post());
         //接收post
