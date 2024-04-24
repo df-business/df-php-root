@@ -45,8 +45,10 @@
         <script src="https://api.dfer.site/gitee/github_dfer/bootstrap/v5.3.2/dist/js/bootstrap.min.js"></script>
         <!-- **********************  bootstrap END  ********************** -->
 
+        <!--<script src="/assets/font_family/init.js"></script>-->
         <script src="{:DEFAULT_ADMIN_ASSETS}/js.ext.js"></script>
         <script src="{:DEFAULT_ADMIN_ASSETS}/DfTools.js"></script>
+
 
         <style>
 
@@ -60,7 +62,7 @@
                 //在js加载前添加loading效果，增加页面友好度，加载完成则删除
                 $('#first_loading').remove();
                 //如果有调用字体
-                if ($('script[src$="fontFamily/init.js"]').length > 0) {
+                if ($('script[src$="font_family/init.js"]').length > 0) {
                     $("<style>").html(
                         '*{font-family: ft !important; }'
                     ).appendTo("head");

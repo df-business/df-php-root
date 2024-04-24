@@ -42,8 +42,9 @@
         <script src="{:VIEW_ASSETS}/loaders/main.js"></script>
         <!-- **********************  loader END  ********************** -->
         <link rel="stylesheet" href="{:VIEW_ASSETS}/homepage/css/init.css" />
-        <!--<script src="/assets/fontFamily/init.js"></script>-->
 
+
+        <!--<script src="/assets/font_family/init.js"></script>-->
         <script src="{:DEFAULT_ADMIN_ASSETS}/DfTools.js"></script>
 
         <style>
@@ -54,14 +55,13 @@
         </style>
         <!--通用脚本-->
         <script>
-
             var df_tools = new DfTools();
 
             //所有资源加载完成则执行
             function loaded() {
                 $('#first_loading').remove(); //在js加载前添加loading效果，增加页面友好度，加载完成则删除
                 //如果有调用字体
-                if ($('script[src$="fontFamily/init.js"]').length > 0) {
+                if ($('script[src$="font_family/init.js"]').length > 0) {
                     $("<style>").html(
                         '*{font-family: ft !important; }'
                     ).appendTo("head");

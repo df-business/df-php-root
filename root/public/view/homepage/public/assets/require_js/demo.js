@@ -1,14 +1,14 @@
 /*
  * requireJs的初始界面
- * 
+ *
  * head中的script排序可能跟手写的顺序不一样，但是js内部是按照依赖关系依次调用的，不影响使用
- * 
- * 
+ *
+ *
  */
 //基本参数
 require.config({
 //所有文件都会以此路径进行加载
-baseUrl: '/assets/RequireJS/t',
+baseUrl: '/assets/require_js/demo',
 //引用其余路径的文件
  paths: {
   jq: '../../jquery.min',
@@ -32,10 +32,10 @@ cat.say();
 i=x.add(1,2)
 log(i)
 
-message('雨下的很大??️');
+message('无关风月我题序等你回');
 
 });
 
-	
+
 });
 

@@ -1,10 +1,10 @@
 /*
- * 
+ *
  * 百度推广
  * 获取网站流量信息
- * 
- *  <script src="/assets/siteCloud/init.js"></script>
- * 
+ *
+ *  <script src="/assets/site_cloud/init.js"></script>
+ *
  */
 
 //网页的ssl状态

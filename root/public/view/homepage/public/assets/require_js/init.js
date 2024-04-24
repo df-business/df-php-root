@@ -20,9 +20,9 @@ require.config({
 		//public
 		jq: 'jquery.min',
 		df: 'df', //自定义函数
-		siteCloud: 'siteCloud/init', //流量统计初始化
+		siteCloud: 'site_cloud/init', //流量统计初始化
 		layui: 'layui/layui', //
-		fontFamily: 'fontFamily/init', //自定义字体文件的初始化
+		fontFamily: 'font_family/init', //自定义字体文件的初始化
 		loaders: 'loaders/main', //加载效果初始化
 		mui: 'mui/mui.min', //wap网页框架
 		jqTemplate: 'jqTemplate/jquery.tmpl', //动态加载数据的框架
@@ -35,7 +35,7 @@ require.config({
 	//载入rJs的css.js
 	map: {
 		'*': {
-			'css': 'requireJs/css'
+			'css': 'require_js/css'
 		}
 	},
 	shim: {
