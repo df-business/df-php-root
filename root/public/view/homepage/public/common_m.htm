@@ -17,16 +17,15 @@
         <meta name="apple-mobile-web-app-status-bar-style" content="black" />
         <!--作为独立的网页，进行全屏显示-->
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        <link rel="shortcut icon" href="{:VIEW_ASSETS}/img/favicon.ico" />
-        <link rel="apple-touch-icon" href="{:VIEW_ASSETS}/img/favicon.png" />
+        <link rel="shortcut icon" href="{:DEFAULT_ADMIN_ASSETS}/img/favicon.ico" />
+        <link rel="apple-touch-icon" href="{:DEFAULT_ADMIN_ASSETS}/img/favicon.png" />
 
         <!--=========引用=========-->
         <!-- ********************** jq START ********************** -->
         <script src="https://api.dfer.site/gitcode/github_dfer/jquery/3.7.1/dist/jquery.min.js"></script>
-        <script src="{:VIEW_ASSETS}/jquery.ext.js"></script>
+        <script src="{:DEFAULT_ADMIN_ASSETS}/jquery.ext.js"></script>
         <!-- **********************  jq END  ********************** -->
 
-        <script src="{:VIEW_ASSETS}/df.js"></script>
 
         <!-- ********************** mui START ********************** -->
         <link rel="stylesheet" href="https://api.dfer.site/gitcode/github_dfer/mui/master/dist/css/mui.min.css" />
@@ -45,6 +44,8 @@
         <link rel="stylesheet" href="{:VIEW_ASSETS}/homepage/css/init.css" />
         <!--<script src="/assets/fontFamily/init.js"></script>-->
 
+        <script src="{:DEFAULT_ADMIN_ASSETS}/DfTools.js"></script>
+
         <style>
             .mui-content,
             .mui-scalable {
@@ -53,6 +54,9 @@
         </style>
         <!--通用脚本-->
         <script>
+
+            var df_tools = new DfTools();
+
             //所有资源加载完成则执行
             function loaded() {
                 $('#first_loading').remove(); //在js加载前添加loading效果，增加页面友好度，加载完成则删除
@@ -61,21 +65,17 @@
                     $("<style>").html(
                         '*{font-family: ft !important; }'
                     ).appendTo("head");
-                    log('自定义字体加载完成')
+                    df_tools.log('自定义字体加载完成')
                 }
                 loading(2);
-                log('web complete');
+                df_tools.log('web complete');
             }
 
             //dom加载完毕
             function ready() {
-                //		$.ProtectPage();
-                //		story()
-                //		hacker(1, '{$layout["color"]}');
-                //rJs加载会在插件还没加载完就显示页面，从而导致页面显示不健全，所以需要隐藏body，在rJs加载之后显示
                 $('#body').removeAttr('hidden')
                 loading(1);
-                log('dom complete');
+                df_tools.log('dom complete');
             }
 
             function resized() {
@@ -103,7 +103,7 @@
 
     <body>
         <div hidden="" id="first_loading" style="z-index:66666;position: fixed;left: 49%;top: 45%;"><img
-                src="{:VIEW_ASSETS}/img/loading-1.gif"></div>
+                src="{:DEFAULT_ADMIN_ASSETS}/img/loading-1.gif"></div>
         <div hidden="" id="body">
             <df-body />
         </div>

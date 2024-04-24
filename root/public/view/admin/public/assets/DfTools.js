@@ -14,7 +14,7 @@ class DfTools {
                         log(x, 'red');
                     },
                     init(x) {
-                        df_init();
+                        log('init', 'white');
                     }
                 }
             });
@@ -134,16 +134,17 @@ class DfTools {
      */
     story(msg = "忆经年，小楼初画夜雨寒。枯蝶残梦驻秋千，看落红凌乱。", color = "#00000066") {
         var delay = 3000;
+        var arr=[];
         if (msg.indexOf("。") < 0)
             arr = msg.split("，")
         else
             arr = msg.split("。")
 
         var num = 0;
+        var _this=this;
         $(function() {
-
-            t = setInterval(function() {
-                message(arr[num], color);
+           var t = setInterval(function() {
+                _this.message(arr[num], color);
                 num++;
                 if (num > arr.length)
                     clearInterval(t);
