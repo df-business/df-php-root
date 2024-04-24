@@ -5,8 +5,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <title>该页面不存在</title>
         <link rel="shortcut icon" href="favicon.ico">
-        <link type="text/css" rel='stylesheet' href="{:VIEW_ASSETS}/404/404life.css">
-        <script type="text/javascript" src='{:VIEW_ASSETS}/404/404life.js'></script>
+        <link type="text/css" rel='stylesheet' href="{:DEFAULT_ADMIN_ASSETS}/404/404life.css">
+        <script type="text/javascript" src='{:DEFAULT_ADMIN_ASSETS}/404/404life.js'></script>
         <script>
             window.console = window.console || function(t) {};
         </script>
@@ -32,15 +32,16 @@
                 <br /> {:SITE}
             </div>
         </div>
-        <script src='{:VIEW_ASSETS}/404/jquery.min.js'></script>
-        <script type="text/javascript" src='{:VIEW_ASSETS}/df.js'></script>
+        <script src='{:DEFAULT_ADMIN_ASSETS}/404/jquery.min.js'></script>
+        <script src="{:DEFAULT_ADMIN_ASSETS}/DfTools.js"></script>
         <script>
             $(function() {
-                hacker({
+                var df_tools = new DfTools();
+                df_tools.hacker({
                     chars: '♩♪♫♬❤♠♥♦♣'
                 })
-                disableRightMouseKey();
-                IsUseF12(hacker)
+                df_tools.disableRightMouseKey();
+                df_tools.isUseF12(df_tools.hacker)
             })
         </script>
     </body>

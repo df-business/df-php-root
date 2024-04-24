@@ -1,1 +1,0 @@
-console.log('homepage_js loaded')
