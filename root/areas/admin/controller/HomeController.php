@@ -18,10 +18,10 @@ class HomeController extends BaseController{
   $message = MessageModel::where(['status' => 0])->select();
   if ($user->nm == 'df') {
    $where = '1';
-   $user->role = "超级管理员";
+   $user->role_name = "超级管理员";
   } else {
-   $roles = RolesModel::where(2)->first();
-   $output['role'] = $roles['nm'];
+   $roles = RolesModel::where($where)->first();
+   $user->role_name = $roles['nm'];
    $roles = $roles['roles'];
    $roles = explode('|', $roles);
    foreach ($roles as $v) {
@@ -34,7 +34,6 @@ class HomeController extends BaseController{
   // var_dump($roles,$sql,$menu);
   $this->view(get_defined_vars(),'iconShare');
  }
-
 
  /**
   * 生成无限级菜单
