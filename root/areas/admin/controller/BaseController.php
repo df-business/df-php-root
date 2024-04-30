@@ -7,6 +7,8 @@ use Dfer\Tools\Statics\{Common};
  */
 abstract class BaseController {
 
+   protected $user;
+
    /**
     * 初始方法
     */
@@ -17,12 +19,12 @@ abstract class BaseController {
 
    protected function initialize()
    {
-    $this->verifyLogin(1);
+    $this->verifyAccess();
    }
 
-/**
- * 视图
- */
+  /**
+   * 视图
+   */
   public	function view($params,$template='common')
    {
     extract($params);
@@ -45,40 +47,32 @@ abstract class BaseController {
    }
 
    /**
-    *
-    * 验证登陆
-    * ses里保存了用户的id、nm、pw
-    * @param {Object} $type	0 跳转 1 获取id
+    * 后台用户登陆验证
     */
-   public function verifyLogin($type = 0)
+   public function verifyAccess()
    {
-    $login = session_get(\ENUM::USER_BACK);
-    if (!empty($login)) {
-     $id = $login[0];
-     $nm = Common::hexToStr($login[1]);
-     $pw = Common::hexToStr($login[2]);
-     if ($type == 'all') {
-      return array($id, $nm, $pw);
-     }
-
-     $user = UserModel::where(['nm' => $nm])->first();
-
-     if ($user['pw'] == $pw) {
-       if ($type) {
-        //	var_dump($user['pw'] == $pw);die();
-         return $id;
-       } else {
-         to_url('admin/home/index');
-       }
-     }
+     //获取后台登录用户的缓存
+    $user_cache = session_get(\ENUM::USER_BACK);
+    if (empty($user_cache)) {
+      // 未登录
+      to_url('admin/login/index');
     } else {
-      if ($type) {
+      // 已登录
+      $id = $user_cache['id'];
+      // 二进制转字符串
+      $nm = Common::hexToStr($user_cache['name']);
+      $pw = Common::hexToStr($user_cache['password']);
+      $user = UserModel::where($id)->object();
+      // var_dump($user,$nm,$pw);
+      if ($user->nm == $nm && $user->pw == $pw) {
+        // 验证通过
+        $this->user=$user;
+      }
+      else{
         to_url('admin/login/index');
       }
-      //header("location:?A=admin&c=login");
     }
    }
-
 
    /**
     * wx公众号状态
@@ -106,7 +100,7 @@ abstract class BaseController {
    }
 
    const SUCCESS='alert-success';
-   const ERROR='alert-danger';
+   const ERROR  ='alert-danger';
    /**
     * 提示
     * @param {Object} $msg 变量
@@ -119,7 +113,6 @@ abstract class BaseController {
     echo $html;
    }
 
-
    /**
     * 验证
     * @param {Object} $var 变量
@@ -128,8 +121,5 @@ abstract class BaseController {
    {
      return new $var;
    }
-
-
-
 }
 ?>

@@ -15,7 +15,10 @@ class LoginController extends BaseController{
     // ********************** 登陆 START **********************
     public function index($param)
     {
-        $this -> verifyLogin();
+        if($this->user)
+        {
+            to_url('admin/home/index');
+        }
         // var_dump(post());
         //接收post
         if (post()) {
@@ -27,11 +30,11 @@ class LoginController extends BaseController{
             }else{
              $user = UserModel::where(['nm'=>$user_sm['nm']])->first();
              if ($user != null) {
-                 if ($user["pw"] == $user_sm["pw"] && $user["nm"] == $user_sm["nm"]) {
+                 if ($user["nm"] == $user_sm["nm"] && $user["pw"] == $user_sm["pw"]) {
                      UserModel::where($user[0])->update(array('last_login_time' => Common::getTime(TIMESTAMP)));
                      // 设置session在cookie的保存时间
                      cookie_set(session_name(), session_id(), SESSION_EXPIRES);
-                     session_set(\ENUM::USER_BACK, array($user[0], Common::strToHex($user["nm"]),  Common::strToHex($user["pw"])));
+                     session_set(\ENUM::USER_BACK, array('id'=>$user[0], 'name'=>Common::strToHex($user["nm"]),  'password'=>Common::strToHex($user["pw"])));
                      to_url("admin/home/index");
                  }
              }

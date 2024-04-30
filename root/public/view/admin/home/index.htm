@@ -32,7 +32,7 @@
 			}
 
 			changeSSL = function() {
-				location.href = "{:SSL_STATE?str_replace('https','http',URL):str_replace('http','https',URL)}";
+				location.href = "{:SSL_ACTIVE?str_replace('https','http',URL):str_replace('http','https',URL)}";
 			}
 
 		})
@@ -178,8 +178,8 @@
 					<div style="float: left;margin-right: 3%;">
 						{:Dfer\Tools\Statics\Common::getBrowser()}
 					</div>
-					<div onclick="changeSSL()" style="{:SSL_STATE?'color: red;':''}float: left;margin-right: 3%;">
-						{:SSL_STATE?"ssl开启":"ssl关闭"}</div>
+					<div onclick="changeSSL()" style="{:SSL_ACTIVE?'color: red;':''}float: left;margin-right: 3%;">
+						{:SSL_ACTIVE?"ssl开启":"ssl关闭"}</div>
 					<div class="pull-right">
 						&copy; 2017-{:date('Y')}
 						<a href="http://www.dfer.top/" target="_blank">www.dfer.site</a>

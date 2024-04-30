@@ -12,30 +12,26 @@ class HomeController extends BaseController{
   */
  public function index($param)
  {
-  $id = $this->verifyLogin(1);
-
-  //验证登录
-  $output = UserModel::where(['id' => $id])->first();
+  $user = $this->user;
   $hits = ConfigModel::where(['key' => 'hits'])->first()['val'];
   //留言
   $message = MessageModel::where(['status' => 0])->select();
-  if ($output['nm'] == 'df') {
+  if ($user->nm == 'df') {
    $where = '1';
-   $output['role'] = "超级管理员";
+   $user->role = "超级管理员";
   } else {
-   $roles = RolesModel::where($output['role'])->first();
+   $roles = RolesModel::where(2)->first();
    $output['role'] = $roles['nm'];
    $roles = $roles['roles'];
    $roles = explode('|', $roles);
-
    foreach ($roles as $v) {
-    $role[] = array('id', $v);
+       $str[]= "`id`='{$v}'";
    }
-   $w = sql_where($role, 'or');
-   $where = "{$w}";
+   $where = implode('or',$str);
   }
   $sql = "select * from menu where parent=0 and ({$where}) order by order_num asc";
   $menu = Mysql::run($sql);
+  // var_dump($roles,$sql,$menu);
   $this->view(get_defined_vars(),'iconShare');
  }
 
@@ -352,7 +348,7 @@ EOT;
   array_pop($l_parent);
   $l_parent = implode(',', $l_parent);
 
-  $is_df=$this->verifyLogin('all')[1]=='df'?true:false;
+  $is_df=$this->user->nm=='df'?true:false;
 // {:$l_parent_id?showFirst('menu',$l_parent_id)['title']:''}>>{:$param?showFirst('menu',$param)['title']:''}
   $title=str("{0}>>{1}",[$l_parent_id?MenuModel::where($l_parent_id)->find()['title']:'',$param?MenuModel::where($param)->find()['title']:'']);
 
