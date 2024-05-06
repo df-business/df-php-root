@@ -1,198 +1,197 @@
 <df-body>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5></h5>
+                </div>
+                <div class="ibox-content">
+                    <form method="post"
+                        action='{:split_url(str("admin/column/%s_update",["layout"]))}'
+                        class="layui-form">
+                        <input name="id" value="{:$output[0]??'0'}" hidden />
+                        <input name="data[bg_img]" id="bg_img" value="{:$output['bg_img']??''}"
+                            hidden />
+                        <input name="data[music_play]" value="{:$output['music_play']??'0'}" hidden />
+                        <input name='data[color]' value="{:$output['color']??''}" hidden />
+                        <div class="form-horizontal m-t">
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">主题：</label>
+                                <div class="col-sm-2">
+                                    <input class="form-control" name="data[title]" size="10" type="text"
+                                        value="{:$output['title']??''}" />
+                                </div>
+                            </div>
 
-	<div class="row">
-		<div class="col-sm-12">
-			<div class="ibox float-e-margins">
-				<div class="ibox-title">
-					<h5></h5>
-				</div>
-				<div class="ibox-content">
-					<form method="post"
-						action='{:split_url(str("admin/column/%s_update",["layout"]))}'
-						class="layui-form">
-						<input name="id" value="{:$output[0]??'0'}" hidden />
-						<input name="data[bg_img]" id="bg_img" value="{:$output['bg_img']??''}"
-							hidden />
-						<input name="data[music_play]" value="{:$output['music_play']??'0'}" hidden />
-						<input name='data[color]' value="{:$output['color']??''}" hidden />
-						<div class="form-horizontal m-t">
-							<div class="form-group">
-								<label class="col-sm-1 control-label">主题：</label>
-								<div class="col-sm-2">
-									<input class="form-control" name="data[title]" size="10" type="text"
-										value="{:$output['title']??''}" />
-								</div>
-							</div>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">关键字：</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" name="data[keywords]" size="10" type="text"
+                                        value="{:$output['keywords']??''}" />
+                                </div>
+                            </div>
 
-							<div class="form-group">
-								<label class="col-sm-1 control-label">关键字：</label>
-								<div class="col-sm-10">
-									<input class="form-control" name="data[keywords]" size="10" type="text"
-										value="{:$output['keywords']??''}" />
-								</div>
-							</div>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">描述：</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" name="data[description]" size="10" type="text"
+                                        value="{:$output['description']??''}" />
+                                </div>
+                            </div>
 
-							<div class="form-group">
-								<label class="col-sm-1 control-label">描述：</label>
-								<div class="col-sm-10">
-									<input class="form-control" name="data[description]" size="10" type="text"
-										value="{:$output['description']??''}" />
-								</div>
-							</div>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">落款：</label>
+                                <div class="col-sm-5">
+                                    <input class="form-control" name="data[inscribe]" size="10" type="text"
+                                        value="{:$output['inscribe']??''}" />
+                                </div>
+                            </div>
 
-							<div class="form-group">
-								<label class="col-sm-1 control-label">落款：</label>
-								<div class="col-sm-5">
-									<input class="form-control" name="data[inscribe]" size="10" type="text"
-										value="{:$output['inscribe']??''}" />
-								</div>
-							</div>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">音乐自动播放：</label>
+                                <div class="col-sm-2">
+                                    <input type="checkbox" lay-skin="switch" lay-text="ON|OFF"
+                                        {:$output['music_play']?"checked" : "" } lay-filter="music_play">
 
-							<div class="form-group">
-								<label class="col-sm-1 control-label">音乐自动播放：</label>
-								<div class="col-sm-2">
-									<input type="checkbox" lay-skin="switch" lay-text="ON|OFF"
-										{:$output['music_play']?"checked" : "" } lay-filter="music_play">
+                                </div>
+                            </div>
 
-								</div>
-							</div>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">主体文字颜色：</label>
+                                <div class="col-sm-4">
+                                    <div id="color1"></div>
+                                </div>
+                            </div>
 
-							<div class="form-group">
-								<label class="col-sm-1 control-label">主体文字颜色：</label>
-								<div class="col-sm-4">
-									<div id="color1"></div>
-								</div>
-							</div>
+                            <div class="form-group">
+                                <!--加载多张背景图会拖网速，所以只用一张-->
+                                <label class="col-sm-1 control-label">背景图片：</label>
+                                <div class="col-sm-4">
+                                    <div class="upload">
+                                        <div id="uploadPreview1">
+                                            <df-if empty($output['bg_img'])>
+                                                暂无图片
+                                                <df-else>
+                                                    <img src='{$output["bg_img"]}' />
+                                            </df-if>
+                                        </div>
+                                        <div class="left">
+                                            <div class="uploadProgressBar"></div>
+                                            <div id="uploadButton1">选择图片</div>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div>
+                                </div>
+                            </div>
 
-							<div class="form-group">
-								<!--加载多张背景图会拖网速，所以只用一张-->
-								<label class="col-sm-1 control-label">背景图片：</label>
-								<div class="col-sm-4">
-									<div class="upload">
-										<div id="uploadPreview1">
-											<df-if empty($output['bg_img'])>
-												暂无图片
-												<df-else>
-													<img src='{$output["bg_img"]}' />
-											</df-if>
-										</div>
-										<div class="left">
-											<div class="uploadProgressBar"></div>
-											<div id="uploadButton1">选择图片</div>
-										</div>
-										<div class="clear"></div>
-									</div>
-								</div>
-							</div>
+                            <div class="form-group">
+                                <!--加载多张背景图会拖网速，所以只用一张-->
+                                <label class="col-sm-1 control-label">字体：</label>
+                                <div class="col-sm-4">
+                                    <div class="upload">
+                                        <div id="uploadPreview2">
+                                            {:VIEW_ASSETS}/fontFamily/font.TTF
+                                        </div>
+                                        <div class="left">
+                                            <div class="uploadProgressBar"></div>
+                                            <div id="uploadButton2">选择字体文件</div>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div>
+                                </div>
+                            </div>
 
-							<div class="form-group">
-								<!--加载多张背景图会拖网速，所以只用一张-->
-								<label class="col-sm-1 control-label">字体：</label>
-								<div class="col-sm-4">
-									<div class="upload">
-										<div id="uploadPreview2">
-											{:VIEW_ASSETS}/fontFamily/font.TTF
-										</div>
-										<div class="left">
-											<div class="uploadProgressBar"></div>
-											<div id="uploadButton2">选择字体文件</div>
-										</div>
-										<div class="clear"></div>
-									</div>
-								</div>
-							</div>
+                            <div class="form-group">
+                                <df-each $img>
+                                    <div class="img_{$id}" style="float: left;margin-right: 15px;">
+                                        <a href="javascript:sele_pic('{::img}')" title="点击更换图片">
+                                            <img style="width: 55px;height: 55px;" src="{::img}">
+                                        </a>
+                                        <div style="text-align: center;">
+                                            <a href="javascript:del_pic('{::id}')"
+                                                onclick='return confirm("确认删除吗？")'>删除</a>
+                                        </div>
+                                    </div>
+                                </df-each>
+                            </div>
 
-							<div class="form-group">
-								<df-each $img>
-									<div class="img_{$id}" style="float: left;margin-right: 15px;">
-										<a href="javascript:sele_pic('{::img}')" title="点击更换图片">
-											<img style="width: 55px;height: 55px;" src="{::img}">
-										</a>
-										<div style="text-align: center;">
-											<a href="javascript:del_pic('{::id}')"
-												onclick='return confirm("确认删除吗？")'>删除</a>
-										</div>
-									</div>
-								</df-each>
-							</div>
-
-							<div class="form-group">
-								<div class="col-sm-2 col-sm-offset-1">
-									<button class="btn btn-primary" onclick="return submit_form()">保存</button>
-								</div>
-							</div>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
+                            <div class="form-group">
+                                <div class="col-sm-2 col-sm-offset-1">
+                                    <button class="btn btn-primary" onclick="return submit_form()">保存</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </df-body>
 <df-footer>
 
-	<!-- ********************** webuploader START ********************** -->
-	<link rel="stylesheet" href="https://oss.dfer.site/webuploader/0.1.5/webuploader.css" type="text/css" />
-	<script type="text/javascript" src="https://oss.dfer.site/webuploader/0.1.5/webuploader.min.js"></script>
-	<script>
-		$(() => {
-			upload("#uploadButton1", "#uploadPreview1", "#bg_img",
-				`{:split_url(str("admin/column/%s_pic_up",["layout"]))}`);
-			upload("#uploadButton2", "#uploadPreview2", null, UPLOAD_API.WEB_UPLOADER);
-		})
-	</script>
-	<!-- **********************  webuploader END  ********************** -->
+    <!-- ********************** webuploader START ********************** -->
+    <link rel="stylesheet" href="https://oss.dfer.site/webuploader/0.1.5/webuploader.css" type="text/css" />
+    <script type="text/javascript" src="https://oss.dfer.site/webuploader/0.1.5/webuploader.min.js"></script>
+    <script>
+        $(() => {
+            upload("#uploadButton1", "#uploadPreview1", "#bg_img",
+                `{:split_url(str("admin/column/%s_pic_up",["layout"]))}`);
+            upload("#uploadButton2", "#uploadPreview2", null, UPLOAD_API.WEB_UPLOADER);
+        })
+    </script>
+    <!-- **********************  webuploader END  ********************** -->
 
 
-	<script type="text/javascript">
-		layui.use(['form', 'colorpicker'], function() {
-			var $ = layui.$;
-			layer = layui.layer;
-			var form = layui.form,
-				colorpicker = layui.colorpicker;
+    <script type="text/javascript">
+        layui.use(['form', 'colorpicker'], function() {
+            var $ = layui.$;
+            layer = layui.layer;
+            var form = layui.form,
+                colorpicker = layui.colorpicker;
 
-			//监听指定开关
-			form.on('switch(music_play)', function(data) {
-				$('[name="data[music_play]"]').val(this.checked ? 1 : 0)
-			});
+            //监听指定开关
+            form.on('switch(music_play)', function(data) {
+                $('[name="data[music_play]"]').val(this.checked ? 1 : 0)
+            });
 
-			colorpicker.render({
-				elem: '#color1',
-				change: function(color) {
-					layer.tips('选择了：' + color, this.elem, {
-						tips: 1
-					});
-				},
-				color: $('[name="data[color]"]').val(),
-				done: function(color) {
-					$('[name="data[color]"]').val(color);
-				}
-			});
-		});
+            colorpicker.render({
+                elem: '#color1',
+                change: function(color) {
+                    layer.tips('选择了：' + color, this.elem, {
+                        tips: 1
+                    });
+                },
+                color: $('[name="data[color]"]').val(),
+                done: function(color) {
+                    $('[name="data[color]"]').val(color);
+                }
+            });
+        });
 
-		function submit_form() {
-			if ($.formVerifyEmpty('data[title]', '请输入标题')) {
-				return false;
-			}
-			return true;
-		}
+        function submit_form() {
+            if ($.formVerifyEmpty('data[title]', '请输入标题')) {
+                return false;
+            }
+            return true;
+        }
 
-		function sele_pic(src) {
-			$('#bg_img').val(src)
-			$('#uploadPreview1').children().attr('src', src);
+        function sele_pic(src) {
+            $('#bg_img').val(src)
+            $('#uploadPreview1').children().attr('src', src);
 
-			$('html,body').animate({
-				scrollTop: $('#uploadPreview1').offset().top
-			}, 500);
-		}
+            $('html,body').animate({
+                scrollTop: $('#uploadPreview1').offset().top
+            }, 500);
+        }
 
-		function del_pic(id) {
-			df_tools.post('{:split_url(str("admin/column/%s_pic_del",["layout"]))}', {
-				id: id
-			}, function(x) {
-				$('.img_' + id).remove();
-			})
-		}
-	</script>
+        function del_pic(id) {
+            df_tools.post('{:split_url(str("admin/column/%s_pic_del",["layout"]))}', {
+                id: id
+            }, function(x) {
+                $('.img_' + id).remove();
+            })
+        }
+    </script>
 
 </df-footer>

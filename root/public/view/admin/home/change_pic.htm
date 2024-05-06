@@ -1,57 +1,57 @@
 <df-body>
-	<div class="row">
-		<div class="col-sm-12">
-			<div class="ibox float-e-margins">
-				<div class="ibox-title">
-					<h5></h5>
-				</div>
-				<div class="ibox-content">
-					<form method="post" action='{:split_url("admin/home/set_change_pic")}'
-						enctype="multipart/form-data">
-						<input name="data[pic]" id="pic" value="{:$output['pic']??'0'}" hidden />
-						<div class="form-horizontal m-t">
-							<div class="form-group">
-								<label class="col-sm-1 control-label">头像：</label>
-								<div class="col-sm-4">
-									<div class="upload">
-										<div id="uploadPreview1">
-											<df-if isset($output['pic'])>
-												<img src='{$output["pic"]}' />
-												<df-else>
-													暂无图片
-											</df-if>
-										</div>
-										<div class="left">
-											<div id="uploadBut1">选择图片</div>
-										</div>
-										<div class="clear"></div>
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-sm-2 col-sm-offset-1">
-									<button class="btn btn-primary" type="submit">保存</button>
-								</div>
-							</div>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5></h5>
+                </div>
+                <div class="ibox-content">
+                    <form method="post" action='{:split_url("admin/home/set_change_pic")}'
+                        enctype="multipart/form-data">
+                        <input name="data[pic]" id="pic" value="{:$output['pic']??'0'}" hidden />
+                        <div class="form-horizontal m-t">
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">头像：</label>
+                                <div class="col-sm-4">
+                                    <div class="upload">
+                                        <div id="uploadPreview1">
+                                            <df-if isset($output['pic'])>
+                                                <img src='{$output["pic"]}' />
+                                                <df-else>
+                                                    暂无图片
+                                            </df-if>
+                                        </div>
+                                        <div class="left">
+                                            <div id="uploadBut1">选择图片</div>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-2 col-sm-offset-1">
+                                    <button class="btn btn-primary" type="submit">保存</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </df-body>
 
 <df-footer>
-	<!-- ********************** webuploader START ********************** -->
-	<link rel="stylesheet" href="https://oss.dfer.site/webuploader/0.1.5/webuploader.css" type="text/css" />
-	<script type="text/javascript" src="https://oss.dfer.site/webuploader/0.1.5/webuploader.min.js"></script>
-	<script>
-		$(() => {
-			upload('#uploadBut1', "#uploadPreview1", "#pic", '{:split_url("upChangePic")}');
-		})
-	</script>
-	<!-- **********************  webuploader END  ********************** -->
+    <!-- ********************** webuploader START ********************** -->
+    <link rel="stylesheet" href="https://oss.dfer.site/webuploader/0.1.5/webuploader.css" type="text/css" />
+    <script type="text/javascript" src="https://oss.dfer.site/webuploader/0.1.5/webuploader.min.js"></script>
+    <script>
+        $(() => {
+            upload('#uploadBut1', "#uploadPreview1", "#pic", '{:split_url("upChangePic")}');
+        })
+    </script>
+    <!-- **********************  webuploader END  ********************** -->
 
 
 </df-footer>

@@ -1,79 +1,74 @@
-<df-header>
-	<df-code>
-		use Dfer\Tools\Statics\{Common};
-	</df-code>
-</df-header>
 <df-body>
-	<div class="row">
-		<div class="col-sm-12">
-			<div class="ibox float-e-margins">
-				<div class="ibox-title">
-					<h5></h5>
-				</div>
-				<div class="ibox-content">
-					<form method="post" action='{:split_url(str("admin/home/%s_update ",[table_name("UserModel")]))}'>
-						<input name="id" value="{:$output[0]??'0'}" hidden />
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5></h5>
+                </div>
+                <div class="ibox-content">
+                    <form method="post" action='{:split_url(str("admin/home/%s_update ",[table_name("UserModel")]))}'>
+                        <input name="id" value="{:$output[0]??'0'}" hidden />
 
-						<input name="data[create_time]" value="{:$output['create_time']??Common::getTime()}" hidden />
+                        <input name="data[create_time]" value="{:$output['create_time']??Common::getTime()}" hidden />
 
-						<div class="form-horizontal m-t">
-							<div class="form-group">
-								<label class="col-sm-1 control-label">账号：</label>
-								<div class="col-sm-5">
-									<input class="form-control" name="data[nm]" size="10" type="text"
-										value="{:$output['nm']??''}" />
-								</div>
-							</div>
+                        <div class="form-horizontal m-t">
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">账号：</label>
+                                <div class="col-sm-5">
+                                    <input class="form-control" name="data[nm]" size="10" type="text"
+                                        value="{:$output['nm']??''}" />
+                                </div>
+                            </div>
 
-							<div class="form-group">
-								<label class="col-sm-1 control-label">密码：</label>
-								<div class="col-sm-5">
-									<input class="form-control" name="data[pw]" size="10" type="password"
-										value="{:$output['pw']??''}" />
-								</div>
-							</div>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">密码：</label>
+                                <div class="col-sm-5">
+                                    <input class="form-control" name="data[pw]" size="10" type="password"
+                                        value="{:$output['pw']??''}" />
+                                </div>
+                            </div>
 
-							<div class="form-group">
-								<label class="col-sm-1 control-label">权限：</label>
-								<div class="col-sm-5">
-									<select class="site-select-tem" name="data[role]">
-										<df-each $type>
-											<option value="{::id}" {:$v['id']==($output['role']??null)? 'selected' : ''
-												}>{::nm}
-											</option>
-										</df-each>
-									</select>
-								</div>
-							</div>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">权限：</label>
+                                <div class="col-sm-5">
+                                    <select class="site-select-tem" name="data[role]">
+                                        <df-each $type>
+                                            <option value="{::id}" {:$v['id']==($output['role']??null)? 'selected' : ''
+                                                }>{::nm}
+                                            </option>
+                                        </df-each>
+                                    </select>
+                                </div>
+                            </div>
 
-						</div>
+                        </div>
 
-						<div class="form-group">
-							<div class="col-sm-2 col-sm-offset-1">
-								<button class="btn btn-primary" onclick="return submit_form()">保存</button>
-								<a href='{:split_url(sprintf(" admin/home/%s",table_name("UserModel")))}'
-									class="btn btn-sm btn-white"> 返 回 </a>
-							</div>
-						</div>
+                        <div class="form-group">
+                            <div class="col-sm-2 col-sm-offset-1">
+                                <button class="btn btn-primary" onclick="return submit_form()">保存</button>
+                                <a href='{:split_url(sprintf(" admin/home/%s",table_name("UserModel")))}'
+                                    class="btn btn-sm btn-white"> 返 回 </a>
+                            </div>
+                        </div>
 
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </df-body>
 <df-footer>
 
 
-	<script type="text/javascript">
-		function submit_form() {
-			if ($.formVerifyEmpty('data[nm]', '')) {
-				return false;
-			}
+    <script type="text/javascript">
+        function submit_form() {
+            if ($.formVerifyEmpty('data[nm]', '')) {
+                return false;
+            }
 
-			return true;
-		}
-	</script>
+            return true;
+        }
+    </script>
 
 </df-footer>

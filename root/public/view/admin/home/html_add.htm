@@ -1,62 +1,60 @@
 <df-body>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5></h5>
+                </div>
+                <div class="ibox-content">
+                    <form method="post" action='{:split_url(str("admin/home/%s_update",[table_name("HtmlModel")]))}'>
+                        <input name="id" value="{:$output[0]??'0'}" hidden />
+                        <div class="form-horizontal m-t">
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">htm文件名：</label>
+                                <div class="col-sm-5">
+                                    <input class="form-control" name="data[file_n]" size="10" type="text"
+                                        value="{:$output['file_n']??''}" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">路径：</label>
+                                <div class="col-sm-5">
+                                    <input class="form-control" name="data[src]" size="10" type="text"
+                                        value="{:$output['src']??''}" />
+                                </div>
+                            </div>
 
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">备注：</label>
+                                <div class="col-sm-5">
+                                    <input class="form-control" name="data[comment]" size="10" type="text"
+                                        value="{:$output['comment']??''}" />
+                                </div>
+                            </div>
 
-	<div class="row">
-		<div class="col-sm-12">
-			<div class="ibox float-e-margins">
-				<div class="ibox-title">
-					<h5></h5>
-				</div>
-				<div class="ibox-content">
-					<form method="post" action='{:split_url(str("admin/home/%s_update",[table_name("HtmlModel")]))}'>
-						<input name="id" value="{:$output[0]??'0'}" hidden />
-						<div class="form-horizontal m-t">
-							<div class="form-group">
-								<label class="col-sm-1 control-label">htm文件名：</label>
-								<div class="col-sm-5">
-									<input class="form-control" name="data[file_n]" size="10" type="text"
-										value="{:$output['file_n']??''}" />
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-1 control-label">路径：</label>
-								<div class="col-sm-5">
-									<input class="form-control" name="data[src]" size="10" type="text"
-										value="{:$output['src']??''}" />
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label class="col-sm-1 control-label">备注：</label>
-								<div class="col-sm-5">
-									<input class="form-control" name="data[comment]" size="10" type="text"
-										value="{:$output['comment']??''}" />
-								</div>
-							</div>
-
-							<div class="form-group">
-								<div class="col-sm-2 col-sm-offset-1">
-									<button class="btn btn-primary" onclick="return submit_form()">保存</button>
-									<a href='{:split_url("admin/home/".table_name("HtmlModel"))}'
-										class="btn btn-sm btn-white"> 返
-										回 </a>
-								</div>
-							</div>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
+                            <div class="form-group">
+                                <div class="col-sm-2 col-sm-offset-1">
+                                    <button class="btn btn-primary" onclick="return submit_form()">保存</button>
+                                    <a href='{:split_url("admin/home/".table_name("HtmlModel"))}'
+                                        class="btn btn-sm btn-white"> 返
+                                        回 </a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </df-body>
 
 <df-footer>
-	<script type="text/javascript">
-		function submit_form() {
-			if ($.formVerifyEmpty('data[src]')) {
-				return false;
-			}
-			return true;
-		}
-	</script>
+    <script type="text/javascript">
+        function submit_form() {
+            if ($.formVerifyEmpty('data[src]')) {
+                return false;
+            }
+            return true;
+        }
+    </script>
 </df-footer>
