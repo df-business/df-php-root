@@ -12,8 +12,7 @@
                     <form method="post"
                         action='{:split_url(str("admin/column/%s_ss_update ",[areas\admin\model\NotepadModel::getName()]))}'>
                         <input name="id" value="{:$output[0]??0}" hidden />
-                        <input name="data[time]" value='{:$output["time"]??date(" Y-m-d H:i:s ")}'
-                            hidden />
+                        <input name="data[time]" value='{:$output["time"]??date(" Y-m-d H:i:s ")}' hidden />
 
                         <div class="form-horizontal m-t">
                             <div class="form-group">
@@ -26,8 +25,7 @@
                             <div class="form-group">
                                 <label class="col-sm-1 control-label">内容：</label>
                                 <div class="col-sm-11">
-                                    <script type="text/plain" id="container" name="data[content]">
-                                        {:$output['content']??''}</script>
+                                    <!--code <script type="text/plain" id="container" name="data[content]">{:$output['content']??''}</script> code-->
                                 </div>
                             </div>
 

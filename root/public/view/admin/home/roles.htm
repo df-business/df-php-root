@@ -33,9 +33,9 @@
                                     <td>{::roles}</td>
                                     <td class='center'>
                                         <a
-                                            href='{:split_url(sprintf("admin/home/%s_add/%s",table_name("RolesModel"),$value[0]))}'>[编辑]</a>
-                                        <a href='{:split_url(sprintf("admin/home/%s_del/%s",table_name("RolesModel"),$value[0]))}'
-                                            onclick='return confirm("您确认要删除吗？")'>[删除]</a>
+                                            href='{:split_url(sprintf("admin/home/%s_add",table_name("RolesModel")),$value[0])}'>[编辑]</a>
+                                        <a href='{:split_url(sprintf("admin/home/%s_del",table_name("RolesModel")),$value[0])}'
+                                            onclick='return confirm("您确认要删除《{::nm}》吗？")'>[删除]</a>
                                     </td>
                                 </tr>
                             </df-each>

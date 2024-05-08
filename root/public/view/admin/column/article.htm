@@ -30,8 +30,8 @@
                                     <td>{::title}</td>
                                     <td class='center'>
                                         <a
-                                            href='{:split_url(str("admin/column/%s_add/%s",[areas\admin\model\ArticleModel::getName(),$value[0]]))}'>[编辑]</a>
-                                        <!--<a href='{:split_url("homepage/column/columndel/%s")}' onclick='return confirm("您确认要删除吗？")'>[删除]</a>-->
+                                            href='{:split_url(str("admin/column/%s_add",[areas\admin\model\ArticleModel::getName()]),$value[0])}'>[编辑]</a>
+                                        <a href='{:split_url(str("admin/column/%s_del",[areas\admin\model\ArticleModel::getName()]),$value[0])}' onclick='return confirm("您确认要删除《{::title}》吗？")'>[删除]</a>
                                     </td>
                                 </tr>
                             </df-each>

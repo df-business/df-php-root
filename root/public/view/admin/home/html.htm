@@ -38,9 +38,9 @@
                                     <td>{::comment}</td>
                                     <td class='center'>
                                         <a
-                                            href='{:split_url(str("admin/home/%s_add/%s",[table_name("HtmlModel"),$value[0]]))}'>[编辑]</a>
-                                        <a href='{:split_url(str("admin/home/%s_del/%s",[table_name("HtmlModel"),$value[0]]))}'
-                                            onclick='return confirm("您确认要删除吗？")'>[删除]</a>
+                                            href='{:split_url(str("admin/home/%s_add",[table_name("HtmlModel")]),$value[0])}'>[编辑]</a>
+                                        <a href='{:split_url(str("admin/home/%s_del",[table_name("HtmlModel")]),$value[0])}'
+                                            onclick='return confirm("您确认要删除《{::file_n}》吗？")'>[删除]</a>
                                     </td>
                                 </tr>
                             </df-each>
