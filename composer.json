@@ -1,6 +1,14 @@
 {
 	"name": "dfer/df-php-root",
 	"type": "composer-plugin",
+    "license": "MIT",
+    "description": "DfPHP的根目录文件",
+    "authors": [{
+    	"name": "df",
+    	"email": "df_business@qq.com"
+    }],
+    "homepage": "http://www.dfer.site",
+    "keywords": ["df", "dfer.site"],
 	"require": {
 		"composer-plugin-api": "^1.0||^2.0",
 		"dfer/tools": "^1.0.0"
@@ -8,12 +16,6 @@
 	"require-dev": {
 		"composer/composer": "^1.0||^2.0"
 	},
-	"license": "MIT",
-	"description": "DfPHP的根目录文件",
-	"authors": [{
-		"name": "df",
-		"email": "df_business@qq.com"
-	}],
 	"autoload": {
 		"psr-4": {
 			"Dfer\\DfPhpRoot\\Composer\\": "src"
