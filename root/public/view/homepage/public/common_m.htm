@@ -38,9 +38,15 @@
         <!-- **********************  loader END  ********************** -->
 
         <link rel="stylesheet" href="{:VIEW_ASSETS}/homepage/css/init.css" />
-        <!--<script src="/assets/font_family/init.js"></script>-->
-        <script src="{:DEFAULT_ADMIN_ASSETS}/jquery.ext.js"></script>
-        <script src="{:DEFAULT_ADMIN_ASSETS}/DfTools.js"></script>
+
+        <!-- ********************** dfer-tools-js START ********************** -->
+        <script src="/node_modules/@df_business/tools-js/extends/js.ext.js"></script>
+        <script src="/node_modules/@df_business/tools-js/extends/jquery.ext.js"></script>
+        <script src="/node_modules/@df_business/tools-js/class/Common.js"></script>
+        <script>
+            var df_tools_common = new Common();
+        </script>
+        <!-- **********************  dfer-tools-js END  ********************** -->
 
         <style>
             .mui-content,
@@ -48,10 +54,8 @@
                 background-color: transparent !important;
             }
         </style>
-        <!--通用脚本-->
-        <script>
-            var df_tools_common = new DfTools();
 
+        <script>
             //所有资源加载完成则执行
             function loaded() {
                 $('#first_loading').remove(); //在js加载前添加loading效果，增加页面友好度，加载完成则删除

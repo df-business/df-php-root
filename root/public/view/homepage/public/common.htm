@@ -18,13 +18,6 @@
         <link rel="shortcut icon" href="{:DEFAULT_ADMIN_ASSETS}/img/favicon.ico" />
         <link rel="apple-touch-icon" href="{:DEFAULT_ADMIN_ASSETS}/img/favicon.png" />
 
-
-        <!-- ********************** 自定义alert START ********************** -->
-        <!-- <link rel="stylesheet" type="text/css" href="{:VIEW_ASSETS}/sweetalert/sweetalert.css">
-		<script type="text/javascript" src="{:VIEW_ASSETS}/sweetalert/sweetalert-dev.js"></script> -->
-        <!-- **********************  自定义alert END  ********************** -->
-
-
         <!-- ********************** jq START ********************** -->
         <script src="https://oss.dfer.site/jquery/3.7.1/jquery.min.js"></script>
         <!-- **********************  jq END  ********************** -->
@@ -44,19 +37,16 @@
         <script src="https://oss.dfer.site/bootstrap/v5.3.3/js/bootstrap.min.js"></script>
         <!-- **********************  bootstrap END  ********************** -->
 
-        <!--<script src="/assets/font_family/init.js"></script>-->
-        <script src="{:DEFAULT_ADMIN_ASSETS}/js.ext.js"></script>
-        <script src="{:DEFAULT_ADMIN_ASSETS}/jquery.ext.js"></script>
-        <script src="{:DEFAULT_ADMIN_ASSETS}/DfTools.js"></script>
-
-
-        <style>
-
-        </style>
-        <!--通用脚本-->
+        <!-- ********************** dfer-tools-js START ********************** -->
+        <script src="/node_modules/@df_business/tools-js/extends/js.ext.js"></script>
+        <script src="/node_modules/@df_business/tools-js/extends/jquery.ext.js"></script>
+        <script src="/node_modules/@df_business/tools-js/class/Common.js"></script>
         <script>
-            var df_tools_common = new DfTools();
+            var df_tools_common = new Common();
+        </script>
+        <!-- **********************  dfer-tools-js END  ********************** -->
 
+        <script>
             //所有资源加载完成则执行
             function loaded() {
                 //在js加载前添加loading效果，增加页面友好度，加载完成则删除
@@ -77,8 +67,8 @@
 
             //dom加载完毕
             function ready() {
-                $.protectPage();
-                df_tools_common.story("欢迎光临寒舍，有问题联系：www.dfer.site", "white")
+                df_tools_common.protectPage();
+                $.story("欢迎光临寒舍，有问题联系：www.dfer.site", "white")
                 $('#body').removeAttr('hidden')
                 loading(1);
                 df_tools_common.log('dom complete');
