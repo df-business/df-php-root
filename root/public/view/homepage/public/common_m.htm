@@ -50,7 +50,7 @@
         </style>
         <!--通用脚本-->
         <script>
-            var df_tools = new DfTools();
+            var df_tools_common = new DfTools();
 
             //所有资源加载完成则执行
             function loaded() {
@@ -60,17 +60,17 @@
                     $("<style>").html(
                         '*{font-family: ft !important; }'
                     ).appendTo("head");
-                    df_tools.log('自定义字体加载完成')
+                    df_tools_common.log('自定义字体加载完成')
                 }
                 loading(2);
-                df_tools.log('web complete');
+                df_tools_common.log('web complete');
             }
 
             //dom加载完毕
             function ready() {
                 $('#body').removeAttr('hidden')
                 loading(1);
-                df_tools.log('dom complete');
+                df_tools_common.log('dom complete');
             }
 
             function resized() {

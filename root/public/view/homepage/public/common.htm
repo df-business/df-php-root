@@ -55,7 +55,7 @@
         </style>
         <!--通用脚本-->
         <script>
-            var df_tools = new DfTools();
+            var df_tools_common = new DfTools();
 
             //所有资源加载完成则执行
             function loaded() {
@@ -66,22 +66,22 @@
                     $("<style>").html(
                         '*{font-family: ft !important; }'
                     ).appendTo("head");
-                    df_tools.log('自定义字体加载完成')
+                    df_tools_common.log('自定义字体加载完成')
                 } else {
-                    df_tools.log('未使用自定义字体')
+                    df_tools_common.log('未使用自定义字体')
                 }
 
                 loading(2);
-                df_tools.log('web complete');
+                df_tools_common.log('web complete');
             }
 
             //dom加载完毕
             function ready() {
                 $.protectPage();
-                df_tools.story("欢迎光临寒舍，有问题联系：www.dfer.site", "white")
+                df_tools_common.story("欢迎光临寒舍，有问题联系：www.dfer.site", "white")
                 $('#body').removeAttr('hidden')
                 loading(1);
-                df_tools.log('dom complete');
+                df_tools_common.log('dom complete');
             }
 
             //只能识别执行到此加载的元素，故而放在网页尾部（识别出整个网页已加载完毕）

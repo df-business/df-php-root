@@ -186,7 +186,7 @@
         }
 
         function del_pic(id) {
-            df_tools.post('{:split_url(str("admin/column/%s_pic_del",["layout"]))}', {
+            df_tools_common.post('{:split_url(str("admin/column/%s_pic_del",["layout"]))}', {
                 id: id
             }, function(x) {
                 $('.img_' + id).remove();

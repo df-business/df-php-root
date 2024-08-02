@@ -25,9 +25,19 @@
         <!-- **********************  jq END  ********************** -->
 
         <link href="{:VIEW_ASSETS}/admin/css/style.css?v=4.1.0" rel="stylesheet">
-        <script src="{:VIEW_ASSETS}/js.ext.js"></script>
-        <script src="{:VIEW_ASSETS}/jquery.ext.js"></script>
-        <script src="{:VIEW_ASSETS}/DfTools.js"></script>
+
+        <!-- ********************** dfer-tools-js START ********************** -->
+        <script src="/node_modules/@df_business/tools-js/extends/js.ext.js"></script>
+        <!-- **********************  dfer-tools-js END  ********************** -->
+        <!-- ********************** dfer-tools-js START ********************** -->
+        <script src="/node_modules/@df_business/tools-js/extends/jquery.ext.js"></script>
+        <!-- **********************  dfer-tools-js END  ********************** -->
+        <!-- ********************** dfer-tools-js START ********************** -->
+        <script src="/node_modules/@df_business/tools-js/class/Common.js"></script>
+        <script>
+            var df_tools_common = new Common();
+        </script>
+        <!-- **********************  dfer-tools-js END  ********************** -->
         <script src="{:VIEW_ASSETS}/admin/js/content.js?v=1.0.0"></script>
         <df-header />
     </head>
@@ -41,8 +51,6 @@
     <df-footer />
 
     <script>
-        var df_tools = new DfTools();
-
         const UPLOAD_API = {
             UEDITOR: '/admin/upload/ueditor_upload',
             WEB_UPLOADER: '/admin/upload/web_upload'

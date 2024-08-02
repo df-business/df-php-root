@@ -19,7 +19,7 @@
                     title: "二选一",
                     btn: ['是', '否']
                 }, function() {
-                    df_tools.post('{:split_url("admin/home/fresh_cache")}', "",
+                    df_tools_common.post('{:split_url("admin/home/fresh_cache")}', "",
                         function(x) {
                             if (x.status)
                                 layer.msg(x.msg);
