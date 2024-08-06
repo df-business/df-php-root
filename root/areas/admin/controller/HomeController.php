@@ -383,7 +383,7 @@ EOT;
   $dt['src'] = urlencode($dt['src']);
   $parent = post('parent');
   $ret = MenuModel::where($id)->update($dt);
-  $this->jumpPrompt($ret,str("admin/home/menu/{0}&parent={1}",[$dt['parent'],$parent]));
+  $this->jumpPrompt($ret,[MenuModel::getName(),$dt['parent'],$parent]);
  }
 
  /**
@@ -395,7 +395,7 @@ EOT;
   $parent_id = $_GET['parent_id'];
   $parent = $_GET['parent'];
   $ret = MenuModel::where("id={$id} or parent={$id}")->del();
-  $this->jumpPrompt($ret,str("admin/home/menu/{0}&parent={1}",[$parent_id,$parent]));
+  $this->jumpPrompt($ret,[MenuModel::getName(),$parent_id,$parent]);
  }
 
  // **********************  菜单 END  **********************
