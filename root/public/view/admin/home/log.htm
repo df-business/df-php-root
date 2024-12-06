@@ -1,0 +1,55 @@
+<df-header>
+    <title>日志</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        button {
+            width: 10%;
+            position: fixed;
+            top: 1px;
+            right: 1px;
+        }
+
+        #main {
+            /*width: 100px;*/
+            word-break: break-all;
+        }
+    </style>
+</df-header>
+
+<df-body>
+
+    <div>
+        <button onclick="clear_log()">清空</button>
+    </div>
+    <div id="main">
+        <h1>数据日志</h1>
+
+        <df-each $output>
+            {::str}<br>
+            <div style="color: red;">{::time}</div>
+            <line style='background: darkgray;height: 1px;'></line>
+        </df-each>
+    </div>
+
+
+
+</df-body>
+
+
+<df-footer>
+    <script>
+        function clear_log() {
+            df_tools_common.post('', {
+                clear: true
+            }, function() {
+                location.reload()
+            }, true);
+
+        }
+    </script>
+
+</df-footer>

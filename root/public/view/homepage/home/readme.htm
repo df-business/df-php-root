@@ -1,0 +1,40 @@
+<df-header>
+	<title>开发文档</title>
+</df-header>
+
+<df-body>
+	<div class="alert alert-primary" role="alert">
+		开发文档
+	</div>
+	</fieldset>
+	<div class="layui-collapse" lay-accordion="">
+
+		<df-each $output>
+			<div class="layui-colla-item">
+				<h2 class="layui-colla-title">{::title}</h2>
+				<df-if $key==0>
+					<div class="layui-colla-content layui-show">
+						<code>
+							{::content}</code>
+					</div>
+					<df-else>
+						<div class="layui-colla-content">
+						<code>
+							{::content}</code>
+						</div>
+				</df-if>
+
+			</div>
+		</df-each>
+
+	</div>
+
+</df-body>
+
+<df-footer>
+
+	<script>
+		layui.use(['element', 'layer'], function() {})
+	</script>
+	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+</df-footer>

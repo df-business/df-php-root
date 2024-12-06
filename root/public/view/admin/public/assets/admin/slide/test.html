@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>简单轮播图</title>
+		<script src="/assets/df.js"></script>
+
+	</head>
+
+	<body>
+		<!--<div id="slider-wrap">
+			<ul id="slider">
+				!{each $output}
+				<li data-color="#1abc9c" onclick="window.open('!`url`')">
+					<div>
+						<span>{::title}</span>
+					</div>
+					<i class="fa fa-image"></i>
+				</li>
+				!{/each}
+			</ul>
+		
+			<div class="btns" id="next"><i class="fa fa-arrow-right"></i></div>
+			<div class="btns" id="previous"><i class="fa fa-arrow-left"></i></div>
+			<div id="counter"></div>
+			<div id="pagination-wrap">
+				<ul>
+				</ul>
+			</div>
+		
+
+		</div>-->
+
+		<div id="wrapper">
+			<h1>Title</h1>
+			<div id="slider-wrap">
+				<ul id="slider">
+					<li data-color="#1abc9c">
+						<div>
+							<h3>Slide #1</h3>
+							<span>Sub-title #1</span>
+						</div>
+						<i class="fa fa-image"></i>
+					</li>
+
+					<li data-color="#3498db">
+						<div>
+							<h3>Slide #2</h3>
+							<span>Sub-title #2</span>
+						</div>
+						<i class="fa fa-gears"></i>
+					</li>
+
+					<li data-color="#9b59b6">
+						<div>
+							<h3>Slide #3</h3>
+							<span>Sub-title #3</span>
+						</div>
+						<i class="fa fa-sliders"></i>
+					</li>
+
+					<li data-color="#34495e">
+						<div>
+							<h3>Slide #4</h3>
+							<span>Sub-title #4</span>
+						</div>
+						<i class="fa fa-code"></i>
+					</li>
+
+					<li data-color="#e74c3c">
+						<div>
+							<h3>Slide #5</h3>
+							<span>Sub-title #5</span>
+						</div>
+						<i class="fa fa-microphone-slash"></i>
+					</li>
+
+				</ul>
+
+				<!--controls-->
+				<div class="btns" id="next"><i class="fa fa-arrow-right"></i></div>
+				<div class="btns" id="previous"><i class="fa fa-arrow-left"></i></div>
+				<div id="counter"></div>
+
+				<div id="pagination-wrap">
+					<ul>
+					</ul>
+				</div>
+				<!--controls-->
+
+			</div>
+		</div>
+		<script src="/assets/jquery.min.js"></script>
+		<!--slide-->
+		<link rel="stylesheet" href="/assets/slide/init.css">
+		<script type="text/javascript" src="/assets/slide/init.js"></script>
+	</body>
+
+</html>

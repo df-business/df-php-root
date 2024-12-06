@@ -1,0 +1,33 @@
+<df-header>
+    <title>{$layout['title']} - DfPHP v{:VERSION}</title>
+</df-header>
+
+<df-body>
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 0;">
+        <legend style="color: {$layout['color']};">{$layout['title']}——{$layout['description']}</legend>
+    </fieldset>
+
+    <div style="padding: 20px;">
+        <div class="card" style="width: 18rem;">
+            <div class="card-header">关于</div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><a href='/readme' class="btn btn-primary btn-sm" target="_blank"><i
+                            class="fa fa-book"></i>&nbsp;开发文档</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div style="color: {$layout['color']};position: absolute;bottom: 1rem;">© 2023-{:Common::getTime(null,'Y')}
+        Dfer.Site</div>
+
+</df-body>
+<df-footer>
+
+    <script>
+        $(function() {
+            var url_a = df_tools_common.getUrlParam('a') == null ? 'index' : df_tools_common.getUrlParam('a');
+            console.log("{$layout['title']}_{0} loaded".format(url_a));
+        })
+    </script>
+
+</df-footer>
