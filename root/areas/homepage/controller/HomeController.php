@@ -45,7 +45,7 @@ class HomeController extends BaseController
      * 首页
      * @param {Object} $param
      */
-    function index($param)
+    public function index($param)
     {
         $layout = ConfigModel::where(['key' => 'layout'])->value('val');
         $column = ArticleModel::order(["id" => "asc"])->select();
@@ -69,7 +69,7 @@ class HomeController extends BaseController
     }
 
     // ********************** 留言 START **********************
-    function postMsg()
+    public function postMsg()
     {
         $dt = post('data');
         //var_dump($dt);

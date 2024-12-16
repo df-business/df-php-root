@@ -42,20 +42,20 @@ class ColumnController extends BaseController
 {
 
   // ********************** 文章管理 START **********************
-  function article($param)
+  public function article($param)
   {
     $output = ArticleModel::order('asc')->select();
     // var_dump($output);
     $this->view(get_defined_vars());
   }
 
-  function articleAdd($param)
+  public function articleAdd($param)
   {
     $output = ArticleModel::where($param)->find();
     $this->view(get_defined_vars());
   }
 
-  function articleUpdate()
+  public function articleUpdate()
   {
     $dt = post('data');
     $id = post('id');
@@ -67,7 +67,7 @@ class ColumnController extends BaseController
    * 删除
    * @param {Object} $id
    */
-  function articleDel($id)
+  public function articleDel($id)
   {
     $ret = ArticleModel::where($id)->del();
     $this->jumpPrompt($ret, ArticleModel::getName());
@@ -77,7 +77,7 @@ class ColumnController extends BaseController
    * 富文本上传组件
    * @param {Object} $name
    */
-  function articleEditUp($name)
+  public function articleEditUp($name)
   {
     Common::showJsonBase(Common::uploadFile(Common::UPLOAD_UMEDITOR_EDITOR));
   }
@@ -86,7 +86,7 @@ class ColumnController extends BaseController
    * 单文件上传组件
    * @param {Object} $name
    */
-  function articleUp($name)
+  public function articleUp($name)
   {
     Common::showJsonBase(Common::uploadFile(Common::UPLOAD_WEB_UPLOADER));
   }
@@ -103,7 +103,7 @@ class ColumnController extends BaseController
    * 预览
    * @param {Object} $param
    */
-  function messageView($param)
+  public function messageView($param)
   {
     $output = MessageModel::where($param)->first();
     MessageModel::where($param)->update(["status" => true]);
@@ -114,7 +114,7 @@ class ColumnController extends BaseController
    * 删除留言
    * @param {Object} $id
    */
-  function messageDel($id)
+  public function messageDel($id)
   {
     $ret = MessageModel::where($id)->del();
     $this->jumpPrompt($ret, MessageModel::getName());
@@ -128,13 +128,13 @@ class ColumnController extends BaseController
     $this->view(get_defined_vars());
   }
 
-  function linkAdd($param)
+  public function linkAdd($param)
   {
     $output = LinkModel::where($param)->find();
     $this->view(get_defined_vars());
   }
 
-  function linkUpdate()
+  public function linkUpdate()
   {
     $dt = post('data');
     $id = post('id');
@@ -146,7 +146,7 @@ class ColumnController extends BaseController
    * 删除
    * @param {Object} $id
    */
-  function linkDel($id)
+  public function linkDel($id)
   {
     $ret = LinkModel::where($id)->del();
     $this->jumpPrompt($ret, LinkModel::getName());
@@ -160,13 +160,13 @@ class ColumnController extends BaseController
     $this->view(get_defined_vars());
   }
 
-  function musicAdd($param)
+  public function musicAdd($param)
   {
     $output = MusicModel::where($param)->find();
     $this->view(get_defined_vars());
   }
 
-  function musicUpdate()
+  public function musicUpdate()
   {
     $dt = post('data');
     $id = post('id');
@@ -179,7 +179,7 @@ class ColumnController extends BaseController
    * 删除
    * @param {Object} $id
    */
-  function musicDel($id)
+  public function musicDel($id)
   {
     $ret = MusicModel::where($id)->del();
     $this->jumpPrompt($ret, MusicModel::getName());
@@ -187,14 +187,14 @@ class ColumnController extends BaseController
   // **********************  音乐管理 END  **********************
 
   // ********************** 布局 START **********************
-  function layout($param)
+  public function layout($param)
   {
     $output = ConfigModel::where(['key' => 'layout'])->find()['val'];
     $img = LayoutImgModel::select();
     $this->view(get_defined_vars());
   }
 
-  function layoutUpdate()
+  public function layoutUpdate()
   {
     $dt = post('data');
     $id = post('id');
@@ -206,7 +206,7 @@ class ColumnController extends BaseController
    * 主页背景图
    * @param {Object} $name
    */
-  function layoutPicUp($name)
+  public function layoutPicUp($name)
   {
     $dt['img'] = Common::uploadFile(Common::UPLOAD_WEB_UPLOADER);
     LayoutImgModel::insert($dt);
@@ -214,7 +214,7 @@ class ColumnController extends BaseController
     Common::showJsonBase($dt['img']);
   }
 
-  function layoutUp($name)
+  public function layoutUp($name)
   {
     Common::showJsonBase(Common::uploadFile(Common::UPLOAD_WEB_UPLOADER, ['path' => VIEW_ASSETS . '/fontFamily/font.TTF']));
   }
@@ -223,7 +223,7 @@ class ColumnController extends BaseController
    * 图片删除
    * @param {Object} $name
    */
-  function layoutPicDel($name)
+  public function layoutPicDel($name)
   {
     $id = param('id');
     $img = LayoutImgModel::where($id)->first();

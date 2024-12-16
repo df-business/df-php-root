@@ -44,7 +44,7 @@ class UploadController extends BaseController
      * 富文本上传组件
      * @param {Object} $name
      */
-    function umeditorUpload($name)
+    public function umeditorUpload($name)
     {
         Common::showJsonBase(Common::uploadFile(Common::UPLOAD_UMEDITOR_EDITOR, ['name' => 'upfile']));
     }
@@ -54,7 +54,7 @@ class UploadController extends BaseController
      * 文件上传组件
      * @param {Object} $name
      */
-    function webUpload($name)
+    public function webUpload($name)
     {
         Common::showJsonBase(Common::uploadFile(Common::UPLOAD_WEB_UPLOADER));
     }

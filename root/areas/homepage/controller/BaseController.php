@@ -56,7 +56,7 @@ abstract class BaseController
    /**
     * 视图
     */
-   public   function view($params, $template = 'common')
+   public function view($params, $template = 'common')
    {
       extract($params);
       include_once view($template, param('area'));

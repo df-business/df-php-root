@@ -50,7 +50,7 @@ abstract class BaseController
   /**
    * 初始方法
    */
-  function __construct()
+  public function __construct()
   {
     $this->initialize();
   }

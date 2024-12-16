@@ -76,7 +76,7 @@ class HomeController extends BaseController
      * @param {Object} $data
      * @param {Object} $where
      */
-    function menuTree($data, $where)
+    public function menuTree($data, $where)
     {
         foreach ($data as $v) {
             $v['src'] = urldecode($v['src']);
@@ -365,7 +365,7 @@ EOT;
     public function menu($param)
     {
         $output = MenuModel::where(['parent' => empty($param) ? '0' : $param])->order(['order_num', 'asc'])->select();
-        $parent = get('parent');
+        $parent = get('parent',"");
         $l_parent = explode(',', $parent);
         $l_parent_id = $l_parent[count($l_parent) - 1];
         array_pop($l_parent);
@@ -478,7 +478,7 @@ EOT;
         }
 
         //根据主页内的文字生成html页面，用来制作字体
-        $body = file_get_contents(split_url('homepage/home/'));
+        $body = file_get_contents(split_url('homepage/home/index'));
         $body = Common::getChinese($body);
 
         $path = '/static_pages/font.html';
