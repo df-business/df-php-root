@@ -36,6 +36,7 @@
 namespace areas\admin\controller;
 
 use Dfer\Tools\Statics\{Common};
+use Dfer\Tools\{Constants};
 
 class UploadController extends BaseController
 {
@@ -46,7 +47,7 @@ class UploadController extends BaseController
      */
     public function umeditorUpload($name)
     {
-        Common::showJsonBase(Common::uploadFile(Common::UPLOAD_UMEDITOR_EDITOR, ['name' => 'upfile']));
+        Common::showJsonBase(Common::uploadFile(Constants::UPLOAD_UMEDITOR_EDITOR, ['name' => 'upfile']));
     }
 
     /**
@@ -56,6 +57,6 @@ class UploadController extends BaseController
      */
     public function webUpload($name)
     {
-        Common::showJsonBase(Common::uploadFile(Common::UPLOAD_WEB_UPLOADER));
+        Common::showJsonBase(Common::uploadFile(Constants::UPLOAD_WEB_UPLOADER));
     }
 }
