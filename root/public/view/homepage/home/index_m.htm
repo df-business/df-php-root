@@ -3,27 +3,22 @@
 </df-header>
 
 <df-body>
-    <div style="padding: 20px;">
-        <div class="layui-row layui-col-space15">
-
-            <df-each $column>
-                <df-if !ctype_space($v["title"])>
-                    <div class="layui-col-md6">
-                        <div class="layui-card">
-                            <div class="layui-card-header">{::title}</div>
-                            <div class="layui-card-body">
-                                {::content}
-                            </div>
-                        </div>
-                    </div>
-                </df-if>
-            </df-each>
+    <header class="mui-bar mui-bar-nav">
+        <a class="mui-action-back mui-icon"></a>
+        <h1 class="mui-title">{$layout['title']} - {$layout['description']}</h1>
+    </header>
+    <div class="mui-content">
+        <div class="mui-card">
+            <div class="mui-card-content">
+                <div class="mui-card-content-inner">
+                    <button type="button" class="mui-btn mui-btn-block"
+                        onclick="window.open('/homepage/home/readme')">开发文档</button>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="foot" style="padding: .3rem 1rem;background-color: rgba(0,0,0,.5);color: {$layout['color']};">©
-        2023-{:Common::getTime(null,'Y')}</div>
-
+    <div style="position: absolute;bottom: 1rem;">© 2023-{:Common::getTime(null,'Y')} {$layout['inscribe']}</div>
 </df-body>
 <df-footer>
     <script>

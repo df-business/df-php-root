@@ -190,7 +190,6 @@ class ColumnController extends BaseController
   public function layout($param)
   {
     $output = ConfigModel::where(['key' => 'layout'])->find()['val'];
-    $img = LayoutImgModel::select();
     $this->view(get_defined_vars());
   }
 
@@ -200,36 +199,6 @@ class ColumnController extends BaseController
     $id = post('id');
     $ret = ConfigModel::where(['key' => 'layout'])->update(['val' => $dt]);
     $this->jumpPrompt($ret, "layout");
-  }
-
-  /**
-   * 主页背景图
-   * @param {Object} $name
-   */
-  public function layoutPicUp($name)
-  {
-    $dt['img'] = Common::uploadFile(Common::UPLOAD_WEB_UPLOADER);
-    LayoutImgModel::insert($dt);
-    //不限制尺寸
-    Common::showJsonBase($dt['img']);
-  }
-
-  public function layoutUp($name)
-  {
-    Common::showJsonBase(Common::uploadFile(Common::UPLOAD_WEB_UPLOADER, ['path' => VIEW_ASSETS . '/fontFamily/font.TTF']));
-  }
-
-  /**
-   * 图片删除
-   * @param {Object} $name
-   */
-  public function layoutPicDel($name)
-  {
-    $id = param('id');
-    $img = LayoutImgModel::where($id)->first();
-    $rt = LayoutImgModel::where($id)->del() . ',';
-    $rt .= Common::delFile($img['img']);
-    show_json(1, $rt);
   }
   // **********************  布局 END  **********************
 
