@@ -38,6 +38,7 @@ namespace areas\admin\controller;
 use areas\admin\model\{UserModel, ConfigModel, MessageModel, RolesModel, UserInfoModel, HtmlModel, MenuModel, CacheModel, LogsModel};
 use Dfer\DfPhpCore\Modules\Statics\Mysql;
 use Dfer\Tools\Statics\{Common};
+use Dfer\Tools\Constants;
 
 class HomeController extends BaseController
 {
@@ -450,7 +451,7 @@ EOT;
         //清空文件缓存
         $files_cache = Common::delDir(ROOT . "/data/cache");
         $files_logs = Common::delDir(ROOT . "/data/logs");
-        show_json($db_cache, [], $files_cache || $files_logs ? '数据库、文件清除成功' : '目录不存在');
+        show_json(Constants::SUCCESS, $db_cache, $files_cache || $files_logs ? '数据库、文件清除成功' : '目录不存在');
     }
 
     /**
