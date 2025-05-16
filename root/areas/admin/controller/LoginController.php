@@ -39,6 +39,7 @@ use areas\admin\model\{UserModel};
 use areas\admin\validate\{LoginValidate};
 use Dfer\DfPhpCore\Modules\Statics\{Lang, Mysql};
 use Dfer\Tools\Statics\{Common};
+use ENUM;
 
 class LoginController extends BaseController
 {
@@ -64,9 +65,7 @@ class LoginController extends BaseController
                 if ($user != null) {
                     if ($user["nm"] == $user_sm["nm"] && $user["pw"] == $user_sm["pw"]) {
                         UserModel::where($user[0])->update(array('last_login_time' => Common::getTime(TIMESTAMP)));
-                        // 设置session在cookie的保存时间
-                        cookie_set(session_name(), session_id(), SESSION_EXPIRES);
-                        session_set(\ENUM::USER_BACK, array('id' => $user[0], 'name' => Common::strToHex($user["nm"]),  'password' => Common::strToHex($user["pw"])));
+                        session_set(ENUM::USER_BACK, array('id' => $user[0], 'name' => Common::strToHex($user["nm"]),  'password' => Common::strToHex($user["pw"])));
                         to_url("admin/home/index");
                     }
                 }
