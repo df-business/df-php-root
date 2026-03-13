@@ -24,7 +24,7 @@
                                 <tr>
                                     <td>{$index}</td>
                                     <td><a
-                                            href='{:split_url(str("admin/column/%s_view/%s",[table_name("MessageModel")]),$value[0])}'>{::name}</a>
+                                            href='{:split_url(str("admin/column/%s_view",[table_name("MessageModel")]),$value[0])}'>{::name}</a>
                                     </td>
                                     <td>
                                         <a target="_blank"
@@ -34,8 +34,8 @@
                                     <td>{:$value['status']?'已读':'未读'}</td>
                                     <td>{::time}</td>
                                     <td class='center'>
-                                        <a href='{:split_url(str("admin/home/%s_del",[areas\admin\model\MessageModel::getName()]),$value[0])}'
-                                            onclick='return confirm("您确认要删除《{::title}》吗？")'>[删除]</a>
+                                        <a href='{:split_url(str("admin/column/%s_del",[areas\admin\model\MessageModel::getName()]),$value[0])}'
+                                            onclick='return confirm("您确认要删除《{::content}》吗？")'>[删除]</a>
                                     </td>
                                 </tr>
                             </df-each>
